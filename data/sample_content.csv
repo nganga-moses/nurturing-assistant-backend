@@ -1,0 +1,11 @@
+content_id,content_type,content_description,target_funnel_stage,success_rate,engagement_metrics
+CONTENT_001,webpage,University Overview and Programs,awareness,0.85,"{""avg_time_spent"": 120, ""avg_scroll_depth"": 0.7, ""avg_interaction_count"": 3}"
+CONTENT_002,pdf,Program Brochure - Computer Science,interest,0.75,"{""avg_time_spent"": 300, ""avg_download_count"": 1, ""avg_interaction_count"": 4}"
+CONTENT_003,form,Application Form,consideration,0.90,"{""avg_time_spent"": 600, ""avg_form_completion"": 0.9, ""avg_interaction_count"": 8}"
+CONTENT_004,webpage,Campus Virtual Tour,awareness,0.80,"{""avg_time_spent"": 180, ""avg_scroll_depth"": 0.8, ""avg_interaction_count"": 5}"
+CONTENT_005,pdf,Financial Aid Guide,interest,0.70,"{""avg_time_spent"": 240, ""avg_download_count"": 1, ""avg_interaction_count"": 3}"
+CONTENT_006,form,Scholarship Application,consideration,0.85,"{""avg_time_spent"": 450, ""avg_form_completion"": 0.8, ""avg_interaction_count"": 6}"
+CONTENT_007,webpage,Student Life Overview,awareness,0.75,"{""avg_time_spent"": 90, ""avg_scroll_depth"": 0.6, ""avg_interaction_count"": 2}"
+CONTENT_008,pdf,Program Brochure - Engineering,interest,0.80,"{""avg_time_spent"": 280, ""avg_download_count"": 1, ""avg_interaction_count"": 4}"
+CONTENT_009,webpage,Admission Requirements,awareness,0.85,"{""avg_time_spent"": 150, ""avg_scroll_depth"": 0.7, ""avg_interaction_count"": 3}"
+CONTENT_010,form,Contact Information Update,decision,0.95,"{""avg_time_spent"": 120, ""avg_form_completion"": 0.95, ""avg_interaction_count"": 2}" 

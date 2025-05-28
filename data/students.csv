@@ -1,0 +1,4 @@
+student_id,demographic_features,funnel_stage
+S1,"{'age': 18, 'gpa': 3.8, 'test_score': 1200, 'intended_major': 'Engineering'}",inquiry
+S2,"{'age': 19, 'gpa': 3.5, 'test_score': 1150, 'intended_major': 'Business'}",application
+S3,"{'age': 20, 'gpa': 3.9, 'test_score': 1300, 'intended_major': 'Science'}",admit

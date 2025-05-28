@@ -1,0 +1,3 @@
+content_id,content_type,content_body,content_meta
+C1,email_template,"Welcome to Engineering!","{'subject': 'Welcome', 'length': 100, 'tags': ['engineering']}"
+C2,sms_text,"Apply now for Business program!","{'length': 50, 'tags': ['business']}"

@@ -1,0 +1,6 @@
+student_id,demographic_features,application_status,funnel_stage,first_interaction_date,last_interaction_date,interaction_count,application_likelihood_score,dropout_risk_score
+S001,"{""first_name"": ""John"", ""last_name"": ""Doe"", ""age"": 18, ""location"": ""New York, NY"", ""high_school_gpa"": 3.9, ""intended_major"": ""Computer Science""}",in_progress,consideration,2024-01-01,2024-03-15,10,0.85,0.4
+S002,"{""first_name"": ""Jane"", ""last_name"": ""Smith"", ""age"": 17, ""location"": ""Los Angeles, CA"", ""high_school_gpa"": 4.0, ""intended_major"": ""Engineering""}",not_started,interest,2024-02-01,2024-03-14,8,0.75,0.6
+S003,"{""first_name"": ""Mike"", ""last_name"": ""Johnson"", ""age"": 19, ""location"": ""Chicago, IL"", ""high_school_gpa"": 3.7, ""intended_major"": ""Business""}",in_progress,decision,2024-01-15,2024-03-13,15,0.92,0.2
+S004,"{""first_name"": ""Sarah"", ""last_name"": ""Williams"", ""age"": 18, ""location"": ""Boston, MA"", ""high_school_gpa"": 3.8, ""intended_major"": ""Psychology""}",not_started,awareness,2024-03-01,2024-03-12,5,0.65,0.7
+S005,"{""first_name"": ""David"", ""last_name"": ""Brown"", ""age"": 17, ""location"": ""Seattle, WA"", ""high_school_gpa"": 3.95, ""intended_major"": ""Computer Science""}",in_progress,consideration,2024-02-15,2024-03-11,12,0.88,0.3 

@@ -1,0 +1,4 @@
+engagement_id,student_id,engagement_type,engagement_content_id,engagement_response,engagement_metrics,timestamp
+E1,S1,email,C1,opened,"{'time_spent': 30}",2024-06-01T10:00:00Z
+E2,S2,sms,C2,clicked,"{'time_spent': 10}",2024-06-02T11:00:00Z
+E3,S3,call,,completed,"{'time_spent': 5}",2024-06-03T12:00:00Z
