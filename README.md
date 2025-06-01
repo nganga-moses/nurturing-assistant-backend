@@ -175,3 +175,30 @@ Once the backend server is running, visit:
 ## License
 
 MIT License
+
+## Recommendation Feedback Loop & Batch Matching Workflow
+
+The system uses a weekly feedback loop to evaluate the effectiveness of recommendations (nudges) and generate new ones. The workflow is as follows:
+
+1. **Import new engagements** from the CRM (actions taken by staff/students in the past week).
+2. **Batch match** these new engagements to the previous cycle's recommendations/nudges to measure effectiveness.
+3. **Purge** old (expired) recommendations/nudges after matching.
+4. **Generate new recommendations** for the next cycle.
+
+### Visual Flowchart
+
+```mermaid
+graph TD
+    A[Import new engagements from CRM] --> B[Batch match to previous recommendations]
+    B --> C[Purge old recommendations]
+    C --> D[Generate new recommendations for next cycle]
+    D --> E[Recommendations actioned by staff/students]
+    E -->|Next week| A
+```
+
+### Why this order?
+- **Matching before purging** ensures you can evaluate the effectiveness of last week's recommendations before removing them.
+- **Purge** cleans up old recommendations so only current ones are available for the next cycle.
+- **New recommendations** are generated for the coming week and will be evaluated in the next cycle.
+
+This workflow ensures accurate feedback, analytics, and continuous improvement of the recommendation system.
