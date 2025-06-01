@@ -3,3 +3,4 @@ node_modules
 .idea
 na_frontend
 .cursorignore
+__pycache__/
