@@ -4,3 +4,4 @@ node_modules
 na_frontend
 .cursorignore
 __pycache__/
+configs
