@@ -17,7 +17,7 @@ from api.services import (
     DashboardService,
     BulkActionService
 )
-from data.schemas import (
+from data.schemas.schemas import (
     RecommendationRequest,
     RecommendationResponse,
     LikelihoodRequest,
@@ -31,7 +31,22 @@ from data.schemas import (
     BulkActionApplyResponse,
     DashboardStatsResponse
 )
-from data.models import init_db, StudentProfile, EngagementHistory, get_session
+from data.models.schemas import (
+    StudentProfileCreate,
+    StudentProfileUpdate,
+    EngagementCreate,
+    EngagementUpdate,
+    ContentCreate,
+    ContentUpdate
+)
+from data.models.models import init_db, StudentProfile, EngagementHistory, get_session
+from .routes import matching
+from .routes import reports
+from .routes import notifications
+from .routes import settings
+from .routes import roles
+from .routes import docs
+from .routes import auth
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -463,6 +478,14 @@ async def assess_risk(request: RiskAssessmentRequest):
         logger.error(f"Error in assess_risk: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
+# Include routers
+app.include_router(matching.router)
+app.include_router(reports.router)
+app.include_router(notifications.router)
+app.include_router(settings.router)
+app.include_router(roles.router)
+app.include_router(docs.router)
+app.include_router(auth.router)
 
 def setup_database():
     """Initialize the database and generate sample data if needed."""

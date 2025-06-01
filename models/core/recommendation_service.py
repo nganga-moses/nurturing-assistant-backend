@@ -6,113 +6,86 @@ from typing import Dict, List, Any, Optional
 from datetime import datetime, timedelta
 import pandas as pd
 from sqlalchemy.orm import Session
+import uuid
 
 # Add the parent directory to the path so we can import from other modules
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from data.models import StudentProfile, EngagementHistory, EngagementContent, get_session
-from models.simple_recommender import SimpleRecommender
+from data.models.models import StudentProfile, EngagementHistory, EngagementContent, get_session
 
 class RecommendationService:
-    """Service for generating recommendations using the trained model."""
+    """Service for generating recommendations using the database and fallback logic."""
     
     def __init__(self, model_dir: str = None):
         """
         Initialize the recommendation service.
         
         Args:
-            model_dir: Directory containing the trained model
+            model_dir: Directory containing the trained model (unused)
         """
-        if model_dir is None:
-            model_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "saved_models")
-        
         self.model_dir = model_dir
-        self.recommender = None
         self.content_cache = {}
         self.last_update = None
         self.update_threshold = timedelta(hours=1)  # Update model if last update was more than 1 hour ago
-        
-        # Try to load the model
-        self._load_model()
+        self.logs = []
     
-    def _load_model(self) -> None:
-        """Load the trained model."""
-        try:
-            # Initialize the simple recommender
-            self.recommender = SimpleRecommender(model_dir=self.model_dir)
-            self.last_update = datetime.now()
-            print("Recommender initialized successfully")
-        except Exception as e:
-            print(f"Error initializing recommender: {str(e)}")
-            print("Recommendations will use fallback logic")
-    
-    def _check_and_update_model(self, session: Session) -> None:
+    def log_recommendation(self, recommendation: Dict[str, Any], status: str = "active", 
+                         outcome: Optional[str] = None, rationale: Optional[str] = None) -> Dict[str, Any]:
         """
-        Check if model needs updating and update if necessary.
+        Log recommendation metadata for reporting and traceability.
         
         Args:
-            session: Database session
-        """
-        if self.last_update is None or datetime.now() - self.last_update > self.update_threshold:
-            print("Updating model with new data...")
-            
-            # Get all data
-            students_df = pd.read_sql(session.query(StudentProfile).statement, session.bind)
-            content_df = pd.read_sql(session.query(EngagementContent).statement, session.bind)
-            engagements_df = pd.read_sql(session.query(EngagementHistory).statement, session.bind)
-            
-            # Update the model
-            if self.recommender is None:
-                self.recommender = SimpleRecommender(model_dir=self.model_dir)
-            
-            self.recommender.train(students_df, content_df, engagements_df)
-            self.last_update = datetime.now()
-            print("Model updated successfully")
-    
-    def get_recommendations(self, student_id: str, count: int = 3) -> List[Dict[str, Any]]:
-        """
-        Get recommendations for a student.
-        
-        Args:
-            student_id: ID of the student
-            count: Number of recommendations to return
+            recommendation: The recommendation to log
+            status: Current status of the recommendation
+            outcome: Outcome of the recommendation (if known)
+            rationale: Rationale for the recommendation
             
         Returns:
-            List of recommendations
+            Log entry dictionary
         """
+        log_entry = {
+            "recommendation_id": str(uuid.uuid4()),
+            "student_id": recommendation.get("student_id"),
+            "engagement_type": recommendation.get("engagement_type"),
+            "content_id": recommendation.get("content_id"),
+            "features_used": recommendation.get("features_used"),
+            "model_version": recommendation.get("model_version"),
+            "created_at": datetime.utcnow().isoformat(),
+            "status": status,
+            "outcome": outcome,
+            "rationale": rationale
+        }
+        self.logs.append(log_entry)
+        return log_entry
+    
+    def get_recommendation_logs(self) -> pd.DataFrame:
+        """Get all recommendation logs as a DataFrame."""
+        return pd.DataFrame(self.logs)
+    
+    def save_logs_to_csv(self, path: str) -> None:
+        """Save recommendation logs to a CSV file."""
+        df = self.get_recommendation_logs()
+        df.to_csv(path, index=False)
+    
+    def get_recommendations(self, student_id: str, count: int = 3) -> List[Dict[str, Any]]:
         session = get_session()
-        
         try:
-            # Get student profile
             student = session.query(StudentProfile).filter_by(student_id=student_id).first()
-            
             if not student:
                 print(f"Student with ID {student_id} not found in database")
                 return self._get_default_recommendations(count)
-            
-            # Check and update model if necessary
-            self._check_and_update_model(session)
-            
             # Get recent engagements
             recent_engagements = session.query(EngagementHistory).filter(
                 EngagementHistory.student_id == student_id,
                 EngagementHistory.timestamp >= datetime.now() - timedelta(days=7)
             ).all()
-            
-            # Use the simple recommender to get recommendations
-            if self.recommender is not None:
-                recommendations = self.recommender.get_recommendations(student_id, count)
-                
-                # Adjust recommendations based on recent engagements
-                recommendations = self._adjust_recommendations(recommendations, recent_engagements)
-                
-                return recommendations
-            else:
-                # Fall back to rule-based recommendations
-                return self._get_fallback_recommendations(student, count, session)
+            # Use fallback logic to get recommendations
+            recommendations = self._get_fallback_recommendations(student, count, session)
+            # Adjust recommendations based on recent engagements
+            recommendations = self._adjust_recommendations(recommendations, recent_engagements)
+            return recommendations
         except Exception as e:
             print(f"Error getting recommendations: {str(e)}")
-            # Fall back to rule-based recommendations if there's an error
             if student:
                 return self._get_fallback_recommendations(student, count, session)
             else:
@@ -132,19 +105,12 @@ class RecommendationService:
         Returns:
             Adjusted recommendations
         """
-        # Get content IDs from recent engagements
         recent_content_ids = {e.engagement_content_id for e in recent_engagements}
-        
-        # Adjust scores for recently engaged content
         for rec in recommendations:
             if rec.get('engagement_id') in recent_content_ids:
-                # Reduce score for recently engaged content
                 rec['expected_effectiveness'] *= 0.5
                 rec['rationale'] += " (Recently engaged with this content)"
-        
-        # Sort by expected effectiveness
         recommendations.sort(key=lambda x: x.get('expected_effectiveness', 0), reverse=True)
-        
         return recommendations
     
     def _get_default_recommendations(self, count: int) -> List[Dict[str, Any]]:
@@ -157,7 +123,6 @@ class RecommendationService:
         Returns:
             List of default recommendations
         """
-        # Define default recommendations for awareness stage
         default_recommendations = [
             {
                 "engagement_id": "default_1",
@@ -181,8 +146,6 @@ class RecommendationService:
                 "rationale": "Default recommendation for new students"
             }
         ]
-        
-        # Return requested number of recommendations
         return default_recommendations[:count]
     
     def _get_fallback_recommendations(self, student: StudentProfile, count: int, session: Session) -> List[Dict[str, Any]]:
@@ -199,24 +162,13 @@ class RecommendationService:
         """
         if student is None:
             return self._get_default_recommendations(count)
-            
         funnel_stage = student.funnel_stage
-        
-        # Get content items for the student's funnel stage
         content_items = session.query(EngagementContent).filter_by(target_funnel_stage=funnel_stage).all()
-        
-        # If no content items found for the funnel stage, get any content items
         if not content_items:
             content_items = session.query(EngagementContent).limit(10).all()
-        
-        # Sort by success rate if available
         if content_items and hasattr(content_items[0], 'success_rate'):
             content_items.sort(key=lambda x: x.success_rate if x.success_rate is not None else 0, reverse=True)
-        
-        # Limit to requested count
         content_items = content_items[:count]
-        
-        # Convert to recommendations
         recommendations = []
         for item in content_items:
             recommendations.append({
@@ -226,8 +178,6 @@ class RecommendationService:
                 "expected_effectiveness": item.success_rate if hasattr(item, 'success_rate') and item.success_rate is not None else 0.7,
                 "rationale": f"Recommended based on student's funnel stage: {funnel_stage}"
             })
-        
-        # If we still don't have enough recommendations, add some defaults
         while len(recommendations) < count:
             idx = len(recommendations)
             recommendations.append({
@@ -237,5 +187,4 @@ class RecommendationService:
                 "expected_effectiveness": 0.5,
                 "rationale": f"Default recommendation for {funnel_stage} stage"
             })
-        
         return recommendations

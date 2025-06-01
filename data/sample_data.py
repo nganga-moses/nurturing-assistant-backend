@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 # Add parent directory to path for imports
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from data.models import StudentProfile, EngagementHistory, EngagementContent, get_session, init_db
+from data.models.models import StudentProfile, EngagementHistory, EngagementContent, get_session, init_db
 
 
 def generate_sample_data(num_students=100, num_engagements_per_student=10, num_content_items=50):

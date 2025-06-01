@@ -1,27 +1,32 @@
 import numpy as np
 from typing import Dict, List, Optional, Any
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import json
 import joblib
 import sys
+from sqlalchemy import or_
+import logging
 
 # Use relative imports instead of absolute imports
-from data.models import StudentProfile, EngagementHistory, EngagementContent, get_session
+from data.models.models import StudentProfile, EngagementHistory, EngagementContent, get_session, StoredRecommendation, RecommendationSettings
 
 # Import our new recommendation service
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from models.recommendation_service import RecommendationService as ModelRecommendationService
+from models.core.recommendation_service import RecommendationService as ModelRecommendationService
+
+# Import MatchingService
+from api.services.matching_service import MatchingService
 
 
 class RecommendationService:
     """Service for generating personalized engagement recommendations."""
     
-    def __init__(self, model_dir=None):
+    def __init__(self, model_dir=None, mode="scheduled"):
         if model_dir is None:
             model_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "models", "saved_models")
         
-        # Initialize our new recommendation service
+        self.mode = mode
         self.recommendation_service = ModelRecommendationService(model_dir=model_dir)
         self.session = get_session()
     
@@ -41,30 +46,195 @@ class RecommendationService:
             List of recommended engagements with scores
         """
         try:
-            # Use our recommendation service to get recommendations
-            recommendations = self.recommendation_service.get_recommendations(student_id, count=top_k)
-            
-            # Format the recommendations to match the expected format
-            formatted_recommendations = []
-            for rec in recommendations:
-                formatted_recommendations.append({
-                    "content_id": rec.get("engagement_id", ""),
-                    "engagement_type": rec.get("engagement_type", ""),
-                    "content_category": "engagement",  # Default category
-                    "content_description": rec.get("content", ""),
-                    "success_rate": rec.get("expected_effectiveness", 0.5),
-                    "target_funnel_stage": funnel_stage or "any",
-                    "score": rec.get("expected_effectiveness", 0.5),
-                    "rationale": rec.get("rationale", "")
-                })
-            
-            return formatted_recommendations
-            
+            if self.mode == "scheduled":
+                return self._get_scheduled_recommendations(student_id, top_k, funnel_stage, risk_level)
+            else:
+                return self._get_realtime_recommendations(student_id, top_k, funnel_stage, risk_level)
         except Exception as e:
             print(f"Error getting recommendations: {str(e)}")
-            # Fall back to mock recommendations if there's an error
             return self._get_mock_recommendations(student_id, top_k)
+    
+    def _get_scheduled_recommendations(self, student_id: str, top_k: int = 5,
+                                     funnel_stage: Optional[str] = None,
+                                     risk_level: Optional[str] = None) -> List[Dict[str, Any]]:
+        """Get recommendations from the scheduled batch."""
+        # Get the latest valid recommendations for this student
+        recommendations = self.session.query(StoredRecommendation)\
+            .filter_by(student_id=student_id)\
+            .filter(StoredRecommendation.expires_at > datetime.now())\
+            .order_by(StoredRecommendation.generated_at.desc())\
+            .first()
+            
+        if not recommendations:
+            # If no valid recommendations exist, generate them
+            return self._get_realtime_recommendations(student_id, top_k, funnel_stage, risk_level)
+            
+        # Filter recommendations based on parameters
+        filtered_recommendations = recommendations.recommendations
+        if funnel_stage:
+            filtered_recommendations = [r for r in filtered_recommendations 
+                                     if r["target_funnel_stage"] == funnel_stage]
+        if risk_level:
+            filtered_recommendations = [r for r in filtered_recommendations 
+                                     if r["risk_level"] == risk_level]
+                                     
+        return filtered_recommendations[:top_k]
+    
+    def _get_realtime_recommendations(self, student_id: str, top_k: int = 5,
+                                    funnel_stage: Optional[str] = None,
+                                    risk_level: Optional[str] = None) -> List[Dict[str, Any]]:
+        """Get real-time recommendations using the model."""
+        # Use our recommendation service to get recommendations
+        recommendations = self.recommendation_service.get_recommendations(student_id, count=top_k)
         
+        # Get feedback metrics for all nudge types
+        tracking_service = NudgeTrackingService()
+        feedback_metrics = tracking_service.get_feedback_metrics()
+        metrics_by_type = {m["nudge_type"]: m for m in feedback_metrics}
+        
+        # Format and adjust recommendations based on feedback
+        formatted_recommendations = []
+        for rec in recommendations:
+            nudge_type = rec.get("type", "")
+            metrics = metrics_by_type.get(nudge_type, {})
+            
+            # Calculate adjusted score based on feedback
+            base_score = rec.get("expected_effectiveness", 0.5)
+            adjusted_score = self._adjust_score_by_feedback(base_score, metrics)
+            
+            formatted_recommendations.append({
+                "content_id": rec.get("engagement_id", ""),
+                "engagement_type": rec.get("engagement_type", ""),
+                "content_category": "engagement",
+                "content_description": rec.get("content", ""),
+                "success_rate": adjusted_score,
+                "target_funnel_stage": funnel_stage or "any",
+                "score": adjusted_score,
+                "rationale": rec.get("rationale", ""),
+                "feedback_metrics": metrics
+            })
+        
+        # Sort by adjusted score
+        formatted_recommendations.sort(key=lambda x: x["score"], reverse=True)
+        
+        return formatted_recommendations[:top_k]
+    
+    def _adjust_score_by_feedback(self, base_score: float, metrics: Dict[str, Any]) -> float:
+        """Adjust recommendation score based on feedback metrics."""
+        if not metrics:
+            return base_score
+        
+        # Calculate engagement rate
+        total_shown = metrics.get("total_shown", 0)
+        if total_shown == 0:
+            return base_score
+        
+        acted_count = metrics.get("acted_count", 0)
+        engagement_rate = acted_count / total_shown
+        
+        # Calculate completion impact
+        completion_rate = metrics.get("completion_rate", 0.5)
+        
+        # Adjust score based on engagement and completion
+        adjusted_score = base_score * (
+            0.7 +  # Base weight
+            0.2 * engagement_rate +  # Engagement impact
+            0.1 * completion_rate  # Completion impact
+        )
+        
+        # Cap score between 0 and 1
+        return max(0.0, min(1.0, adjusted_score))
+    
+    def purge_expired_recommendations(self, buffer_minutes: int = 5):
+        """
+        Purge expired recommendations before generating new ones.
+        
+        Args:
+            buffer_minutes: Number of minutes before expiration to consider a recommendation expired
+        """
+        try:
+            # Calculate cutoff time
+            cutoff_time = datetime.now() + timedelta(minutes=buffer_minutes)
+            
+            # Delete expired recommendations
+            self.session.query(StoredRecommendation)\
+                .filter(StoredRecommendation.expires_at <= cutoff_time)\
+                .delete()
+            
+            self.session.commit()
+            logging.info("Successfully purged expired recommendations")
+        except Exception as e:
+            logging.error(f"Error purging expired recommendations: {str(e)}")
+            self.session.rollback()
+            raise
+    
+    def generate_scheduled_recommendations(self, batch_size: int = 1000):
+        """Generate recommendations for a batch of students."""
+        try:
+            # --- Batch matching step (evaluate previous recommendations) ---
+            matching_service = MatchingService(self.session)
+            all_engagements = self.session.query(EngagementHistory).all()
+            matched_count = 0
+            for engagement in all_engagements:
+                matched, confidence = matching_service.match_engagement_to_nudge(engagement)
+                if matched:
+                    matched_count += 1
+            logging.info(f"Batch matching complete. Matched {matched_count} engagements.")
+            # --- End batch matching ---
+
+            # Purge expired recommendations (after matching)
+            self.purge_expired_recommendations()
+
+            # Get students who need recommendations
+            students = self.session.query(StudentProfile)\
+                .filter(
+                    or_(
+                        StudentProfile.last_recommendation_at == None,
+                        StudentProfile.last_recommendation_at < datetime.now() - timedelta(days=1)
+                    )
+                )\
+                .limit(batch_size)\
+                .all()
+            # Track successful generations
+            successful_generations = 0
+            failed_generations = 0
+            for student in students:
+                try:
+                    # Generate recommendations
+                    recommendations = self._get_realtime_recommendations(student.student_id)
+                    # Store recommendations
+                    stored_rec = StoredRecommendation(
+                        student_id=student.student_id,
+                        recommendations=recommendations,
+                        generated_at=datetime.now(),
+                        expires_at=datetime.now() + timedelta(days=1)
+                    )
+                    self.session.add(stored_rec)
+                    # Update student's last recommendation timestamp
+                    student.last_recommendation_at = datetime.now()
+                    successful_generations += 1
+                except Exception as e:
+                    logging.error(f"Error generating recommendations for student {student.student_id}: {str(e)}")
+                    failed_generations += 1
+                    continue
+            self.session.commit()
+            # Log generation results
+            logging.info(
+                f"Recommendation generation completed. "
+                f"Successful: {successful_generations}, "
+                f"Failed: {failed_generations}, "
+                f"Total: {len(students)}"
+            )
+            return {
+                "successful_generations": successful_generations,
+                "failed_generations": failed_generations,
+                "total_attempted": len(students)
+            }
+        except Exception as e:
+            logging.error(f"Error in generate_scheduled_recommendations: {str(e)}")
+            self.session.rollback()
+            raise
+    
     def _get_recommendations_with_nn(self, student_embedding, student_id: str, top_k: int = 5,
                                   funnel_stage: Optional[str] = None, risk_level: Optional[str] = None) -> List[Dict[str, Any]]:
         """
@@ -706,3 +876,243 @@ class BulkActionService:
             return f"Schedule personal call with admissions counselor"
         else:
             return "Unknown action"
+
+
+class RecommendationSettingsService:
+    """Service for managing recommendation generation settings."""
+    
+    def __init__(self):
+        self.session = get_session()
+    
+    def get_settings(self) -> Dict[str, Any]:
+        """Get current recommendation settings."""
+        settings = self.session.query(RecommendationSettings).first()
+        if not settings:
+            # Create default settings if none exist
+            settings = RecommendationSettings()
+            self.session.add(settings)
+            self.session.commit()
+        return settings.to_dict()
+    
+    def update_settings(self, settings_data: Dict[str, Any]) -> Dict[str, Any]:
+        """Update recommendation settings."""
+        settings = self.session.query(RecommendationSettings).first()
+        if not settings:
+            settings = RecommendationSettings()
+            self.session.add(settings)
+        
+        # Update settings
+        for key, value in settings_data.items():
+            if hasattr(settings, key):
+                setattr(settings, key, value)
+        
+        # Calculate next run time
+        settings.next_run = self._calculate_next_run(settings)
+        
+        self.session.commit()
+        return settings.to_dict()
+    
+    def _calculate_next_run(self, settings: RecommendationSettings) -> datetime:
+        """Calculate the next run time based on settings."""
+        now = datetime.now()
+        
+        if settings.mode == "realtime":
+            return None
+            
+        if not settings.is_active:
+            return None
+            
+        # Parse schedule time
+        hour, minute = map(int, settings.schedule_time.split(":"))
+        
+        if settings.schedule_type == "daily":
+            next_run = now.replace(hour=hour, minute=minute, second=0, microsecond=0)
+            if next_run <= now:
+                next_run += timedelta(days=1)
+                
+        elif settings.schedule_type == "weekly":
+            # Map day names to numbers (0 = Monday, 6 = Sunday)
+            day_map = {
+                "monday": 0, "tuesday": 1, "wednesday": 2,
+                "thursday": 3, "friday": 4, "saturday": 5, "sunday": 6
+            }
+            target_day = day_map.get(settings.schedule_day.lower(), 0)
+            current_day = now.weekday()
+            
+            next_run = now.replace(hour=hour, minute=minute, second=0, microsecond=0)
+            days_ahead = (target_day - current_day) % 7
+            if days_ahead == 0 and next_run <= now:
+                days_ahead = 7
+            next_run += timedelta(days=days_ahead)
+            
+        return next_run
+    
+    def should_run_now(self) -> bool:
+        """Check if recommendations should be generated now."""
+        settings = self.session.query(RecommendationSettings).first()
+        if not settings or not settings.is_active:
+            return False
+            
+        if settings.mode == "realtime":
+            return False
+            
+        now = datetime.now()
+        if not settings.next_run:
+            return False
+            
+        # Allow 5-minute window for execution
+        return abs((now - settings.next_run).total_seconds()) <= 300
+    
+    def update_last_run(self):
+        """Update the last run timestamp and calculate next run."""
+        settings = self.session.query(RecommendationSettings).first()
+        if settings:
+            settings.last_run = datetime.now()
+            settings.next_run = self._calculate_next_run(settings)
+            self.session.commit()
+
+
+class NudgeTrackingService:
+    """Service for tracking nudge actions and managing feedback metrics."""
+    
+    def __init__(self):
+        self.session = get_session()
+    
+    def track_nudge_action(self, student_id: str, nudge_id: int, action_type: str) -> None:
+        """
+        Track a student's action on a nudge.
+        
+        Args:
+            student_id: ID of the student
+            nudge_id: ID of the nudge
+            action_type: Type of action ("acted", "ignored", "untouched")
+        """
+        try:
+            # Get the nudge
+            nudge = self.session.query(StoredRecommendation).get(nudge_id)
+            if not nudge:
+                raise ValueError(f"Nudge {nudge_id} not found")
+            
+            # Calculate time to action
+            time_to_action = None
+            if action_type == "acted":
+                time_to_action = int((datetime.now() - nudge.generated_at).total_seconds())
+            
+            # Create action record
+            action = NudgeAction(
+                student_id=student_id,
+                nudge_id=nudge_id,
+                action_type=action_type,
+                time_to_action=time_to_action
+            )
+            self.session.add(action)
+            
+            # Update feedback metrics
+            self._update_feedback_metrics(nudge.recommendations[0]["type"], action_type)
+            
+            self.session.commit()
+            logging.info(f"Tracked {action_type} action for student {student_id} on nudge {nudge_id}")
+            
+        except Exception as e:
+            self.session.rollback()
+            logging.error(f"Error tracking nudge action: {str(e)}")
+            raise
+    
+    def track_completion(self, student_id: str, nudge_id: int, completed: bool, dropoff_point: str = None) -> None:
+        """
+        Track whether a student completed the suggested action.
+        
+        Args:
+            student_id: ID of the student
+            nudge_id: ID of the nudge
+            completed: Whether the action was completed
+            dropoff_point: Where the student dropped off if not completed
+        """
+        try:
+            action = self.session.query(NudgeAction)\
+                .filter(
+                    NudgeAction.student_id == student_id,
+                    NudgeAction.nudge_id == nudge_id,
+                    NudgeAction.action_type == "acted"
+                ).first()
+            
+            if not action:
+                raise ValueError(f"No acted action found for student {student_id} on nudge {nudge_id}")
+            
+            action.action_completed = completed
+            action.dropoff_point = dropoff_point
+            
+            # Update feedback metrics
+            self._update_completion_metrics(action.nudge.recommendations[0]["type"], completed)
+            
+            self.session.commit()
+            logging.info(f"Updated completion status for student {student_id} on nudge {nudge_id}")
+            
+        except Exception as e:
+            self.session.rollback()
+            logging.error(f"Error tracking completion: {str(e)}")
+            raise
+    
+    def _update_feedback_metrics(self, nudge_type: str, action_type: str) -> None:
+        """Update feedback metrics for a nudge type."""
+        metrics = self.session.query(NudgeFeedbackMetrics)\
+            .filter(NudgeFeedbackMetrics.nudge_type == nudge_type)\
+            .first()
+        
+        if not metrics:
+            metrics = NudgeFeedbackMetrics(nudge_type=nudge_type)
+            self.session.add(metrics)
+        
+        metrics.total_shown += 1
+        if action_type == "acted":
+            metrics.acted_count += 1
+        elif action_type == "ignored":
+            metrics.ignored_count += 1
+        else:  # untouched
+            metrics.untouched_count += 1
+        
+        metrics.last_updated = datetime.now()
+    
+    def _update_completion_metrics(self, nudge_type: str, completed: bool) -> None:
+        """Update completion metrics for a nudge type."""
+        metrics = self.session.query(NudgeFeedbackMetrics)\
+            .filter(NudgeFeedbackMetrics.nudge_type == nudge_type)\
+            .first()
+        
+        if metrics:
+            total_acted = metrics.acted_count
+            if total_acted > 0:
+                metrics.completion_rate = (metrics.completion_rate * (total_acted - 1) + (1 if completed else 0)) / total_acted
+            metrics.last_updated = datetime.now()
+    
+    def get_feedback_metrics(self, nudge_type: str = None) -> Dict[str, Any]:
+        """
+        Get feedback metrics for a specific nudge type or all types.
+        
+        Args:
+            nudge_type: Optional nudge type to filter by
+            
+        Returns:
+            Dictionary of feedback metrics
+        """
+        query = self.session.query(NudgeFeedbackMetrics)
+        if nudge_type:
+            query = query.filter(NudgeFeedbackMetrics.nudge_type == nudge_type)
+        
+        metrics = query.all()
+        return [m.to_dict() for m in metrics]
+    
+    def get_student_actions(self, student_id: str) -> List[Dict[str, Any]]:
+        """
+        Get all actions for a specific student.
+        
+        Args:
+            student_id: ID of the student
+            
+        Returns:
+            List of action records
+        """
+        actions = self.session.query(NudgeAction)\
+            .filter(NudgeAction.student_id == student_id)\
+            .all()
+        return [a.to_dict() for a in actions]

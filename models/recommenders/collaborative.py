@@ -3,45 +3,22 @@ import tensorflow_recommenders as tfrs
 import pandas as pd
 import numpy as np
 from typing import Dict, List, Any, Optional
+import logging
 from .base_recommender import BaseRecommender
-from ..core.engagement_content_preprocessor import EngagementContentPreprocessor
+from .utils import (
+    create_student_tower,
+    create_candidate_tower,
+    create_retrieval_model,
+    prepare_training_data,
+    calculate_metrics
+)
+import os
 
-class CandidateModel(tf.keras.Model):
-    def __init__(self, engagement_type_ids, content_ids, embedding_dimension):
-        super().__init__()
-        self.engagement_type_lookup = tf.keras.layers.StringLookup(vocabulary=engagement_type_ids, mask_token=None)
-        self.engagement_type_embedding = tf.keras.layers.Embedding(len(engagement_type_ids) + 1, embedding_dimension // 2)
-        self.content_lookup = tf.keras.layers.StringLookup(vocabulary=content_ids, mask_token=None)
-        self.content_embedding = tf.keras.layers.Embedding(len(content_ids) + 1, embedding_dimension)
-        self.embedding_dimension = embedding_dimension
-    def call(self, candidate_id):
-        # candidate_id: shape (batch,), e.g., 'email|C1'
-        split = tf.strings.split(candidate_id, sep='|').to_tensor()
-        engagement_type = split[:, 0]
-        content_id = split[:, 1]
-        engagement_type_idx = self.engagement_type_lookup(engagement_type)
-        content_idx = self.content_lookup(content_id)
-        engagement_type_emb = self.engagement_type_embedding(engagement_type_idx)
-        content_emb = self.content_embedding(content_idx)
-        # If content_id == 'NO_CONTENT', zero out content embedding
-        has_content = tf.cast(tf.not_equal(content_id, 'NO_CONTENT'), tf.float32)
-        content_emb = tf.where(tf.expand_dims(has_content, -1) > 0, content_emb, tf.zeros_like(content_emb))
-        return tf.concat([engagement_type_emb, content_emb], axis=1)
-
-class TFRSCollaborativeModel(tfrs.models.Model):
-    def __init__(self, student_model, candidate_model, task):
-        super().__init__()
-        self.student_model = student_model
-        self.candidate_model = candidate_model
-        self.task = task
-    def compute_loss(self, features: Dict[str, tf.Tensor], training=False) -> tf.Tensor:
-        return self.task(
-            self.student_model(features['student_id']),
-            self.candidate_model(features['candidate_id'])
-        )
+# Configure logging
+logger = logging.getLogger(__name__)
 
 class CollaborativeFilteringModel(BaseRecommender):
-    """Collaborative filtering model using TensorFlow Recommenders with engagement type and content towers."""
+    """Collaborative filtering model using TensorFlow Recommenders."""
     
     def __init__(
         self,
@@ -61,157 +38,16 @@ class CollaborativeFilteringModel(BaseRecommender):
         self.embedding_dimension = embedding_dimension
         self.learning_rate = learning_rate
         self.model_dir = model_dir
-        self.preprocessor = EngagementContentPreprocessor()
-        self.student_model = None
-        self.candidate_model = None
-        self.task = None
         self.model = None
         self.student_ids = None
-        self.engagement_type_ids = None
         self.content_ids = None
-        self.feature_usage = None
         self.model_version = "v2.0"
-        
-    def _create_student_model(self) -> tf.keras.Model:
-        """Create the student tower model."""
-        # Output dimension must match engagement_type + content embedding dims
-        combined_dim = (self.embedding_dimension // 2) + self.embedding_dimension
-        return tf.keras.Sequential([
-            tf.keras.layers.StringLookup(vocabulary=self.student_ids, mask_token=None),
-            tf.keras.layers.Embedding(len(self.student_ids) + 1, combined_dim),
-            tf.keras.layers.Dense(combined_dim, activation='relu'),
-            tf.keras.layers.Dense(combined_dim)
-        ])
-    
-    def _create_candidate_model(self) -> tf.keras.Model:
-        """Create the candidate model for engagement types and content."""
-        candidate_id_input = tf.keras.Input(shape=(), dtype=tf.string, name="candidate_id")
-        split = tf.keras.layers.Lambda(lambda x: tf.strings.split(x, sep='|'), output_shape=(None,))(candidate_id_input)
-        split_dense = tf.keras.layers.Lambda(lambda x: x.to_tensor(default_value='NO_CONTENT'), output_shape=(2,))(split)
-        engagement_type = tf.keras.layers.Lambda(lambda x: x[:, 0], output_shape=())(split_dense)
-        content_id = tf.keras.layers.Lambda(lambda x: x[:, 1], output_shape=())(split_dense)
-        engagement_type_lookup = tf.keras.layers.StringLookup(vocabulary=self.engagement_type_ids, mask_token=None)
-        engagement_type_embedding = tf.keras.layers.Embedding(len(self.engagement_type_ids) + 1, self.embedding_dimension // 2)
-        engagement_type_idx = engagement_type_lookup(engagement_type)
-        engagement_type_emb = engagement_type_embedding(engagement_type_idx)
-        content_lookup = tf.keras.layers.StringLookup(vocabulary=self.content_ids, mask_token=None)
-        content_embedding = tf.keras.layers.Embedding(len(self.content_ids) + 1, self.embedding_dimension)
-        content_idx = content_lookup(content_id)
-        content_emb = content_embedding(content_idx)
-        has_content = tf.keras.layers.Lambda(lambda x: tf.cast(tf.not_equal(x, 'NO_CONTENT'), tf.float32), output_shape=())(content_id)
-        has_content_expanded = tf.keras.layers.Lambda(lambda x: tf.expand_dims(x, -1), output_shape=(1,))(has_content)
-        content_emb_masked = tf.keras.layers.Multiply()([has_content_expanded, content_emb])
-        combined_emb = tf.keras.layers.Concatenate(axis=1)([engagement_type_emb, content_emb_masked])
-        return tf.keras.Model(inputs=candidate_id_input, outputs=combined_emb, name="candidate_model")
-    
-    def _make_candidate_ids(self):
-        """Create a list of candidate IDs."""
-        candidate_ids = []
-        for engagement_type in self.engagement_type_ids:
-            for content_id in self.content_ids:
-                candidate_ids.append(f"{engagement_type}|{content_id}")
-        return candidate_ids
-    
-    def _create_retrieval_model(self, candidate_ids) -> tfrs.models.Model:
-        """Create the retrieval model with both engagement type and content."""
-        self.student_model = self._create_student_model()
-        self.candidate_model = self._create_candidate_model()
-        
-        # Debug: Print candidate_ids
-        print(f"DEBUG candidate_ids (first 10): {candidate_ids[:10]}")
-        print(f"DEBUG total candidate_ids: {len(candidate_ids)}")
-
-        # Debug: Print sample candidate embedding output
-        if len(candidate_ids) > 0:
-            sample_cid = candidate_ids[0]
-            sample_emb = self.candidate_model(tf.constant([sample_cid])).numpy()
-            print(f"DEBUG sample candidate_id: {sample_cid}")
-            print(f"DEBUG sample candidate embedding shape: {sample_emb.shape}")
-            print(f"DEBUG sample candidate embedding: {sample_emb}")
-
-        # Create a BruteForce retrieval layer using the candidate model directly
-        retrieval_layer = tfrs.layers.factorized_top_k.BruteForce(
-            self.student_model,
-            k=100
-        )
-        retrieval_layer.index_from_dataset(
-            tf.data.Dataset.from_tensor_slices(candidate_ids).map(
-                lambda x: (x, tf.squeeze(self.candidate_model(tf.expand_dims(x, 0)), axis=0))
-            )
-        )
-
-        # Create the retrieval task with the candidate model directly
-        self.task = tfrs.tasks.Retrieval(
-            metrics=tfrs.metrics.FactorizedTopK(
-                candidates=self.candidate_model
-            )
-        )
-        
-        return TFRSCollaborativeModel(
-            student_model=self.student_model,
-            candidate_model=self.candidate_model,
-            task=self.task
-        )
-    
-    def prepare_data(
-        self,
-        students_df: pd.DataFrame,
-        engagements_df: pd.DataFrame,
-        content_df: pd.DataFrame
-    ) -> Dict[str, Any]:
-        """
-        Prepare data for training.
-        
-        Args:
-            students_df: DataFrame of student profiles
-            engagements_df: DataFrame of engagement history
-            content_df: DataFrame of engagement content
-            
-        Returns:
-            Dictionary containing prepared data
-        """
-        processed = self.preprocessor.preprocess(students_df, engagements_df, content_df)
-        self.student_ids = processed['students_df']['student_id'].unique()
-        self.engagement_type_ids = processed['engagement_types']
-        self.content_ids = processed['content_ids']
-        merged = processed['merged_df']
-
-        # Debug: Print vocabularies
-        print(f"DEBUG student_ids: {self.student_ids}")
-        print(f"DEBUG engagement_type_ids: {self.engagement_type_ids}")
-        print(f"DEBUG content_ids: {self.content_ids}")
-
-        # Debug: Check merged DataFrame for NaNs or missing values
-        print("DEBUG merged DataFrame info:")
-        print(merged.info())
-        print("DEBUG merged DataFrame head:")
-        print(merged.head())
-        print("DEBUG merged DataFrame NaNs:")
-        print(merged.isnull().sum())
-        
-        # For training, create candidate_id column
-        merged['candidate_id'] = merged['engagement_type'] + '|' + merged['content_id']
-        
-        # Prepare TensorFlow datasets
-        student_dataset = tf.data.Dataset.from_tensor_slices({
-            'student_id': merged['student_id'].values
-        })
-        interaction_dataset = tf.data.Dataset.from_tensor_slices({
-            'student_id': merged['student_id'].values,
-            'candidate_id': merged['candidate_id'].values
-        })
-        
-        return {
-            'student_dataset': student_dataset,
-            'interaction_dataset': interaction_dataset,
-            'merged_df': merged
-        }
     
     def train(
         self,
-        students_df: pd.DataFrame,
-        engagements_df: pd.DataFrame,
-        content_df: pd.DataFrame,
+        student_data: pd.DataFrame,
+        content_data: pd.DataFrame,
+        engagement_data: Optional[pd.DataFrame] = None,
         epochs: int = 5,
         batch_size: int = 32
     ) -> Dict[str, float]:
@@ -219,28 +55,48 @@ class CollaborativeFilteringModel(BaseRecommender):
         Train the model.
         
         Args:
-            students_df: DataFrame of student profiles
-            engagements_df: DataFrame of engagement history
-            content_df: DataFrame of engagement content
+            student_data: DataFrame of student profiles
+            content_data: DataFrame of content information
+            engagement_data: Optional DataFrame of engagement history
             epochs: Number of training epochs
             batch_size: Batch size for training
             
         Returns:
             Dictionary of training metrics
         """
-        # Prepare data
-        data_dict = self.prepare_data(students_df, engagements_df, content_df)
+        logger.info("Preparing data for training...")
+        data_dict = prepare_training_data(student_data, content_data, engagement_data)
         
-        # Create model
-        candidate_ids = self._make_candidate_ids()
-        self.model = self._create_retrieval_model(candidate_ids)
+        # Store IDs for later use
+        self.student_ids = data_dict['student_ids']
+        self.content_ids = data_dict['content_ids']
+        
+        # Create models
+        logger.info("Creating models...")
+        student_model = create_student_tower(
+            self.student_ids,
+            self.embedding_dimension
+        )
+        candidate_model = create_candidate_tower(
+            self.content_ids,
+            self.embedding_dimension
+        )
+        
+        # Create retrieval model
+        self.model = create_retrieval_model(
+            student_model,
+            candidate_model,
+            data_dict['candidate_ids']
+        )
         
         # Compile model
+        logger.info("Compiling model...")
         self.model.compile(
             optimizer=tf.keras.optimizers.Adagrad(learning_rate=self.learning_rate)
         )
         
         # Train model
+        logger.info("Training model...")
         history = self.model.fit(
             data_dict['interaction_dataset'].batch(batch_size),
             epochs=epochs,
@@ -252,71 +108,158 @@ class CollaborativeFilteringModel(BaseRecommender):
     def get_recommendations(
         self,
         student_id: str,
-        n_recommendations: int = 5
+        count: int = 5,
+        context: Optional[Dict[str, Any]] = None
     ) -> List[Dict[str, Any]]:
         """
         Get recommendations for a student.
         
         Args:
             student_id: ID of the student
-            n_recommendations: Number of recommendations to return
+            count: Number of recommendations to return
+            context: Optional context information
             
         Returns:
-            List of recommended engagements with both type and content
+            List of recommendations
         """
         if self.model is None:
-            raise ValueError("Model not trained. Call train() first.")
+            logger.warning("Model not trained yet")
+            return []
         
-        candidate_ids = self._make_candidate_ids()
+        try:
+            # Get student embedding
+            student_embedding = self.model.student_model(
+                tf.constant([student_id])
+            )
+            
+            # Get top-k candidates
+            candidates = self.model.candidate_model(
+                tf.constant(self.content_ids)
+            )
+            
+            # Calculate scores
+            scores = tf.matmul(student_embedding, candidates, transpose_b=True)
+            
+            # Get top-k indices
+            top_k = tf.math.top_k(scores, k=count)
+            
+            # Create recommendations
+            recommendations = []
+            for idx, score in zip(top_k.indices[0], top_k.values[0]):
+                content_id = self.content_ids[idx]
+                recommendations.append({
+                    'content_id': content_id,
+                    'score': float(score),
+                    'rank': len(recommendations) + 1
+                })
+            
+            return recommendations
+            
+        except Exception as e:
+            logger.error(f"Error getting recommendations: {str(e)}")
+            return []
+    
+    def save(self, model_dir: str) -> None:
+        """
+        Save the model.
         
-        # Build index for retrieval
-        index = tfrs.layers.factorized_top_k.BruteForce(self.student_model)
-        index.index_from_dataset(
-            tf.data.Dataset.from_tensor_slices(candidate_ids).map(lambda x: (x, self.candidate_model(tf.expand_dims(x, 0))))
-        )
-        
-        # Get recommendations
-        _, top_candidate_ids = index(tf.constant([student_id]))
-        
-        # Format recommendations
-        recommendations = []
-        for cid in top_candidate_ids[0, :n_recommendations].numpy():
-            cid_str = cid.decode() if isinstance(cid, bytes) else str(cid)
-            engagement_type, content_id = cid_str.split('|')
-            features_used = ["student", "engagement_type"]
-            if content_id != 'NO_CONTENT':
-                features_used.append("content")
-            recommendations.append({
-                'student_id': student_id,
-                'engagement_type': engagement_type,
-                'content_id': content_id,
-                'features_used': features_used,
+        Args:
+            model_dir: Directory to save the model to
+        """
+        try:
+            # Create directories
+            os.makedirs(os.path.join(model_dir, "saved", "model_weights"), exist_ok=True)
+            os.makedirs(os.path.join(model_dir, "saved_models", "collaborative"), exist_ok=True)
+            
+            # Save metadata
+            metadata = {
+                'embedding_dimension': self.embedding_dimension,
+                'learning_rate': self.learning_rate,
+                'student_ids': self.student_ids,
+                'content_ids': self.content_ids,
                 'model_version': self.model_version
-            })
-        
-        return recommendations
+            }
+            
+            metadata_path = os.path.join(model_dir, "saved_models", "collaborative", "collaborative_metadata.npy")
+            np.save(metadata_path, metadata)
+            
+            # Save model weights
+            weights_path = os.path.join(model_dir, "saved", "model_weights", "collaborative_model")
+            self.model.save_weights(weights_path)
+            
+            logger.info(f"Model saved to {model_dir}")
+            
+        except Exception as e:
+            logger.error(f"Error saving model: {str(e)}")
+            raise
     
-    def save(self) -> None:
-        """Save the model."""
+    def load(self, model_dir: str) -> None:
+        """
+        Load the model.
+        
+        Args:
+            model_dir: Directory to load the model from
+        """
+        try:
+            # Load metadata
+            metadata_path = os.path.join(model_dir, "saved_models", "collaborative", "collaborative_metadata.npy")
+            metadata = np.load(metadata_path, allow_pickle=True).item()
+            
+            # Set attributes
+            self.embedding_dimension = metadata['embedding_dimension']
+            self.learning_rate = metadata['learning_rate']
+            self.student_ids = metadata['student_ids']
+            self.content_ids = metadata['content_ids']
+            self.model_version = metadata['model_version']
+            
+            # Create models
+            student_model = create_student_tower(
+                self.student_ids,
+                self.embedding_dimension
+            )
+            candidate_model = create_candidate_tower(
+                self.content_ids,
+                self.embedding_dimension
+            )
+            
+            # Create retrieval model
+            self.model = create_retrieval_model(
+                student_model,
+                candidate_model,
+                self.content_ids
+            )
+            
+            # Load weights
+            weights_path = os.path.join(model_dir, "saved", "model_weights", "collaborative_model")
+            self.model.load_weights(weights_path)
+            
+            logger.info(f"Model loaded from {model_dir}")
+            
+        except Exception as e:
+            logger.error(f"Error loading model: {str(e)}")
+            self.model = None
+    
+    def get_metrics(self) -> Dict[str, float]:
+        """
+        Get model metrics.
+        
+        Returns:
+            Dictionary of metrics
+        """
         if self.model is None:
-            raise ValueError("No model to save. Train the model first.")
+            logger.warning("No model to get metrics from")
+            return {}
         
-        # Save model weights
-        self.model.save_weights(f"{self.model_dir}/collaborative_model")
-        
-        # Save vocabularies
-        np.save(f"{self.model_dir}/student_ids.npy", self.student_ids)
-        np.save(f"{self.model_dir}/engagement_type_ids.npy", self.engagement_type_ids)
-        np.save(f"{self.model_dir}/content_ids.npy", self.content_ids)
-    
-    def load(self) -> None:
-        """Load the model."""
-        # Load vocabularies
-        self.student_ids = np.load(f"{self.model_dir}/student_ids.npy")
-        self.engagement_type_ids = np.load(f"{self.model_dir}/engagement_type_ids.npy")
-        self.content_ids = np.load(f"{self.model_dir}/content_ids.npy")
-        
-        # Create and load model
-        candidate_ids = self._make_candidate_ids()
-        self.model = self._create_retrieval_model(candidate_ids)
-        self.model.load_weights(f"{self.model_dir}/collaborative_model") 
+        try:
+            # Create test dataset
+            test_data = tf.data.Dataset.from_tensor_slices({
+                'student_id': self.student_ids,
+                'candidate_id': self.content_ids
+            }).batch(32)
+            
+            # Calculate metrics
+            return calculate_metrics(self.model, test_data)
+            
+        except Exception as e:
+            logger.error(f"Error calculating metrics: {str(e)}")
+            return {} 

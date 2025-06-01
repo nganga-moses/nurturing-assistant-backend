@@ -1,7 +1,37 @@
 #!/usr/bin/env python
 """
-Script to ingest CSV data and train the recommendation model for the Student Engagement Recommender System.
-This script loads data from CSV files, stores it in the database, and trains the model.
+Script for initial data ingestion and model training.
+
+This script is meant to be run ONCE during initial setup to:
+1. Load initial data from CSV files
+2. Store it in the database
+3. Train the initial recommendation models
+
+The script supports:
+- Loading data from multiple CSV files
+- Data validation and preprocessing
+- Database initialization and population
+- Initial model training
+- Model evaluation and saving
+
+Usage:
+    # Basic usage with all required files
+    python ingest_and_train.py \
+        --students-csv data/students.csv \
+        --engagements-csv data/engagements.csv \
+        --content-csv data/content.csv
+
+    # With custom model parameters
+    python ingest_and_train.py \
+        --students-csv data/students.csv \
+        --engagements-csv data/engagements.csv \
+        --content-csv data/content.csv \
+        --epochs 10 \
+        --batch-size 64
+
+For incremental updates, use:
+- ingest_students.py: For new/updated student data
+- ingest_engagements.py: For new engagement data
 """
 
 import os
@@ -11,11 +41,12 @@ import pandas as pd
 from datetime import datetime
 import logging
 from sqlalchemy.orm import Session
+from typing import Dict
 
 # Add the parent directory to the path so we can import from other modules
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from data.models import (
+from data.models.models import (
     StudentProfile, 
     EngagementHistory, 
     EngagementContent, 
@@ -24,6 +55,7 @@ from data.models import (
 )
 from models.train_model import train_and_save_model, prepare_data_for_training
 from models.simple_recommender import SimpleRecommender
+from api.services.matching_service import MatchingService
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -39,9 +71,20 @@ def parse_args():
     parser.add_argument("--epochs", type=int, default=5, help="Number of training epochs")
     return parser.parse_args()
 
-def load_csv_data(students_csv: str, engagements_csv: str, content_csv: str) -> dict:
+def load_data_from_csv(
+    students_csv: str,
+    engagements_csv: str,
+    content_csv: str
+) -> Dict[str, pd.DataFrame]:
     """
-    Load data from CSV files.
+    Load initial data from CSV files.
+    
+    This function:
+    1. Reads all required CSV files
+    2. Validates data structure
+    3. Handles missing values
+    4. Converts data types
+    5. Returns a dictionary of DataFrames
     
     Args:
         students_csv: Path to students CSV file
@@ -49,7 +92,14 @@ def load_csv_data(students_csv: str, engagements_csv: str, content_csv: str) -> 
         content_csv: Path to content CSV file
         
     Returns:
-        Dictionary containing DataFrames
+        Dictionary containing:
+        - students: DataFrame of student profiles
+        - engagements: DataFrame of engagement history
+        - content: DataFrame of engagement content
+        
+    Raises:
+        FileNotFoundError: If any CSV file is missing
+        ValueError: If data validation fails
     """
     logger.info("Loading CSV data...")
     
@@ -74,13 +124,57 @@ def load_csv_data(students_csv: str, engagements_csv: str, content_csv: str) -> 
         logger.error(f"Error loading CSV data: {str(e)}")
         raise
 
-def ingest_data_to_db(dataframes: dict, session: Session) -> None:
+def initialize_database(session: Session) -> None:
     """
-    Ingest data from DataFrames into the database.
+    Initialize the database schema.
+    
+    This function:
+    1. Creates all required tables
+    2. Sets up indexes
+    3. Configures constraints
+    4. Handles existing tables
     
     Args:
-        dataframes: Dictionary containing DataFrames
-        session: Database session
+        session: SQLAlchemy session
+        
+    Raises:
+        SQLAlchemyError: If database initialization fails
+    """
+    logger.info("Initializing database...")
+    
+    try:
+        # Initialize database
+        init_db()
+        
+        logger.info("Database initialized successfully")
+        
+    except Exception as e:
+        logger.error(f"Error initializing database: {str(e)}")
+        raise
+
+def store_data_in_database(
+    session: Session,
+    dataframes: Dict[str, pd.DataFrame]
+) -> None:
+    """
+    Store data in the database.
+    
+    This function:
+    1. Validates data before storage
+    2. Handles data insertion
+    3. Manages transactions
+    4. Updates related records
+    
+    Args:
+        session: SQLAlchemy session
+        dataframes: Dictionary containing:
+            - students: DataFrame of student profiles
+            - engagements: DataFrame of engagement history
+            - content: DataFrame of engagement content
+            
+    Raises:
+        ValueError: If data is invalid
+        SQLAlchemyError: If database operations fail
     """
     logger.info("Ingesting data into database...")
     
@@ -139,45 +233,66 @@ def ingest_data_to_db(dataframes: dict, session: Session) -> None:
         raise
 
 def main():
-    args = parse_args()
+    """
+    Main function to run the initial data ingestion and training script.
     
+    This function:
+    1. Parses command line arguments
+    2. Sets up logging
+    3. Loads data from CSV files
+    4. Initializes database
+    5. Stores data
+    6. Trains initial models
+    
+    Command line arguments:
+        --students-csv: Path to students CSV file
+        --engagements-csv: Path to engagements CSV file
+        --content-csv: Path to content CSV file
+        --epochs: Number of training epochs
+        --batch-size: Batch size for training
+        --model-dir: Directory to save models
+    """
+    # Ensure PostgreSQL is used by default
+    if "DATABASE_URL" not in os.environ:
+        os.environ["DATABASE_URL"] = "postgresql://postgres:postgres@localhost:5432/student_engagement"
+
+    args = parse_args()
     print("=" * 80)
     print(f"Starting data ingestion and model training at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 80)
-    
     try:
-        # Initialize database
-        init_db()
-        
-        # Load CSV data
-        dataframes = load_csv_data(args.students_csv, args.engagements_csv, args.content_csv)
-        
         # Get database session
         session = get_session()
-        
         try:
-            # Ingest data into database
-            ingest_data_to_db(dataframes, session)
-            
+            # Load data from CSV
+            dataframes = load_data_from_csv(args.students_csv, args.engagements_csv, args.content_csv)
+            # Initialize database
+            initialize_database(session)
+            # Store data in database
+            store_data_in_database(session, dataframes)
+            # --- Post-import batch matching step ---
+            print("Running post-import batch matching for all engagements...")
+            matching_service = MatchingService(session)
+            all_engagements = session.query(EngagementHistory).all()
+            matched_count = 0
+            for engagement in all_engagements:
+                matched, confidence = matching_service.match_engagement_to_nudge(engagement)
+                if matched:
+                    matched_count += 1
+            print(f"Batch matching complete. Matched {matched_count} engagements.")
+            # --- End batch matching ---
             # Train and save model
             model_dir = args.output_dir
             if model_dir is None:
                 model_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "models", "saved_models")
-            
-            # Ensure model directory exists
             os.makedirs(model_dir, exist_ok=True)
-            
-            # Train the model
             prepared_data = prepare_data_for_training(dataframes)
             train_and_save_model(prepared_data, model_dir=model_dir, epochs=args.epochs)
-            
             print("\n" + "=" * 80)
             print("Data ingestion and model training completed successfully!")
             print("=" * 80)
-            
         finally:
             session.close()
-            
     except Exception as e:
         print("\n" + "=" * 80)
         print(f"Error during data ingestion and model training: {str(e)}")

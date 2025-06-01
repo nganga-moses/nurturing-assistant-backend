@@ -2,6 +2,10 @@ from abc import ABC, abstractmethod
 from typing import Dict, List, Any, Optional
 import pandas as pd
 import tensorflow as tf
+import logging
+
+# Configure logging
+logger = logging.getLogger(__name__)
 
 class BaseRecommender(ABC):
     """Base class for all recommendation models."""
@@ -165,4 +169,134 @@ class BaseRecommender(ABC):
         Returns:
             Dictionary of metrics
         """
-        raise NotImplementedError("Metric calculation not implemented") 
+        raise NotImplementedError("Metric calculation not implemented")
+    
+    def validate_data(
+        self,
+        student_data: pd.DataFrame,
+        content_data: pd.DataFrame,
+        engagement_data: Optional[pd.DataFrame] = None
+    ) -> bool:
+        """
+        Validate input data.
+        
+        Args:
+            student_data: DataFrame with student information
+            content_data: DataFrame with content information
+            engagement_data: Optional DataFrame with engagement history
+            
+        Returns:
+            True if data is valid, False otherwise
+        """
+        try:
+            # Check required columns
+            required_student_cols = ['student_id']
+            required_content_cols = ['content_id']
+            
+            if not all(col in student_data.columns for col in required_student_cols):
+                logger.error("Missing required columns in student data")
+                return False
+            
+            if not all(col in content_data.columns for col in required_content_cols):
+                logger.error("Missing required columns in content data")
+                return False
+            
+            # Check for empty dataframes
+            if student_data.empty:
+                logger.error("Student data is empty")
+                return False
+            
+            if content_data.empty:
+                logger.error("Content data is empty")
+                return False
+            
+            # Check for duplicate IDs
+            if student_data['student_id'].duplicated().any():
+                logger.error("Duplicate student IDs found")
+                return False
+            
+            if content_data['content_id'].duplicated().any():
+                logger.error("Duplicate content IDs found")
+                return False
+            
+            # Check engagement data if provided
+            if engagement_data is not None:
+                required_engagement_cols = ['student_id', 'content_id']
+                if not all(col in engagement_data.columns for col in required_engagement_cols):
+                    logger.error("Missing required columns in engagement data")
+                    return False
+                
+                # Check for invalid references
+                invalid_students = ~engagement_data['student_id'].isin(student_data['student_id'])
+                invalid_content = ~engagement_data['content_id'].isin(content_data['content_id'])
+                
+                if invalid_students.any():
+                    logger.error("Invalid student IDs in engagement data")
+                    return False
+                
+                if invalid_content.any():
+                    logger.error("Invalid content IDs in engagement data")
+                    return False
+            
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error validating data: {str(e)}")
+            return False
+    
+    def preprocess_data(
+        self,
+        student_data: pd.DataFrame,
+        content_data: pd.DataFrame,
+        engagement_data: Optional[pd.DataFrame] = None
+    ) -> Dict[str, pd.DataFrame]:
+        """
+        Preprocess input data.
+        
+        Args:
+            student_data: DataFrame with student information
+            content_data: DataFrame with content information
+            engagement_data: Optional DataFrame with engagement history
+            
+        Returns:
+            Dictionary of preprocessed DataFrames
+        """
+        try:
+            # Make copies to avoid modifying original data
+            student_df = student_data.copy()
+            content_df = content_data.copy()
+            engagement_df = engagement_data.copy() if engagement_data is not None else None
+            
+            # Clean student data
+            student_df = student_df.fillna({
+                'funnel_stage': 'awareness',
+                'demographic_features': {}
+            })
+            
+            # Clean content data
+            content_df = content_df.fillna({
+                'engagement_type': 'email',
+                'content_category': 'general',
+                'target_funnel_stage': 'awareness'
+            })
+            
+            # Clean engagement data if provided
+            if engagement_df is not None:
+                engagement_df = engagement_df.fillna({
+                    'engagement_type': 'email',
+                    'engagement_status': 'pending'
+                })
+            
+            return {
+                'student_data': student_df,
+                'content_data': content_df,
+                'engagement_data': engagement_df
+            }
+            
+        except Exception as e:
+            logger.error(f"Error preprocessing data: {str(e)}")
+            return {
+                'student_data': student_data,
+                'content_data': content_data,
+                'engagement_data': engagement_data
+            } 

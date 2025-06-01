@@ -6,7 +6,7 @@ def generate_and_log_recommendations(
     students_path: str,
     engagements_path: str,
     content_path: str,
-    model_dir: str = "models/saved_models",
+    model_dir: str = "models/saved_models/collaborative",
     n_recommendations: int = 5,
     log_path: str = "recommendation_logs.csv"
 ):

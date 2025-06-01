@@ -27,10 +27,10 @@ class SimpleRecommender:
             model_dir: Directory to save/load the model
         """
         if model_dir is None:
-            model_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "saved_models")
+            model_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
         
         self.model_dir = model_dir
-        self.model_path = os.path.join(model_dir, "simple_recommender.joblib")
+        self.model_path = os.path.join(model_dir, "saved_models", "content_based", "simple_recommender.joblib")
         self.model = None
         self.content_data = None
         self.student_data = None
