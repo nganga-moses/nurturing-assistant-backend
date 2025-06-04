@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from ..dependencies import get_db
+from database.session import get_db
 from ..auth.supabase import supabase
 from data.models.user import User
 

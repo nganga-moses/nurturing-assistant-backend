@@ -4,7 +4,8 @@ import tensorflow as tf
 from datetime import datetime, timedelta
 import json
 from typing import Dict, List, Tuple, Any
-from .models import StudentProfile, EngagementHistory, EngagementContent, get_session
+from database.session import get_db
+from .models import StudentProfile, EngagementHistory, EngagementContent
 
 
 class DataProcessor:
@@ -13,7 +14,7 @@ class DataProcessor:
     """
     
     def __init__(self):
-        self.session = get_session()
+        self.session = get_db()
         
     def load_data(self) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
         """

@@ -4,7 +4,24 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from data.models import Base
+from database.base import Base
+from data.models import (
+    StudentProfile,
+    StoredRecommendation,
+    RecommendationAction,
+    RecommendationFeedbackMetrics,
+    RecommendationSettings,
+    EngagementContent,
+    EngagementHistory,
+    EngagementType,
+    CustomField,
+    StatusChange,
+    ErrorLog,
+    IntegrationConfig,
+    Settings,
+    User,
+    Role
+)
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

@@ -1,24 +1,31 @@
-from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect, Response
-from typing import Dict, List, Set
+from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect, Response, Depends
+from sqlalchemy.orm import Session
+from typing import Dict, List, Set, Optional
 from datetime import datetime, timedelta
-import sqlite3
 import json
 import asyncio
 import csv
 import io
-
-
+from database.session import get_db
+from data.models.student_profile import StudentProfile
+from data.models.engagement_history import EngagementHistory
 
 router = APIRouter()
 
 # Store active WebSocket connections
 active_connections: Set[WebSocket] = set()
 
+def get_db():
+    db = next(get_session())
+    try:
+        yield db
+    finally:
+        db.close()
+
 async def broadcast_dashboard_update():
     """Broadcast dashboard data to all connected clients."""
     if not active_connections:
         return
-        
     data = await get_dashboard_data()
     for connection in active_connections:
         try:
@@ -35,121 +42,47 @@ async def websocket_endpoint(websocket: WebSocket):
             # Send initial data
             data = await get_dashboard_data()
             await websocket.send_json(data)
-            
             # Wait for 30 seconds before next update
             await asyncio.sleep(30)
     except WebSocketDisconnect:
         active_connections.remove(websocket)
 
-def get_db_connection():
-    conn = sqlite3.connect('student_engagement.db')
-    conn.row_factory = sqlite3.Row
-    return conn
-
 @router.get("/dashboard")
-async def get_dashboard_data_endpoint():
+async def get_dashboard_data_endpoint(db: Session = Depends(get_db)):
     """HTTP endpoint for dashboard data."""
-    return await get_dashboard_data()
+    return await get_dashboard_data(db)
 
-async def get_dashboard_data():
-    """Get dashboard data asynchronously."""
+async def get_dashboard_data(db: Session):
     try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-
         # Get total active students
-        cursor.execute("""
-            SELECT COUNT(DISTINCT sp.student_id) as total
-            FROM student_profiles sp
-            WHERE sp.last_interaction_date >= date('now', '-30 days')
-        """)
-        total_students = cursor.fetchone()['total'] or 0
-
+        total_students = db.query(StudentProfile).filter(StudentProfile.last_interaction_date >= datetime.now() - timedelta(days=30)).count()
         # Get application rate
-        cursor.execute("""
-            SELECT 
-                COALESCE(
-                    COUNT(DISTINCT CASE WHEN sp.application_status = 'completed' THEN sp.student_id END) * 100.0 / 
-                    NULLIF(COUNT(DISTINCT sp.student_id), 0),
-                    0
-                ) as rate
-            FROM student_profiles sp
-        """)
-        application_rate = f"{cursor.fetchone()['rate']:.1f}%"
-
+        completed_applications = db.query(StudentProfile).filter_by(application_status="completed").count()
+        application_rate = f"{completed_applications * 100.0 / total_students:.1f}%" if total_students > 0 else "0.0%"
         # Get at-risk students
-        cursor.execute("""
-            SELECT COUNT(DISTINCT sp.student_id) as count
-            FROM student_profiles sp
-            WHERE sp.dropout_risk_score >= 0.7
-        """)
-        at_risk_students = cursor.fetchone()['count'] or 0
-
+        at_risk_students = db.query(StudentProfile).filter(StudentProfile.dropout_risk_score >= 0.7).count()
         # Get engagement rate
-        cursor.execute("""
-            SELECT 
-                COALESCE(
-                    COUNT(DISTINCT CASE WHEN eh.engagement_response = 'positive' THEN sp.student_id END) * 100.0 / 
-                    NULLIF(COUNT(DISTINCT sp.student_id), 0),
-                    0
-                ) as rate
-            FROM student_profiles sp
-            LEFT JOIN engagement_history eh ON sp.student_id = eh.student_id
-        """)
-        engagement_rate = f"{cursor.fetchone()['rate']:.1f}%"
-
+        engagement_rate = f"{db.query(EngagementHistory).filter(EngagementHistory.engagement_response == 'positive').count() * 100.0 / total_students:.1f}%" if total_students > 0 else "0.0%"
         # Get funnel distribution
-        cursor.execute("""
-            SELECT 
-                COALESCE(sp.funnel_stage, 'Unknown') as funnel_stage,
-                COUNT(DISTINCT sp.student_id) as count
-            FROM student_profiles sp
-            GROUP BY sp.funnel_stage
-        """)
         funnel_distribution = [
-            {"name": row['funnel_stage'], "value": row['count']}
-            for row in cursor.fetchall()
+            {"name": stage[0], "value": db.query(StudentProfile).filter_by(funnel_stage=stage[0]).count()}
+            for stage in db.query(StudentProfile.funnel_stage).distinct()
         ]
-
         # Get engagement trends (last 30 days)
-        cursor.execute("""
-            SELECT 
-                date(eh.timestamp) as date,
-                eh.engagement_type,
-                COUNT(*) as count
-            FROM engagement_history eh
-            WHERE eh.timestamp >= date('now', '-30 days')
-            GROUP BY date(eh.timestamp), eh.engagement_type
-            ORDER BY date
-        """)
-        engagement_data = cursor.fetchall()
-        
+        engagement_data = db.query(EngagementHistory).filter(EngagementHistory.timestamp >= datetime.now() - timedelta(days=30)).all()
         # Process engagement trends
         engagement_trends = {}
         for row in engagement_data:
-            date = row['date']
+            date = row.timestamp.strftime('%Y-%m-%d')
             if date not in engagement_trends:
                 engagement_trends[date] = {'date': date, 'email': 0, 'sms': 0, 'campus_visit': 0}
-            engagement_trends[date][row['engagement_type']] = row['count']
-        
+            engagement_trends[date][row.engagement_type] = engagement_trends[date].get(row.engagement_type, 0) + 1
         engagement_trends = list(engagement_trends.values())
-
         # Get application likelihood distribution
-        cursor.execute("""
-            SELECT 
-                ROUND(COALESCE(sp.application_likelihood_score, 0) * 10) / 10 as likelihood,
-                COUNT(*) as count
-            FROM student_profiles sp
-            GROUP BY ROUND(COALESCE(sp.application_likelihood_score, 0) * 10) / 10
-            ORDER BY likelihood
-        """)
         likelihood_distribution = [
-            {"likelihood": row['likelihood'], "count": row['count']}
-            for row in cursor.fetchall()
+            {"likelihood": round(score[0] * 10) / 10, "count": db.query(StudentProfile).filter_by(application_likelihood_score=score[0]).count()}
+            for score in db.query(StudentProfile.application_likelihood_score).distinct()
         ]
-
-        conn.close()
-
         return {
             "totalStudents": total_students,
             "applicationRate": application_rate,
@@ -160,16 +93,14 @@ async def get_dashboard_data():
             "likelihoodDistribution": likelihood_distribution,
             "lastUpdated": datetime.now().isoformat()
         }
-
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/dashboard/export/{format}")
-async def export_dashboard_data(format: str):
+async def export_dashboard_data(format: str, db: Session = Depends(get_db)):
     """Export dashboard data in various formats."""
     try:
-        data = await get_dashboard_data()
-        
+        data = await get_dashboard_data(db)
         if format == "json":
             return Response(
                 content=json.dumps(data, indent=2),
@@ -181,7 +112,6 @@ async def export_dashboard_data(format: str):
         elif format == "csv":
             output = io.StringIO()
             writer = csv.writer(output)
-            
             # Write metrics
             writer.writerow(["Metric", "Value"])
             writer.writerow(["Total Students", data["totalStudents"]])
@@ -189,13 +119,11 @@ async def export_dashboard_data(format: str):
             writer.writerow(["At-Risk Students", data["atRiskStudents"]])
             writer.writerow(["Engagement Rate", data["engagementRate"]])
             writer.writerow([])
-            
             # Write funnel distribution
             writer.writerow(["Funnel Stage", "Count"])
             for item in data["funnelDistribution"]:
                 writer.writerow([item["name"], item["value"]])
             writer.writerow([])
-            
             # Write engagement trends
             writer.writerow(["Date", "Email", "SMS", "Campus Visit"])
             for trend in data["engagementTrends"]:
@@ -206,12 +134,10 @@ async def export_dashboard_data(format: str):
                     trend["campus_visit"]
                 ])
             writer.writerow([])
-            
             # Write likelihood distribution
             writer.writerow(["Likelihood", "Count"])
             for item in data["likelihoodDistribution"]:
                 writer.writerow([item["likelihood"], item["count"]])
-            
             return Response(
                 content=output.getvalue(),
                 media_type="text/csv",
@@ -221,7 +147,6 @@ async def export_dashboard_data(format: str):
             )
         else:
             raise HTTPException(status_code=400, detail="Unsupported export format")
-            
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

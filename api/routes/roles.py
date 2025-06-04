@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import Optional, List
-from ..dependencies import get_db
+from database.session import get_db
 from ..auth.jwt import get_current_user, check_admin, check_manager
 from data.models.user import User, Role
 

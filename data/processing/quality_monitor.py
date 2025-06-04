@@ -1,11 +1,12 @@
 import pandas as pd
 import numpy as np
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, Any
 from datetime import datetime
 import logging
 from dataclasses import dataclass
 import json
 import os
+from data.processing.data_quality import DataValidator
 
 logger = logging.getLogger(__name__)
 
@@ -25,6 +26,7 @@ class DataQualityMonitor:
         self.metrics_dir = metrics_dir
         self.metrics_history = []
         os.makedirs(metrics_dir, exist_ok=True)
+        self.validator = DataValidator()
     
     def calculate_metrics(self, data: pd.DataFrame, original_data: Optional[pd.DataFrame] = None) -> QualityMetrics:
         """
@@ -54,105 +56,58 @@ class DataQualityMonitor:
         return metrics
     
     def _calculate_missing_values(self, data: pd.DataFrame) -> Dict[str, float]:
-        """Calculate percentage of missing values per column."""
-        return {
-            col: (data[col].isna().sum() / len(data)) * 100
-            for col in data.columns
-        }
+        """Calculate percentage of missing values per column (0-100)."""
+        missing = self.validator._validate_missing(data)
+        total = len(data)
+        return {col: (count / total * 100 if total > 0 else 0.0) for col, count in missing.items()}
     
     def _calculate_type_errors(self, data: pd.DataFrame) -> Dict[str, int]:
-        """Calculate number of type errors per column."""
-        type_errors = {}
-        
-        for col in data.columns:
-            if col in ["student_id", "engagement_id"]:
-                # Check for string type
-                type_errors[col] = sum(~data[col].astype(str).str.match(r'^[A-Za-z0-9_-]+$'))
-            elif col in ["gpa", "sat_score", "act_score"]:
-                # Check for numeric type and range
-                type_errors[col] = sum(pd.to_numeric(data[col], errors='coerce').isna())
-            elif "timestamp" in col.lower():
-                # Check for datetime type
-                type_errors[col] = sum(pd.to_datetime(data[col], errors='coerce').isna())
-        
-        return type_errors
+        """Calculate type errors for each column."""
+        return self.validator._validate_types(data)
     
     def _calculate_range_violations(self, data: pd.DataFrame) -> Dict[str, int]:
         """Calculate number of range violations per column."""
-        range_violations = {}
-        
-        # Define valid ranges
-        ranges = {
-            "gpa": (0, 4.0),
-            "sat_score": (400, 1600),
-            "act_score": (1, 36),
-            "age": (15, 30)
-        }
-        
-        for col, (min_val, max_val) in ranges.items():
-            if col in data.columns:
-                range_violations[col] = sum(
-                    (data[col] < min_val) | (data[col] > max_val)
-                )
-        
-        return range_violations
+        return self.validator._validate_ranges(data)
     
-    def _calculate_imputation_quality(self, processed_data: pd.DataFrame, original_data: pd.DataFrame) -> Dict[str, float]:
-        """Calculate quality of imputation by comparing with original data."""
+    def _calculate_imputation_quality(self, data: pd.DataFrame, original_data: pd.DataFrame) -> Dict[str, float]:
+        """Calculate imputation quality for each column."""
         imputation_quality = {}
         
-        for col in processed_data.columns:
-            if col in original_data.columns:
-                # Calculate how many values were imputed
-                imputed_mask = original_data[col].isna() & ~processed_data[col].isna()
-                if imputed_mask.any():
-                    # Calculate quality based on distribution similarity
-                    original_dist = original_data[~original_data[col].isna()][col].value_counts(normalize=True)
-                    imputed_dist = processed_data[imputed_mask][col].value_counts(normalize=True)
-                    
-                    # Calculate distribution similarity
-                    common_categories = set(original_dist.index) & set(imputed_dist.index)
-                    if common_categories:
-                        similarity = sum(
-                            min(original_dist[cat], imputed_dist[cat])
-                            for cat in common_categories
-                        )
-                        imputation_quality[col] = similarity
-                    else:
-                        imputation_quality[col] = 0.0
+        # Define columns that can be imputed
+        imputable_columns = ['gpa', 'sat_score', 'act_score']
+        
+        for column in imputable_columns:
+            if column not in data.columns or column not in original_data.columns:
+                imputation_quality[column] = 0.0
+                continue
+            
+            # Count original missing values
+            original_missing = original_data[column].isna().sum()
+            if original_missing == 0:
+                imputation_quality[column] = 1.0
+                continue
+            
+            # Count values that were imputed
+            imputed = data[column].notna().sum() - original_data[column].notna().sum()
+            
+            # Calculate quality as ratio of successfully imputed values
+            imputation_quality[column] = imputed / original_missing if original_missing > 0 else 1.0
         
         return imputation_quality
     
     def _calculate_validation_quality(self, data: pd.DataFrame) -> float:
         """Calculate overall validation quality score."""
-        # Calculate various quality factors
-        completeness = 1 - sum(data.isna().sum()) / (data.shape[0] * data.shape[1])
-        
-        # Calculate consistency (e.g., funnel stage progression)
-        if "funnel_stage_before" in data.columns and "funnel_stage_after" in data.columns:
-            funnel_stages = ["Awareness", "Interest", "Consideration", "Decision", "Application"]
-            stage_indices = {stage: i for i, stage in enumerate(funnel_stages)}
-            
-            valid_progressions = sum(
-                stage_indices[after] >= stage_indices[before]
-                for before, after in zip(data["funnel_stage_before"], data["funnel_stage_after"])
-                if before in stage_indices and after in stage_indices
-            )
-            consistency = valid_progressions / len(data)
-        else:
-            consistency = 1.0
-        
-        # Calculate uniqueness
-        uniqueness = 1 - (data.duplicated().sum() / len(data))
-        
-        # Combine factors with weights
-        quality_score = (
-            0.4 * completeness +
-            0.4 * consistency +
-            0.2 * uniqueness
+        validation_results = self.validator.validate_data(data)
+        total_cells = len(data) * len(self.validator.expected_types)
+        if total_cells == 0:
+            return 0.0
+
+        error_cells = (
+            sum(validation_results['type_errors'].values()) +
+            sum(validation_results['range_violations'].values()) +
+            sum(validation_results['missing_values'].values())
         )
-        
-        return quality_score
+        return 1.0 - (error_cells / total_cells)
     
     def save_metrics(self):
         """Save metrics history to disk."""
@@ -194,3 +149,127 @@ class DataQualityMonitor:
             trends["uniqueness"].append(metrics["validation_quality"])
         
         return trends 
+    
+    def check_data_quality(self, data: pd.DataFrame) -> Dict[str, float]:
+        """
+        Check data quality and return quality metrics.
+        
+        Args:
+            data: DataFrame to check
+            
+        Returns:
+            Dictionary of quality metrics
+        """
+        metrics = self.calculate_metrics(data)
+        
+        return {
+            'completeness': 1 - np.mean(list(metrics.missing_values.values())) / 100,
+            'consistency': 1 - (sum(metrics.data_type_errors.values()) + sum(metrics.range_violations.values())) / len(data),
+            'timeliness': metrics.validation_quality,
+            'accuracy': np.mean(list(metrics.imputation_quality.values())) if metrics.imputation_quality else 1.0
+        }
+    
+    def generate_metrics(self, data: pd.DataFrame) -> Dict[str, Dict[str, float]]:
+        """
+        Generate comprehensive quality metrics report.
+        
+        Args:
+            data: DataFrame to analyze
+            
+        Returns:
+            Dictionary containing daily and weekly metrics
+        """
+        # Calculate daily metrics
+        daily_metrics = {
+            'completeness': self._calculate_completeness(data),
+            'consistency': self._calculate_consistency(data),
+            'timeliness': self._calculate_timeliness(data),
+            'accuracy': self._calculate_accuracy(data)
+        }
+        
+        # Calculate weekly metrics (using same data for now)
+        weekly_metrics = daily_metrics.copy()
+        
+        # Generate data quality report
+        data_quality_report = {
+            'current_metrics': daily_metrics,
+            'trends': {
+                'completeness': self._calculate_trend('completeness'),
+                'consistency': self._calculate_trend('consistency'),
+                'timeliness': self._calculate_trend('timeliness'),
+                'accuracy': self._calculate_trend('accuracy')
+            },
+            'recommendations': self._generate_recommendations(daily_metrics)
+        }
+        
+        return {
+            'daily_metrics': daily_metrics,
+            'weekly_metrics': weekly_metrics,
+            'data_quality_report': data_quality_report
+        }
+    
+    def _calculate_trend(self, metric_name: str, window: int = 7) -> float:
+        """Calculate trend for a metric."""
+        if len(self.metrics_history) < 2:
+            return 0.0
+
+        recent_metrics = self.metrics_history[-window:]
+        if len(recent_metrics) < 2:
+            return 0.0
+
+        values = [m[metric_name] for m in recent_metrics if metric_name in m]
+        if len(values) < 2:
+            return 0.0
+
+        return (values[-1] - values[0]) / len(values)
+    
+    def _generate_recommendations(self, metrics: Dict[str, float]) -> List[str]:
+        """Generate recommendations based on metrics."""
+        recommendations = []
+        threshold = 0.9
+        
+        if metrics['completeness'] < threshold:
+            recommendations.append("Improve data completeness by implementing better data collection processes")
+        if metrics['consistency'] < threshold:
+            recommendations.append("Enhance data consistency by standardizing data formats and validation rules")
+        if metrics['timeliness'] < threshold:
+            recommendations.append("Optimize data timeliness by reducing processing delays")
+        if metrics['accuracy'] < threshold:
+            recommendations.append("Increase data accuracy by implementing better validation and verification")
+        
+        return recommendations 
+
+    def _calculate_completeness(self, data: pd.DataFrame) -> float:
+        """Calculate data completeness."""
+        return self.validator._validate_completeness(data)
+
+    def _calculate_consistency(self, data: pd.DataFrame) -> float:
+        """Stub: Return 1.0 for consistency."""
+        return 1.0
+
+    def _calculate_timeliness(self, data: pd.DataFrame) -> float:
+        """Stub: Return 1.0 for timeliness."""
+        return 1.0
+
+    def _calculate_accuracy(self, data: pd.DataFrame) -> float:
+        """Calculate data accuracy based on imputation quality."""
+        # Use imputation quality as a proxy for accuracy
+        imputation_quality = self._calculate_imputation_quality(data, data)
+        return np.mean(list(imputation_quality.values())) if imputation_quality else 1.0
+
+    def get_quality_report(self) -> Dict[str, Any]:
+        """Generate a comprehensive data quality report."""
+        if not self.metrics_history:
+            return {"error": "No metrics available"}
+
+        latest_metrics = self.metrics_history[-1]
+        trends = {
+            'completeness': self._calculate_trend('completeness'),
+            'validation_quality': self._calculate_trend('validation_quality')
+        }
+
+        return {
+            'current_metrics': latest_metrics,
+            'trends': trends,
+            'recommendations': self._generate_recommendations(latest_metrics)
+        } 

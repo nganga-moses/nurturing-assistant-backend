@@ -3,12 +3,12 @@ from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
 from typing import Optional, List
 
-from ..dependencies import get_db
+from database.session import get_db
 from data.models import ErrorLog
 
 router = APIRouter(prefix="/notifications", tags=["notifications"])
 
-@router.get("/")
+@router.get("")
 def list_notifications(
     resolved: Optional[bool] = Query(None),
     error_type: Optional[str] = Query(None),

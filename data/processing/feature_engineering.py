@@ -1,14 +1,40 @@
 import pandas as pd
 import numpy as np
 from typing import Dict, List, Optional
-from datetime import datetime
+from datetime import datetime, date
 import json
 
 class AdvancedFeatureEngineering:
     def __init__(self, student_data: pd.DataFrame, engagement_data: pd.DataFrame):
-        self.student_data = student_data
+        self.student_data = student_data.copy()
         self.engagement_data = engagement_data
+        # Add age and age_range columns from birthdate
+        if 'birthdate' in self.student_data.columns:
+            self.student_data['age'] = self.student_data['birthdate'].apply(self._calculate_age)
+            self.student_data['age_range'] = self.student_data['age'].apply(self._calculate_age_range)
         
+    def _calculate_age(self, birthdate):
+        if pd.isnull(birthdate):
+            return np.nan
+        if isinstance(birthdate, str):
+            try:
+                birthdate = pd.to_datetime(birthdate).date()
+            except Exception:
+                return np.nan
+        elif isinstance(birthdate, pd.Timestamp):
+            birthdate = birthdate.date()
+        today = date.today()
+        return today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
+
+    def _calculate_age_range(self, age):
+        if pd.isnull(age):
+            return None
+        bins = [(0, 17), (18, 24), (25, 34), (35, 44), (45, 54), (55, 64), (65, 120)]
+        for start, end in bins:
+            if start <= age <= end:
+                return f"{start}-{end}"
+        return None
+
     def _extract_metrics(self, metrics_str):
         try:
             return json.loads(metrics_str)

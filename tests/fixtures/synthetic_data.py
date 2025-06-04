@@ -8,6 +8,7 @@ import numpy as np
 import tensorflow as tf
 from typing import Dict, List, Any
 from datetime import datetime, timedelta
+import json
 
 def generate_synthetic_data() -> Dict:
     """
@@ -135,3 +136,77 @@ def generate_synthetic_data() -> Dict:
     }
     print("Generated synthetic data keys:", result.keys())
     return result
+
+def create_sample_data(num_students: int = 100, num_engagements: int = 100, batch_size: int = 32) -> Dict[str, Any]:
+    """Create synthetic data for testing."""
+    # Generate student and engagement IDs
+    student_ids = [f"student{i}" for i in range(num_students)]
+    engagement_ids = [f"engagement{i}" for i in range(num_engagements)]
+    
+    # Generate random features for students and engagements
+    student_features = {
+        "age": np.random.uniform(15, 25, size=num_students),
+        "gender": np.random.uniform(0, 1, size=num_students),
+        "ethnicity": np.random.uniform(0, 1, size=num_students),
+        "location": np.random.uniform(0, 1, size=num_students),
+        "gpa": np.random.uniform(0, 4, size=num_students),
+        "test_scores": np.random.uniform(0, 100, size=num_students),
+        "courses": np.random.uniform(0, 10, size=num_students),
+        "major": np.random.uniform(0, 1, size=num_students),
+        "attendance": np.random.uniform(0, 1, size=num_students),
+        "participation": np.random.uniform(0, 1, size=num_students)
+    }
+    student_features_df = pd.DataFrame(student_features)
+    
+    engagement_features = {
+        "type": np.random.uniform(0, 1, size=num_engagements),
+        "duration": np.random.uniform(0, 100, size=num_engagements),
+        "difficulty": np.random.uniform(0, 1, size=num_engagements),
+        "prerequisites": np.random.uniform(0, 1, size=num_engagements),
+        "popularity": np.random.uniform(0, 1, size=num_engagements),
+        "success_rate": np.random.uniform(0, 1, size=num_engagements),
+        "engagement_level": np.random.uniform(0, 1, size=num_engagements),
+        "feedback_score": np.random.uniform(0, 1, size=num_engagements),
+        "completion_rate": np.random.uniform(0, 1, size=num_engagements),
+        "interaction_frequency": np.random.uniform(0, 1, size=num_engagements)
+    }
+    engagement_features_df = pd.DataFrame(engagement_features)
+    
+    # Generate random labels
+    ranking_labels = np.random.uniform(0, 10, size=num_students)
+    likelihood_labels = np.random.uniform(0, 1, size=num_students)
+    risk_labels = np.random.uniform(0, 1, size=num_students)
+    
+    # Generate random timestamps
+    timestamps = [datetime.now() - timedelta(days=np.random.randint(0, 365)) for _ in range(num_students)]
+    
+    # Generate random funnel stages
+    funnel_stages = ['awareness', 'interest', 'consideration', 'decision', 'application']
+    funnel_stage_before = [np.random.choice(funnel_stages) for _ in range(num_students)]
+    
+    # Generate random engagement metrics
+    engagement_metrics = [{'duration': np.random.randint(30, 180), 'attendance': np.random.randint(10, 100)} for _ in range(num_students)]
+    
+    # Generate random engagement types
+    engagement_types = ['academic', 'social', 'campus_visit', 'info_session'] * (num_students // 4)
+    engagement_types.extend(['academic'] * (num_students % 4))  # Ensure the list is of length num_students
+    
+    # Create a DataFrame for the dataset
+    dataset_df = pd.DataFrame({
+        "student_id": student_ids,
+        "engagement_id": engagement_ids,
+        "ranking_label": ranking_labels,
+        "likelihood_label": likelihood_labels,
+        "risk_label": risk_labels,
+        "timestamp": timestamps,  # Add timestamp column
+        "funnel_stage_before": funnel_stage_before,  # Add funnel stage column
+        "engagement_metrics": engagement_metrics,  # Add engagement metrics column
+        "engagement_type": engagement_types  # Add engagement type column
+    })
+    
+    # Split the dataset into training and validation sets
+    train_size = int(0.8 * num_students)
+    train_data = dataset_df.iloc[:train_size]
+    val_data = dataset_df.iloc[train_size:]
+    
+    return train_data, val_data, student_ids, engagement_ids

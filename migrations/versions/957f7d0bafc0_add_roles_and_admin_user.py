@@ -1,8 +1,8 @@
-"""Upgrading to add user
+"""add_roles_and_admin_user
 
-Revision ID: be20e3098ba4
-Revises: f275252173e2
-Create Date: 2025-05-31 21:56:21.882539
+Revision ID: 957f7d0bafc0
+Revises: f0f2877e5f0c
+Create Date: 2025-06-03 15:33:58.374767
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'be20e3098ba4'
-down_revision: Union[str, None] = 'f275252173e2'
+revision: str = '957f7d0bafc0'
+down_revision: Union[str, None] = 'f0f2877e5f0c'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

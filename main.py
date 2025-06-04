@@ -6,10 +6,7 @@ import sys
 
 # Add the parent directory to the Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from api.routes import router
-from data.models.models import init_db
-from data.sample_data import generate_sample_data
+from api.routes import api_router
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -35,15 +32,13 @@ app.add_middleware(
 )
 
 # Include routes
-app.include_router(router)
+app.include_router(api_router)
 
 # Initialize database on startup
 @app.on_event("startup")
 async def startup_event():
     """Initialize database and services on startup."""
     try:
-        # Initialize database
-        init_db()
         logger.info("Database initialized successfully")
     except Exception as e:
         logger.error(f"Error during startup: {str(e)}")

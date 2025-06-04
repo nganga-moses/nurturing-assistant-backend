@@ -2,8 +2,9 @@ import pandas as pd
 import numpy as np
 import pytest
 from data.processing.quality_monitor import DataQualityMonitor
-from data.processing.validator import DataValidator
+from data.processing.data_quality import DataValidator
 from tests.fixtures.synthetic_data import create_sample_data
+from datetime import datetime
 
 @pytest.fixture
 def sample_data():
@@ -152,7 +153,7 @@ def test_save_load_metrics(tmp_path):
 def test_data_quality_monitor():
     """Test data quality monitoring functionality."""
     # Create sample data
-    train_data, val_data, student_ids, engagement_ids = create_sample_data(num_samples=100)
+    train_data, val_data, student_ids, engagement_ids = create_sample_data(num_students=100, num_engagements=100, batch_size=32)
     
     # Initialize quality monitor
     quality_monitor = DataQualityMonitor()
@@ -173,7 +174,7 @@ def test_data_quality_monitor():
 def test_data_validation():
     """Test data validation functionality."""
     # Create sample data
-    train_data, val_data, student_ids, engagement_ids = create_sample_data(num_samples=100)
+    train_data, val_data, student_ids, engagement_ids = create_sample_data(num_students=100, num_engagements=100, batch_size=32)
     
     # Initialize validator
     validator = DataValidator()
@@ -200,7 +201,7 @@ def test_data_validation():
 def test_quality_metrics_generation():
     """Test quality metrics generation."""
     # Create sample data
-    train_data, val_data, student_ids, engagement_ids = create_sample_data(num_samples=100)
+    train_data, val_data, student_ids, engagement_ids = create_sample_data(num_students=100, num_engagements=100, batch_size=32)
     
     # Initialize quality monitor
     quality_monitor = DataQualityMonitor()

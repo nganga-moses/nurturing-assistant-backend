@@ -5,18 +5,18 @@ from datetime import datetime, timedelta
 import json
 import os
 import sys
+from sqlalchemy import text
 
 # Add parent directory to path for imports
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from data.models.models import init_db, get_session
 from data.sample_data import generate_sample_data
+from database.session import get_db
 
 @pytest.fixture(scope="session")
 def db_session():
     """Create a database session for testing."""
-    init_db()
-    session = get_session()
+    session = next(get_db())
     yield session
     session.close()
 
@@ -65,4 +65,20 @@ def model_config():
 @pytest.fixture(scope="session")
 def test_data_dir():
     """Return path to test data directory."""
-    return os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures', 'test_data') 
+    return os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures', 'test_data')
+
+@pytest.fixture(autouse=True)
+def clean_database(db_session):
+    """Truncate all tables after each test to ensure a clean state."""
+    yield
+    # Truncate all tables (disable/re-enable constraints for PostgreSQL)
+    db_session.execute(text('''
+        DO $$ DECLARE
+            r RECORD;
+        BEGIN
+            FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = current_schema()) LOOP
+                EXECUTE 'TRUNCATE TABLE ' || quote_ident(r.tablename) || ' RESTART IDENTITY CASCADE';
+            END LOOP;
+        END $$;
+    '''))
+    db_session.commit() 

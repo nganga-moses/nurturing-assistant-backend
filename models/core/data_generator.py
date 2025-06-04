@@ -17,7 +17,7 @@ class DataGenerator:
         batch_engagement_ids = np.random.choice(engagement_ids, size=self.batch_size)
         
         # Generate random features
-        student_features = {
+        student_features_dict = {
             "age": np.random.uniform(15, 25, size=self.batch_size),
             "gender": np.random.uniform(0, 1, size=self.batch_size),
             "ethnicity": np.random.uniform(0, 1, size=self.batch_size),
@@ -27,21 +27,28 @@ class DataGenerator:
             "courses": np.random.uniform(0, 10, size=self.batch_size),
             "major": np.random.uniform(0, 1, size=self.batch_size),
             "attendance": np.random.uniform(0, 1, size=self.batch_size),
-            "participation": np.random.uniform(0, 1, size=self.batch_size),
-            "feedback": np.random.uniform(0, 1, size=self.batch_size),
-            "study_habits": np.random.uniform(0, 1, size=self.batch_size),
-            "social_activity": np.random.uniform(0, 1, size=self.batch_size),
-            "stress_level": np.random.uniform(0, 1, size=self.batch_size)
+            "participation": np.random.uniform(0, 1, size=self.batch_size)
         }
+        student_features = tf.stack([tf.convert_to_tensor(student_features_dict[k], dtype=tf.float32) for k in [
+            "age", "gender", "ethnicity", "location", "gpa", "test_scores", "courses", "major", "attendance", "participation"
+        ]], axis=1)
         
-        engagement_features = {
+        engagement_features_dict = {
             "type": np.random.uniform(0, 1, size=self.batch_size),
             "duration": np.random.uniform(0, 100, size=self.batch_size),
             "difficulty": np.random.uniform(0, 1, size=self.batch_size),
             "prerequisites": np.random.uniform(0, 1, size=self.batch_size),
             "popularity": np.random.uniform(0, 1, size=self.batch_size),
-            "success_rate": np.random.uniform(0, 1, size=self.batch_size)
+            "success_rate": np.random.uniform(0, 1, size=self.batch_size),
+            "engagement_level": np.random.uniform(0, 1, size=self.batch_size),
+            "feedback_score": np.random.uniform(0, 1, size=self.batch_size),
+            "completion_rate": np.random.uniform(0, 1, size=self.batch_size),
+            "interaction_frequency": np.random.uniform(0, 1, size=self.batch_size)
         }
+        engagement_features = tf.stack([tf.convert_to_tensor(engagement_features_dict[k], dtype=tf.float32) for k in [
+            "type", "duration", "difficulty", "prerequisites", "popularity", "success_rate",
+            "engagement_level", "feedback_score", "completion_rate", "interaction_frequency"
+        ]], axis=1)
         
         # Generate random labels
         ranking_labels = np.random.uniform(0, 10, size=self.batch_size)
@@ -52,8 +59,8 @@ class DataGenerator:
         return {
             "student_id": tf.convert_to_tensor(batch_student_ids),
             "engagement_id": tf.convert_to_tensor(batch_engagement_ids),
-            "student_features": {k: tf.convert_to_tensor(v) for k, v in student_features.items()},
-            "engagement_features": {k: tf.convert_to_tensor(v) for k, v in engagement_features.items()},
+            "student_features": student_features,
+            "engagement_features": engagement_features,
             "ranking_label": tf.convert_to_tensor(ranking_labels),
             "likelihood_label": tf.convert_to_tensor(likelihood_labels),
             "risk_label": tf.convert_to_tensor(risk_labels)
@@ -67,16 +74,8 @@ class DataGenerator:
             output_signature={
                 "student_id": tf.TensorSpec(shape=(self.batch_size,), dtype=tf.string),
                 "engagement_id": tf.TensorSpec(shape=(self.batch_size,), dtype=tf.string),
-                "student_features": {
-                    k: tf.TensorSpec(shape=(self.batch_size,), dtype=tf.float32)
-                    for k in ["age", "gender", "ethnicity", "location", "gpa", "test_scores",
-                             "courses", "major", "attendance", "participation", "feedback",
-                             "study_habits", "social_activity", "stress_level"]
-                },
-                "engagement_features": {
-                    k: tf.TensorSpec(shape=(self.batch_size,), dtype=tf.float32)
-                    for k in ["type", "duration", "difficulty", "prerequisites", "popularity", "success_rate"]
-                },
+                "student_features": tf.TensorSpec(shape=(self.batch_size, 10), dtype=tf.float32),
+                "engagement_features": tf.TensorSpec(shape=(self.batch_size, 10), dtype=tf.float32),
                 "ranking_label": tf.TensorSpec(shape=(self.batch_size,), dtype=tf.float32),
                 "likelihood_label": tf.TensorSpec(shape=(self.batch_size,), dtype=tf.float32),
                 "risk_label": tf.TensorSpec(shape=(self.batch_size,), dtype=tf.float32)

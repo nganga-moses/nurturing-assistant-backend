@@ -24,73 +24,34 @@ This system uses TensorFlow Recommenders (TFRS) to predict the most effective ne
 5. **Student Management**: Interface for viewing and managing individual students
 6. **Bulk Actions**: Tools for applying engagement strategies to student segments
 
-## Completed Features
-
-### At-Risk Students Page
-- Created the AtRiskStudents component to display students at high risk of dropping off
-- Implemented backend API endpoint for fetching at-risk students
-- Added Redux thunk to fetch at-risk students from the API
-
-### High-Potential Students Page
-- Created the HighPotentialStudents component to display students with high application likelihood
-- Implemented backend API endpoint for fetching high-potential students
-- Added Redux thunk to fetch high-potential students from the API
-
-### Recommended Nudges Page
-- Created the RecommendedNudges component to display student-specific recommendations
-- Added support for fetching all recommendations in the Redux store
-- Implemented UI to display recommendations grouped by student
-
-### Fixed Student List Page
-- Enhanced the StudentList component to better display application likelihood
-- Added text labels to make likelihood scores more understandable
-- Ensured proper display of risk levels using the RiskIndicator component
-
-### Backend API Enhancements
-- Added endpoint for high-potential students
-- Fixed the at-risk students endpoint to use query parameters
-- Implemented mock data for development and testing
-
 ## Project Structure
 
 ```
 student-engagement-recommender/
-├── backend/
-│   ├── api/           # FastAPI endpoints
-│   ├── data/          # Data processing and management
-│   ├── models/        # ML models implementation
-│   └── utils/         # Helper functions and utilities
-├── frontend/          # React.js frontend application
-│   ├── src/
-│   │   ├── components/  # UI components
-│   │   ├── store/       # Redux state management
-│   │   ├── services/    # API services
-│   │   └── types/       # TypeScript type definitions
-├── setup_dev.sh      # Development environment setup script
-└── README.md         # Project documentation
+├── api/                    # FastAPI application
+│   ├── routes/            # API route definitions
+│   ├── services/          # Business logic services
+│   ├── auth/              # Authentication and authorization
+│   └── dashboard.py       # Dashboard-specific endpoints
+├── models/                # ML models implementation
+├── data/                  # Data processing and management
+├── utils/                 # Helper functions and utilities
+├── database/             # Database files and migrations
+├── migrations/           # Alembic database migrations
+├── tests/                # Test suite
+├── docs/                 # Documentation
+├── scripts/              # Utility scripts
+├── configs/              # Configuration files
+├── na_frontend/         # Frontend application
+├── main.py              # Application entry point
+├── requirements.txt     # Python dependencies
+└── README.md           # Project documentation
 ```
 
 ## Quick Start
 
-To quickly set up the development environment, run the setup script:
-
-```bash
-./setup_dev.sh
-```
-
-This script will:
-1. Create a Python virtual environment for the backend
-2. Install all required Python dependencies
-3. Initialize the database with sample data
-4. Install all required Node.js dependencies for the frontend
-
-## Manual Setup Instructions
-
-### Backend Setup
-
 1. Create and activate a virtual environment:
    ```bash
-   cd backend
    python -m venv venv
    source venv/bin/activate  # On Windows: .\venv\Scripts\activate
    ```
@@ -100,7 +61,12 @@ This script will:
    pip install -r requirements.txt
    ```
 
-3. Start the backend server:
+3. Initialize the database:
+   ```bash
+   alembic upgrade head
+   ```
+
+4. Start the backend server:
    ```bash
    python main.py
    ```
@@ -109,60 +75,28 @@ This script will:
    uvicorn api.main:app --reload
    ```
 
-### Frontend Setup
-
-1. Install Node.js dependencies:
+5. Start the frontend development server:
    ```bash
-   cd frontend
+   cd na_frontend
    npm install
-   ```
-
-2. Start the development server:
-   ```bash
    npm start
    ```
-
-## Using the System
-
-### Dashboard
-
-The dashboard provides an overview of key metrics:
-- Total active students
-- Application rate
-- Number of at-risk students
-- Funnel stage distribution
-- Engagement effectiveness by type
-
-### Student Management
-
-The student list allows you to:
-- Filter students by funnel stage and risk level
-- Search for specific students
-- View detailed student profiles
-- Generate personalized recommendations
-
-### Bulk Actions
-
-The bulk actions interface enables you to:
-- Select an action type (email campaign, SMS campaign, etc.)
-- Target a specific student segment
-- Preview the action before applying
-- Apply the action to multiple students at once
 
 ## API Documentation
 
 Once the backend server is running, visit:
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
+- Swagger UI: http://localhost:8000/api/docs
+- ReDoc: http://localhost:8000/api/redoc
 
 ## Technologies Used
 
 ### Backend
 - Python 3.8+
 - FastAPI
-- TensorFlow & TensorFlow Recommenders
 - SQLAlchemy
+- Alembic
 - Pydantic
+- TensorFlow & TensorFlow Recommenders
 
 ### Frontend
 - React
@@ -172,33 +106,26 @@ Once the backend server is running, visit:
 - Chart.js
 - Axios
 
+## Development
+
+### Database Migrations
+
+To create a new migration:
+```bash
+alembic revision --autogenerate -m "description of changes"
+```
+
+To apply migrations:
+```bash
+alembic upgrade head
+```
+
+### Running Tests
+
+```bash
+pytest
+```
+
 ## License
 
 MIT License
-
-## Recommendation Feedback Loop & Batch Matching Workflow
-
-The system uses a weekly feedback loop to evaluate the effectiveness of recommendations (nudges) and generate new ones. The workflow is as follows:
-
-1. **Import new engagements** from the CRM (actions taken by staff/students in the past week).
-2. **Batch match** these new engagements to the previous cycle's recommendations/nudges to measure effectiveness.
-3. **Purge** old (expired) recommendations/nudges after matching.
-4. **Generate new recommendations** for the next cycle.
-
-### Visual Flowchart
-
-```mermaid
-graph TD
-    A[Import new engagements from CRM] --> B[Batch match to previous recommendations]
-    B --> C[Purge old recommendations]
-    C --> D[Generate new recommendations for next cycle]
-    D --> E[Recommendations actioned by staff/students]
-    E -->|Next week| A
-```
-
-### Why this order?
-- **Matching before purging** ensures you can evaluate the effectiveness of last week's recommendations before removing them.
-- **Purge** cleans up old recommendations so only current ones are available for the next cycle.
-- **New recommendations** are generated for the coming week and will be evaluated in the next cycle.
-
-This workflow ensures accurate feedback, analytics, and continuous improvement of the recommendation system.

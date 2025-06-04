@@ -1,83 +1,88 @@
-# Nudge Tracking System
+# Recommendation Tracking
 
-## Overview
-The nudge tracking system provides a comprehensive framework for monitoring and analyzing student interactions with engagement nudges. It enables data-driven decision making by tracking how students respond to different types of nudges and using this feedback to improve future recommendations.
+This document describes the recommendation tracking system used to monitor and analyze student interactions with recommendations.
 
-## Components
+## Models
 
-### 1. Database Models
-
-#### NudgeAction
-Tracks individual student interactions with nudges:
-- `student_id`: Links to the student profile
-- `nudge_id`: Links to the stored recommendation
-- `action_type`: Type of interaction ("acted", "ignored", "untouched")
+### RecommendationAction
+Tracks individual student interactions with recommendations:
+- `student_id`: ID of the student
+- `recommendation_id`: ID of the recommendation
+- `action_type`: Type of action (e.g., "viewed", "acted", "completed")
 - `action_timestamp`: When the action occurred
-- `time_to_action`: Time taken to respond (in seconds)
-- `action_completed`: Whether the suggested action was completed
-- `dropoff_point`: Where the student dropped off if not completed
+- `time_to_action`: Time between recommendation and action
+- `action_completed`: Whether the action was completed
+- `dropoff_point`: Where the student dropped off (if applicable)
 
-#### NudgeFeedbackMetrics
-Aggregates metrics for different types of nudges:
-- `nudge_type`: Type of recommendation
+### RecommendationFeedbackMetrics
+Tracks aggregate metrics for recommendation types:
+- `recommendation_type`: Type of recommendation
 - `total_shown`: Total number of times shown
 - `acted_count`: Number of times acted upon
 - `ignored_count`: Number of times ignored
-- `untouched_count`: Number of times left untouched
-- `avg_time_to_action`: Average time to respond
-- `completion_rate`: Rate of action completion
-- `dropoff_rates`: JSON tracking where students drop off
+- `untouched_count`: Number of times not interacted with
+- `avg_time_to_action`: Average time to action
+- `avg_time_to_completion`: Average time to completion
+- `completion_rate`: Rate of completion
+- `dropoff_rates`: JSON object with dropoff points and rates
 
-### 2. Tracking Service
+## API Endpoints
 
-The `NudgeTrackingService` provides methods for:
-- Tracking nudge actions (`track_nudge_action`)
-- Recording action completion (`track_completion`)
-- Updating feedback metrics
-- Retrieving metrics and student actions
+### Tracking Actions
+- `POST /recommendations/{recommendation_id}/track`
+  - Tracks a student's action on a recommendation
+  - Body: `{"student_id": "...", "action_type": "..."}`
 
-### 3. Recommendation Integration
+### Tracking Completion
+- `POST /recommendations/{recommendation_id}/complete`
+  - Tracks whether a student completed the suggested action
+  - Body: `{"student_id": "...", "completed": true/false, "dropoff_point": "..."}`
 
-The recommendation system now considers feedback when generating suggestions:
-- Base scores are adjusted based on historical engagement
-- Completion rates influence future recommendations
-- Metrics are included in recommendation responses
+### Getting Metrics
+- `GET /recommendations/feedback/metrics`
+  - Gets feedback metrics for recommendation types
+  - Query params: `recommendation_type` (optional)
 
-### 4. Reporting Endpoints
+### Getting Student Actions
+- `GET /recommendations/students/{student_id}/actions`
+  - Gets all actions for a specific student
 
-Three main reporting endpoints:
-1. `/api/reports/nudge-performance`: Overall nudge effectiveness
-2. `/api/reports/agent-performance`: Enrollment agent metrics
-3. `/api/reports/student-engagement`: Individual student tracking
+## Database Schema
 
-## Usage Examples
+The recommendation tracking system uses two main tables:
 
-### Tracking a Nudge Action
+1. `recommendation_actions`
+   - Tracks individual student interactions
+   - Foreign keys to `student_profiles` and `stored_recommendations`
+
+2. `recommendation_feedback_metrics`
+   - Stores aggregate metrics
+   - Used for analyzing recommendation effectiveness
+
+## Usage Example
+
 ```python
-tracking_service.track_nudge_action(
-    student_id="S001",
-    nudge_id=123,
-    action_type="acted"
+# Track a recommendation action
+tracking_service.track_recommendation_action(
+    student_id="student123",
+    recommendation_id=1,
+    action_type="viewed"
 )
-```
 
-### Recording Completion
-```python
+# Track completion
 tracking_service.track_completion(
-    student_id="S001",
-    nudge_id=123,
+    student_id="student123",
+    recommendation_id=1,
     completed=True
 )
-```
 
-### Getting Feedback Metrics
-```python
-metrics = tracking_service.get_feedback_metrics("application_reminder")
+# Get feedback metrics
+metrics = tracking_service.get_feedback_metrics()
 ```
 
 ## Testing
 
-The system includes comprehensive tests in `tests/unit/api/test_nudge_tracking.py` covering:
+The system includes comprehensive tests in `tests/unit/api/test_recommendation_tracking.py` covering:
 - Action tracking
 - Completion recording
 - Metric retrieval
@@ -87,5 +92,5 @@ The system includes comprehensive tests in `tests/unit/api/test_nudge_tracking.p
 
 The system uses Alembic for database migrations:
 - Adds `enrollment_agent_id` to student profiles
-- Creates `nudge_actions` table
-- Creates `nudge_feedback_metrics` table 
+- Creates `recommendation_actions` table
+- Creates `recommendation_feedback_metrics` table 

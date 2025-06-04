@@ -44,18 +44,18 @@ from sqlalchemy import desc
 # Add the parent directory to the path so we can import from other modules
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from data.models.models import (
-    StudentProfile, 
-    EngagementHistory, 
-    EngagementContent, 
-    get_session, 
-    init_db
-)
+from data.models.student_profile import StudentProfile
+from data.models.engagement_history import EngagementHistory
+from data.models.stored_recommendation import StoredRecommendation
+from data.models.engagement_content import EngagementContent
+from data.models.get_session import get_session
+from data.models.init_db import init_db
 from models.recommendation_service import RecommendationService
 from models.simple_recommender import SimpleRecommender
 from utils.status_tracker import StatusTracker
 from batch_processing.status_tracker import BatchStatusTracker
 from api.services.matching_service import MatchingService
+from database.session import get_db
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -234,7 +234,7 @@ def main():
         # Initialize database
         init_db()
         # Get database session
-        session = get_session()
+        session = get_db()
         try:
             # Get new engagements
             if args.engagements_csv:
@@ -253,7 +253,7 @@ def main():
             all_engagements = session.query(EngagementHistory).all()
             matched_count = 0
             for engagement in all_engagements:
-                matched, confidence = matching_service.match_engagement_to_nudge(engagement)
+                matched, confidence = matching_service.match_engagement_to_recommendation(engagement)
                 if matched:
                     matched_count += 1
             print(f"Batch matching complete. Matched {matched_count} engagements.")

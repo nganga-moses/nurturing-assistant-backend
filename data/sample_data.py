@@ -7,7 +7,8 @@ from datetime import datetime, timedelta
 # Add parent directory to path for imports
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from data.models.models import StudentProfile, EngagementHistory, EngagementContent, get_session, init_db
+from data.models import StudentProfile, EngagementHistory, EngagementContent
+from database.session import get_db
 
 
 def generate_sample_data(num_students=100, num_engagements_per_student=10, num_content_items=50):
@@ -19,11 +20,8 @@ def generate_sample_data(num_students=100, num_engagements_per_student=10, num_c
         num_engagements_per_student: Average number of engagements per student
         num_content_items: Number of content items to generate
     """
-    # Initialize database
-    init_db()
-    
     # Get session
-    session = get_session()
+    session = get_db()
     
     # Generate content items
     content_items = []

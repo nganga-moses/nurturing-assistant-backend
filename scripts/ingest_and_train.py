@@ -46,16 +46,16 @@ from typing import Dict
 # Add the parent directory to the path so we can import from other modules
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from data.models.models import (
-    StudentProfile, 
-    EngagementHistory, 
-    EngagementContent, 
-    get_session, 
-    init_db
-)
+from data.models.student_profile import StudentProfile
+from data.models.engagement_history import EngagementHistory
+from data.models.stored_recommendation import StoredRecommendation
+from data.models.engagement_content import EngagementContent
+from data.models.get_session import get_session
+from data.models.init_db import init_db
 from models.train_model import train_and_save_model, prepare_data_for_training
 from models.simple_recommender import SimpleRecommender
 from api.services.matching_service import MatchingService
+from database.session import get_db
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -157,80 +157,69 @@ def store_data_in_database(
     dataframes: Dict[str, pd.DataFrame]
 ) -> None:
     """
-    Store data in the database.
-    
-    This function:
-    1. Validates data before storage
-    2. Handles data insertion
-    3. Manages transactions
-    4. Updates related records
-    
-    Args:
-        session: SQLAlchemy session
-        dataframes: Dictionary containing:
-            - students: DataFrame of student profiles
-            - engagements: DataFrame of engagement history
-            - content: DataFrame of engagement content
-            
-    Raises:
-        ValueError: If data is invalid
-        SQLAlchemyError: If database operations fail
+    Store data in the database from the loaded DataFrames.
+    This function expects students and engagements DataFrames to have flat columns.
+    It reconstructs the JSON fields as needed.
     """
-    logger.info("Ingesting data into database...")
-    
-    try:
-        # Ingest students
-        for _, row in dataframes['students'].iterrows():
-            student = StudentProfile(
-                student_id=row['student_id'],
-                demographic_features=row['demographic_features'] if isinstance(row['demographic_features'], dict) else eval(row['demographic_features']),
-                application_status=row['application_status'],
-                funnel_stage=row['funnel_stage'],
-                first_interaction_date=pd.to_datetime(row['first_interaction_date']),
-                last_interaction_date=pd.to_datetime(row['last_interaction_date']),
-                interaction_count=row['interaction_count'],
-                application_likelihood_score=row['application_likelihood_score'],
-                dropout_risk_score=row['dropout_risk_score']
-            )
-            session.add(student)
-        
-        # Ingest content
-        for _, content in dataframes['content'].iterrows():
-            content_obj = EngagementContent(
-                content_id=content['content_id'],
-                engagement_type=content['content_type'],
-                content_category="general",
-                content_description=content['content_description'],
-                content_features=content['engagement_metrics'],
-                success_rate=content['success_rate'],
-                target_funnel_stage=content['target_funnel_stage'],
-                appropriate_for_risk_level="all"
-            )
-            session.add(content_obj)
-        
-        # Ingest engagements
-        logger.info("Engagements DataFrame columns: %s", dataframes['engagements'].columns.tolist())
-        for _, engagement in dataframes['engagements'].iterrows():
-            engagement_obj = EngagementHistory(
-                engagement_id=engagement['engagement_id'],
-                student_id=engagement['student_id'],
-                engagement_type=engagement['engagement_type'],
-                engagement_content_id=engagement['engagement_content_id'],
-                timestamp=pd.to_datetime(engagement['timestamp']),
-                engagement_response=engagement['engagement_response'],
-                engagement_metrics=engagement['engagement_metrics'] if isinstance(engagement['engagement_metrics'], dict) else eval(engagement['engagement_metrics']),
-                funnel_stage_before=engagement['funnel_stage_before'],
-                funnel_stage_after=engagement['funnel_stage_after']
-            )
-            session.add(engagement_obj)
-        
-        session.commit()
-        logger.info("Data ingestion completed successfully")
-        
-    except Exception as e:
-        session.rollback()
-        logger.error(f"Error ingesting data: {str(e)}")
-        raise
+    students_df = dataframes['students']
+    engagements_df = dataframes['engagements']
+    content_df = dataframes['content']
+
+    # --- Students: Build demographic_features JSON ---
+    if all(col in students_df.columns for col in ["location", "intended_major"]):
+        students_df['demographic_features'] = students_df.apply(
+            lambda row: {
+                "location": row["location"],
+                "intended_major": row["intended_major"]
+            }, axis=1
+        )
+    # --- Engagements: Build engagement_metrics JSON ---
+    metric_cols = ["open_time", "click_through", "time_spent"]
+    if all(col in engagements_df.columns for col in metric_cols):
+        engagements_df['engagement_metrics'] = engagements_df.apply(
+            lambda row: {
+                "open_time": row["open_time"],
+                "click_through": row["click_through"],
+                "time_spent": row["time_spent"]
+            }, axis=1
+        )
+    # Now store in DB as before
+    for _, row in students_df.iterrows():
+        student = StudentProfile(
+            student_id=row['student_id'],
+            first_name=row.get('first_name'),
+            last_name=row.get('last_name'),
+            birthdate=pd.to_datetime(row.get('birthdate')) if row.get('birthdate') else None,
+            recruiter_id=row.get('recruiter_id'),
+            enrollment_agent_id=row.get('recruiter_id'),
+            demographic_features=row['demographic_features'],
+            application_status=row['application_status'],
+            funnel_stage=row['funnel_stage'],
+            first_interaction_date=row['first_interaction_date'],
+            last_interaction_date=row['last_interaction_date'],
+            interaction_count=row['interaction_count'],
+            gpa=row.get('gpa'),
+            sat_score=row.get('sat_score'),
+            act_score=row.get('act_score')
+        )
+        session.add(student)
+    for _, row in engagements_df.iterrows():
+        engagement = EngagementHistory(
+            engagement_id=row['engagement_id'],
+            student_id=row['student_id'],
+            engagement_type=row['engagement_type'],
+            engagement_content_id=row['engagement_content_id'],
+            timestamp=row['timestamp'],
+            engagement_response=row['engagement_response'],
+            engagement_metrics=row['engagement_metrics'],
+            funnel_stage_before=row['funnel_stage_before'],
+            funnel_stage_after=row['funnel_stage_after']
+        )
+        session.add(engagement)
+    for _, row in content_df.iterrows():
+        content = EngagementContent(**row)
+        session.add(content)
+    session.commit()
 
 def main():
     """
@@ -262,7 +251,7 @@ def main():
     print("=" * 80)
     try:
         # Get database session
-        session = get_session()
+        session = get_db()
         try:
             # Load data from CSV
             dataframes = load_data_from_csv(args.students_csv, args.engagements_csv, args.content_csv)
@@ -276,7 +265,7 @@ def main():
             all_engagements = session.query(EngagementHistory).all()
             matched_count = 0
             for engagement in all_engagements:
-                matched, confidence = matching_service.match_engagement_to_nudge(engagement)
+                matched, confidence = matching_service.match_engagement_to_recommendation(engagement)
                 if matched:
                     matched_count += 1
             print(f"Batch matching complete. Matched {matched_count} engagements.")

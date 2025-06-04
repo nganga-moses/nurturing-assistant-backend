@@ -11,7 +11,10 @@ import uuid
 # Add the parent directory to the path so we can import from other modules
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from data.models.models import StudentProfile, EngagementHistory, EngagementContent, get_session
+from data.models.student_profile import StudentProfile
+from data.models.engagement_history import EngagementHistory
+from data.models.engagement_content import EngagementContent
+from database.session import get_db
 
 class RecommendationService:
     """Service for generating recommendations using the database and fallback logic."""
@@ -68,28 +71,28 @@ class RecommendationService:
         df.to_csv(path, index=False)
     
     def get_recommendations(self, student_id: str, count: int = 3) -> List[Dict[str, Any]]:
-        session = get_session()
+        session = next(get_db())
         try:
             student = session.query(StudentProfile).filter_by(student_id=student_id).first()
             if not student:
                 print(f"Student with ID {student_id} not found in database")
                 return self._get_default_recommendations(count)
+            
             # Get recent engagements
             recent_engagements = session.query(EngagementHistory).filter(
                 EngagementHistory.student_id == student_id,
                 EngagementHistory.timestamp >= datetime.now() - timedelta(days=7)
             ).all()
+            
             # Use fallback logic to get recommendations
             recommendations = self._get_fallback_recommendations(student, count, session)
+            
             # Adjust recommendations based on recent engagements
             recommendations = self._adjust_recommendations(recommendations, recent_engagements)
             return recommendations
         except Exception as e:
             print(f"Error getting recommendations: {str(e)}")
-            if student:
-                return self._get_fallback_recommendations(student, count, session)
-            else:
-                return self._get_default_recommendations(count)
+            return self._get_default_recommendations(count)
         finally:
             session.close()
     

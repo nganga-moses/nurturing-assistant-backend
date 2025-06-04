@@ -23,4 +23,34 @@ class RecommendationSettingsResponse(BaseModel):
     next_run: Optional[datetime]
     is_active: bool
     created_at: datetime
-    updated_at: datetime 
+    updated_at: datetime
+
+class RecommendationResponse(BaseModel):
+    student_id: str
+    recommendations: List[Dict[str, Any]]
+
+class LikelihoodRequest(BaseModel):
+    student_id: str
+
+class LikelihoodResponse(BaseModel):
+    student_id: str
+    likelihood: float
+
+class RiskAssessmentRequest(BaseModel):
+    student_id: str
+
+class RiskAssessmentResponse(BaseModel):
+    student_id: str
+    risk_score: float
+    risk_category: str
+
+class BulkActionRequest(BaseModel):
+    action: str
+    segment: str
+
+class BulkActionPreviewResponse(BaseModel):
+    preview: List[Dict[str, Any]]
+
+class BulkActionApplyResponse(BaseModel):
+    applied: bool
+    details: Optional[Dict[str, Any]] = None 

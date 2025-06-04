@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import Optional, List
-from ..dependencies import get_db
-from ..auth.jwt import get_current_user, check_admin, check_manager
+from database.session import get_db
+from api.auth.supabase import get_current_user, check_admin, check_manager
 from data.models.settings import Settings
 from data.models.user import User
 
@@ -66,4 +66,9 @@ def set_global_setting(
         setting = Settings(user_id=None, key=key, value=value)
         db.add(setting)
     db.commit()
-    return {"success": True, "setting": setting.to_dict()} 
+    return {"success": True, "setting": setting.to_dict()}
+
+@router.get("/sync")
+def get_sync_settings(db: Session = Depends(get_db), current_user: User = Depends(check_admin)):
+    """Get sync settings (stub)."""
+    return {"sync_enabled": True, "last_sync": None, "next_sync": None} 

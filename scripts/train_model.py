@@ -47,10 +47,13 @@ from models.synthetic_data import generate_synthetic_data
 # Add the parent directory to the path so we can import from other modules
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from data.models.models import StudentProfile, EngagementHistory, EngagementContent, get_session
+from data.models.student_profile import StudentProfile
+from data.models.engagement_history import EngagementHistory
+from data.models.engagement_content import EngagementContent
 from models.recommender_model import ModelTrainer
 from models.collaborative_filtering_model import CollaborativeFilteringModel
 from models.simple_recommender import SimpleRecommender
+from database.session import get_db
 
 def load_data_from_db(session: Session) -> Dict[str, pd.DataFrame]:
     """
@@ -501,7 +504,7 @@ def main():
     os.makedirs(args.model_dir, exist_ok=True)
     
     # Load data from database
-    session = get_session()
+    session = get_db()
     dataframes = load_data_from_db(session)
     
     # Prepare data for training
