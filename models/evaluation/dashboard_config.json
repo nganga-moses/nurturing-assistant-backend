@@ -1,0 +1,72 @@
+{
+  "dashboard_name": "Student Engagement Model Monitor",
+  "refresh_interval": "5_minutes",
+  "panels": {
+    "model_performance": {
+      "metrics": [
+        "prediction_accuracy",
+        "inference_latency",
+        "throughput_rps",
+        "error_rate"
+      ],
+      "charts": [
+        "time_series",
+        "gauge",
+        "histogram"
+      ],
+      "alerts": {
+        "accuracy_drop": "accuracy < 0.08",
+        "high_latency": "latency > 100ms",
+        "error_spike": "error_rate > 0.05"
+      }
+    },
+    "data_quality": {
+      "metrics": [
+        "feature_completeness",
+        "data_freshness",
+        "distribution_drift",
+        "schema_violations"
+      ],
+      "charts": [
+        "bar_chart",
+        "distribution_plot"
+      ],
+      "alerts": {
+        "data_drift": "drift_score > 0.15",
+        "missing_data": "completeness < 0.95"
+      }
+    },
+    "business_metrics": {
+      "metrics": [
+        "recommendation_ctr",
+        "student_engagement_rate",
+        "content_coverage",
+        "recommendation_diversity"
+      ],
+      "charts": [
+        "line_chart",
+        "pie_chart"
+      ],
+      "alerts": {
+        "low_engagement": "engagement_rate < 0.3",
+        "poor_diversity": "diversity_score < 0.5"
+      }
+    },
+    "system_health": {
+      "metrics": [
+        "cpu_usage",
+        "memory_usage",
+        "disk_usage",
+        "network_io"
+      ],
+      "charts": [
+        "gauge",
+        "time_series"
+      ],
+      "alerts": {
+        "high_memory": "memory > 80%",
+        "high_cpu": "cpu > 90%"
+      }
+    }
+  }
+}

@@ -24,13 +24,12 @@ from data.models.student_profile import StudentProfile
 from data.models.engagement_history import EngagementHistory
 from data.models.stored_recommendation import StoredRecommendation
 from data.models.engagement_content import EngagementContent
-from data.models.get_session import get_session
-from data.models.init_db import init_db
-from models.recommendation_service import RecommendationService
-from models.simple_recommender import SimpleRecommender
+from database.session import get_db
+from models.recommenders.content_based import ContentBasedRecommender
+from models.recommenders.collaborative import CollaborativeFilteringModel
 from utils.status_tracker import StatusTracker
 from api.services.matching_service import MatchingService
-from database.session import get_db
+from data.models.funnel_stage import FunnelStage
 
 # Configure logging
 logging.basicConfig(
@@ -222,6 +221,10 @@ def update_student_profiles(session: Session, students_df: pd.DataFrame) -> None
         if student:
             # Update basic information
             student.funnel_stage = row['funnel_stage']
+            # Get the corresponding FunnelStage record
+            stage = session.query(FunnelStage).filter_by(stage_name=row['funnel_stage']).first()
+            if stage:
+                student.current_stage_id = stage.id
             student.last_interaction_date = pd.to_datetime(row['last_interaction_date'])
             student.interaction_count = row['interaction_count']
             
@@ -263,18 +266,25 @@ def update_student_data(session: Session, students_df: pd.DataFrame) -> Tuple[in
             existing_student.demographic_features = student['demographic_features']
             existing_student.application_status = student['application_status']
             existing_student.funnel_stage = student['funnel_stage']
+            # Get the corresponding FunnelStage record
+            stage = session.query(FunnelStage).filter_by(stage_name=student['funnel_stage']).first()
+            if stage:
+                existing_student.current_stage_id = stage.id
             existing_student.last_interaction_date = student['last_interaction_date']
             existing_student.interaction_count = student['interaction_count']
             existing_student.application_likelihood_score = student['application_likelihood_score']
             existing_student.dropout_risk_score = student['dropout_risk_score']
             updated_students += 1
         else:
+            # Get the corresponding FunnelStage record
+            stage = session.query(FunnelStage).filter_by(stage_name=student['funnel_stage']).first()
             # Create new student
             new_student = StudentProfile(
                 student_id=student['student_id'],
                 demographic_features=student['demographic_features'],
                 application_status=student['application_status'],
                 funnel_stage=student['funnel_stage'],
+                current_stage_id=stage.id if stage else None,
                 first_interaction_date=student['first_interaction_date'],
                 last_interaction_date=student['last_interaction_date'],
                 interaction_count=student['interaction_count'],
@@ -311,10 +321,8 @@ def main():
     print(f"Starting student data update at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 80)
     try:
-        # Initialize database
-        init_db()
         # Get database session
-        session = get_db()
+        session = next(get_db())
         try:
             # Get student data
             if args.students_csv:

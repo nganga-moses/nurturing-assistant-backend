@@ -10,25 +10,15 @@ class DataValidator:
     """Validates and cleans CRM data."""
     
     def __init__(self):
-        self.required_columns = {
-            "student_data": [
-                "student_id",
-                "location",
-                "age",
-                "intended_major",
-                "gpa",
-                "sat_score",
-                "act_score"
-            ],
-            "engagement_data": [
-                "engagement_id",
-                "student_id",
-                "engagement_type",
-                "timestamp",
-                "engagement_response",
-                "funnel_stage_before",
-                "funnel_stage_after"
-            ]
+        self.required_student_columns = {
+            'student_id', 'first_name', 'last_name', 'birthdate', 'email', 'phone',
+            'location', 'intended_major', 'application_status', 'funnel_stage',
+            'first_interaction_date', 'last_interaction_date', 'recruiter_id',
+            'interaction_count', 'gpa', 'sat_score', 'act_score'
+        }
+        self.required_engagement_columns = {
+            'engagement_id', 'student_id', 'engagement_type', 'timestamp',
+            'engagement_response', 'funnel_stage_before', 'funnel_stage_after'
         }
         
         self.data_types = {
@@ -65,77 +55,64 @@ class DataValidator:
         
         return cleaned_data
     
-    def process_student_data(self, student_data: pd.DataFrame) -> pd.DataFrame:
-        """Process and clean student data."""
-        # Check required columns
-        missing_cols = set(self.required_columns["student_data"]) - set(student_data.columns)
+    def process_student_data(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Process student data to ensure required fields and data types."""
+        # Ensure all required columns exist
+        missing_cols = self.required_student_columns - set(df.columns)
         if missing_cols:
             raise ValueError(f"Missing required columns in student data: {missing_cols}")
+
+        # Convert date fields to datetime
+        date_fields = ['birthdate', 'first_interaction_date', 'last_interaction_date']
+        for field in date_fields:
+            if field in df.columns:
+                df[field] = pd.to_datetime(df[field], errors='coerce').dt.normalize()
+                df[field] = df[field].replace({pd.NaT: None})
         
-        # Remove duplicates
-        student_data = student_data.drop_duplicates(subset=["student_id"])
+        # Clean and validate data
+        df = df.copy()
         
-        # Handle missing values
-        student_data["gpa"] = student_data["gpa"].fillna(
-            student_data.groupby("intended_major")["gpa"].transform("mean")
-        )
+        # Convert birthdate to datetime
+        df['birthdate'] = pd.to_datetime(df['birthdate'], errors='coerce')
         
-        student_data["sat_score"] = student_data["sat_score"].fillna(
-            student_data.groupby("intended_major")["sat_score"].transform("mean")
-        )
+        # Convert numeric fields
+        numeric_fields = ['gpa', 'sat_score', 'act_score', 'interaction_count']
+        for field in numeric_fields:
+            df[field] = pd.to_numeric(df[field], errors='coerce')
         
-        student_data["act_score"] = student_data["act_score"].fillna(
-            student_data.groupby("intended_major")["act_score"].transform("mean")
-        )
+        # Validate GPA range (0-4)
+        df['gpa'] = df['gpa'].clip(0, 4)
         
-        # Validate data types
-        for column, dtype in self.data_types.items():
-            if column in student_data.columns:
-                student_data[column] = self.convert_to_type(
-                    student_data[column],
-                    dtype
-                )
+        # Validate SAT score range (400-1600)
+        df['sat_score'] = df['sat_score'].clip(400, 1600)
         
-        # Validate ranges
-        student_data["gpa"] = student_data["gpa"].clip(0, 4.0)
-        student_data["sat_score"] = student_data["sat_score"].clip(400, 1600)
-        student_data["act_score"] = student_data["act_score"].clip(1, 36)
+        # Validate ACT score range (1-36)
+        df['act_score'] = df['act_score'].clip(1, 36)
         
-        return student_data
+        return df
     
-    def process_engagement_data(self, engagement_data: pd.DataFrame) -> pd.DataFrame:
-        """Process and clean engagement data."""
-        # Check required columns
-        missing_cols = set(self.required_columns["engagement_data"]) - set(engagement_data.columns)
+    def process_engagement_data(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Process and validate engagement data.
+        """
+        # Check for required columns
+        missing_cols = self.required_engagement_columns - set(df.columns)
         if missing_cols:
             raise ValueError(f"Missing required columns in engagement data: {missing_cols}")
+
+        # Clean and validate data
+        df = df.copy()
         
-        # Remove invalid engagements
-        engagement_data = engagement_data[
-            engagement_data["student_id"].isin(self.valid_student_ids)
-        ]
+        # Convert timestamp to datetime
+        df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
         
-        # Handle timestamps
-        engagement_data["timestamp"] = pd.to_datetime(
-            engagement_data["timestamp"],
-            errors="coerce"
-        )
+        # Convert engagement metrics if present
+        metric_fields = ['open_time', 'click_through', 'time_spent']
+        for field in metric_fields:
+            if field in df.columns:
+                df[field] = pd.to_numeric(df[field], errors='coerce')
         
-        # Remove future dates
-        engagement_data = engagement_data[
-            engagement_data["timestamp"] <= pd.Timestamp.now()
-        ]
-        
-        # Validate funnel stages
-        engagement_data["funnel_stage_before"] = engagement_data["funnel_stage_before"].apply(
-            lambda x: x if x in self.valid_funnel_stages else "Awareness"
-        )
-        
-        engagement_data["funnel_stage_after"] = engagement_data["funnel_stage_after"].apply(
-            lambda x: x if x in self.valid_funnel_stages else "Awareness"
-        )
-        
-        return engagement_data
+        return df
     
     def convert_to_type(self, series: pd.Series, dtype: str) -> pd.Series:
         """Convert series to specified data type."""
@@ -170,12 +147,29 @@ class DataImputation:
         data["location"] = data.groupby("intended_major")["location"].transform(
             lambda x: x.fillna(x.mode()[0])
         )
-        
-        # Age: Use median age for similar students
-        data["age"] = data.groupby("intended_major")["age"].transform(
-            lambda x: x.fillna(x.median())
-        )
-        
+
+        # If 'age' is present, impute it; otherwise, skip
+        if "age" in data.columns:
+            data["age"] = data.groupby("intended_major")["age"].transform(
+                lambda x: x.fillna(x.median())
+            )
+        # If 'age' is not present but 'birthdate' is, compute age
+        elif "birthdate" in data.columns:
+            from datetime import date
+            def calculate_age(birthdate):
+                if pd.isnull(birthdate):
+                    return None
+                if isinstance(birthdate, str):
+                    try:
+                        birthdate = pd.to_datetime(birthdate).date()
+                    except Exception:
+                        return None
+                elif isinstance(birthdate, pd.Timestamp):
+                    birthdate = birthdate.date()
+                today = date.today()
+                return today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
+            data["age"] = data["birthdate"].apply(calculate_age)
+        # If neither, do nothing
         return data
     
     def impute_academic(self, data: pd.DataFrame) -> pd.DataFrame:

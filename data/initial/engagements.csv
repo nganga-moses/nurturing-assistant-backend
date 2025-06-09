@@ -1,0 +1,1001 @@
+engagement_id,student_id,engagement_type,engagement_content_id,timestamp,engagement_response,open_time,click_through,time_spent,funnel_stage_before,funnel_stage_after
+9fd54f87-b6aa-40b4-98ea-74c1d3721706,8fe5d687-993c-46d5-bd37-619db1811b2e,virtual info session,content_10,2025-01-10 09:37:36,joined,223,TRUE,283,Consideration,Decision
+5c82cdc8-3b68-4949-b9f2-590b49eaf928,278dfafb-85de-4ee1-9b38-da10b1018eb8,sms,content_7,2025-04-23 01:39:12,clicked,187,FALSE,402,Consideration,Decision
+2deaa226-0d9b-46ee-a747-e0c7d1413967,52cb11e4-a257-4c61-bb46-44b78fe3e7ec,virtual info session,content_6,2025-02-28 20:14:30,booked,297,TRUE,588,Interest,Consideration
+ac85f4a7-f053-48eb-83ca-c291ddfea534,08e4ec84-91b5-4836-88ab-e65b45eb8f4f,virtual info session,content_15,2025-01-28 10:56:12,clicked,113,FALSE,196,Interest,Application
+5327cc76-1259-4c1c-8723-e02867d9eccf,c1608051-1357-4cdd-9b71-387134559ffa,phone call,content_3,2025-05-31 12:19:02,booked,53,FALSE,296,Interest,Consideration
+590c8516-90a0-4bb3-bea7-8962d1d67641,47d2d03d-5680-40bb-91b4-85c7d0752e21,virtual info session,content_6,2025-03-22 18:33:54,joined,208,FALSE,33,Interest,Application
+7f44d0bf-a98e-406a-a33a-315ae47a771b,4a2bd9fd-8be8-4445-a122-c0251b3a0cad,event invite,content_16,2025-04-01 14:53:07,ignored,85,FALSE,31,Interest,Application
+308b813b-672f-421f-b6b1-510fc2dd4cfb,50ffd0e6-6318-4dff-90ce-4366128e39a9,webinar,content_3,2025-04-23 09:41:20,unsubscribed,137,FALSE,28,Interest,Consideration
+c671637b-0e08-42e4-814a-1e7520aa4ae0,3562cd5e-d1d3-434d-a70e-28c4b8cc97b3,event invite,content_12,2025-02-08 15:53:15,unsubscribed,3,FALSE,450,Awareness,Consideration
+d4d78458-8842-417f-8461-0e402cbfb814,e4ed4730-a941-4200-8435-2c7f94a2a4d3,1-1 meeting,content_6,2025-04-23 01:59:22,unsubscribed,185,TRUE,459,Interest,Application
+b761c2ee-78f2-4a4a-b220-2b6b573280fd,6c002365-b339-43ad-b834-65d302a9dd99,1-1 meeting,content_10,2025-01-11 23:42:05,unsubscribed,201,TRUE,109,Awareness,Consideration
+2f300076-ddb8-4cd1-bcae-28ba058e833b,9c68b336-72ed-4bdf-afaf-d97f38ca7407,phone call,content_11,2025-02-09 06:09:58,ignored,215,FALSE,595,Consideration,Decision
+3ee7f77a-6476-44fa-827e-bdc997d5cfcf,0cb38777-7e45-43e0-b7f9-d0e2ddb338f3,phone call,content_16,2025-03-20 22:21:05,unsubscribed,242,TRUE,231,Interest,Consideration
+a677ae35-e1d5-41d3-a109-0fcf25fd96d7,e68b0841-4bb4-4484-873d-9f9aaf75b8d6,email,content_15,2025-05-20 17:46:52,joined,282,FALSE,324,Awareness,Consideration
+713525d9-b58e-4dd5-9aa9-2e912aa96a4e,6c115fd7-1b8e-453e-a79f-a6793f6c8cda,event invite,content_8,2025-05-30 23:14:18,booked,125,FALSE,253,Application,Enrollment
+fee4cbe8-f26d-4c2f-b90e-2839a3010623,3954817a-b94b-4124-8324-b065e435a5d0,webinar,content_6,2025-05-04 01:01:13,ignored,161,TRUE,101,Application,Enrollment
+37f73dda-5bf0-4f9a-9bc1-cbd81f22d0ba,14df0d8d-a1c3-40a9-aaa8-961df5a4b4d4,webinar,content_18,2025-05-17 01:55:04,joined,135,TRUE,209,Awareness,Interest
+332ca6c2-7f27-4556-9936-216832469c89,8bfff612-859a-4885-b4b1-de1fd12f5a92,1-1 meeting,content_7,2025-05-15 14:45:48,ignored,173,FALSE,138,Consideration,Decision
+ed8a063f-4412-4b4b-a401-cc27a9336c65,eebb1a24-bc82-4347-b1bf-f20a4c08cb40,phone call,content_18,2025-01-19 11:13:10,ignored,64,TRUE,319,Decision,Application
+35f22a2f-113c-4584-8fa8-4b73806a957d,3e8e3ac6-5f3e-44da-bc92-8d57faeb6c39,event invite,content_8,2025-03-09 23:05:52,unsubscribed,283,FALSE,235,Decision,Application
+f9c58e47-4a49-43fc-84b9-a5fbcfd47970,56413076-a5a9-469c-a24f-384def04a4ce,virtual info session,content_4,2025-01-11 12:57:15,booked,210,TRUE,217,Awareness,Interest
+8f5a01f2-efd9-4da8-a901-3f332259d811,0cd80297-21f6-4adb-a4f5-12607b63a493,phone call,content_8,2025-05-18 21:00:17,unsubscribed,280,TRUE,175,Awareness,Interest
+f1c8e067-7f0f-4aa9-bfcc-1e31f2cfd7b6,ef23ccab-954f-48ed-b477-db0437290373,phone call,content_5,2025-05-04 06:25:37,ignored,57,FALSE,462,Interest,Application
+5ebb2ac6-f0d5-48e3-b5b2-808e0953de7a,736ad7dc-c410-4cd9-8225-cebe6da9d411,sms,content_3,2025-03-15 07:01:42,replied,40,TRUE,68,Awareness,Consideration
+82a39baf-9ea3-4bcf-9508-f9d0d666d2ba,1f98c592-d9d9-46de-b7ee-9fae64ea42d2,virtual info session,content_11,2025-03-01 23:00:03,joined,231,TRUE,407,Awareness,Interest
+b464e177-356c-47e8-8e79-2d173a2f966e,ea51aad2-0fb6-4559-a1cd-898a182b5502,event invite,content_14,2025-05-23 20:04:59,unsubscribed,108,TRUE,482,Awareness,Interest
+1a0b219f-fc73-4ef7-8508-945d76508dbb,5e2a7df4-d83c-4d57-94a9-50cd63a09408,event invite,content_3,2025-03-16 12:27:01,ignored,38,FALSE,500,Application,Enrollment
+a931cf5f-edfc-4140-a866-d57ed002f53f,bb7d7c83-8cd0-4b03-9579-84ddcf734bf0,email,content_5,2025-01-27 03:34:00,joined,44,FALSE,572,Interest,Application
+67edc29b-c2a2-412a-944a-2970d46d92ae,4f16ff26-e240-4a30-9f25-45e0214bb08d,virtual info session,content_6,2025-04-12 19:54:38,clicked,106,TRUE,323,Application,Enrollment
+285cf083-d291-4719-a161-96ccf1be7b4a,dbf17263-f5e0-4c2b-9395-627de5f5c972,sms,content_9,2025-02-26 01:48:53,replied,43,TRUE,588,Consideration,Decision
+cbdfa681-23b4-4d23-9d95-603bb2a44899,c2c9d38e-bdbf-4e3b-bb6f-6dd06820d2db,sms,content_9,2025-02-28 16:54:01,ignored,172,TRUE,11,Awareness,Interest
+55ad4f0f-8e14-4707-b095-e7e35d619c32,aca39d72-6874-48c4-91f8-bda393f4e4b8,event invite,content_2,2025-06-01 23:04:08,ignored,278,TRUE,458,Interest,Application
+ff38df0e-5178-4947-9993-c200e3ec5301,f8a067cf-96ca-457f-8a1f-ada01c4392e5,1-1 meeting,content_15,2025-03-09 19:16:29,replied,135,FALSE,218,Interest,Consideration
+03edae83-a3c1-43b8-8282-6e413a1727bc,19e043bc-7bec-4670-9b97-7b4c68355913,1-1 meeting,content_10,2025-02-02 12:21:45,unsubscribed,70,TRUE,238,Awareness,Consideration
+600c9de9-4995-45a9-8831-a5fce2d86088,56413076-a5a9-469c-a24f-384def04a4ce,phone call,content_13,2025-01-05 18:25:27,replied,243,FALSE,516,Interest,Consideration
+92aa9e58-95ba-4aeb-8fd2-3e4064ccc893,6dfc3769-5da0-4fcc-a79e-fbe01355de7c,webinar,content_9,2025-01-22 01:12:13,booked,177,TRUE,401,Application,Enrollment
+3d2dc1be-4572-47ed-84ff-1af6e6a3896e,cd6c9802-c1b6-4c23-a72a-e70cf5814eea,1-1 meeting,content_10,2025-05-16 19:47:06,replied,102,TRUE,428,Consideration,Decision
+c20ea2d2-b17b-43b9-b2fd-83e235b50671,ebc0eed6-5767-429c-951e-8375c5da221e,1-1 meeting,content_5,2025-01-10 17:34:57,clicked,292,FALSE,513,Interest,Consideration
+9bfe5528-e966-431c-8b37-7fa4dfe8f5ed,3562cd5e-d1d3-434d-a70e-28c4b8cc97b3,phone call,content_19,2025-03-21 17:14:23,ignored,129,FALSE,529,Interest,Application
+a6bb8a8e-2621-4dc0-8d4a-0f312bb316b5,93a554ce-0984-4dd2-a0df-0240a9284132,virtual info session,content_9,2025-04-28 11:18:48,ignored,264,TRUE,201,Interest,Application
+e2d7304c-9df7-476c-a4a9-22013632d99c,a5187093-6603-4ab5-9476-08768e507adf,phone call,content_18,2025-01-05 15:29:29,booked,224,FALSE,315,Application,Enrollment
+05d11113-544a-4785-9dc6-d4a5f783c251,279fa767-a13b-45b7-bdde-19fd0191cf3e,webinar,content_16,2025-01-10 22:39:24,unsubscribed,273,FALSE,97,Interest,Consideration
+3b02798e-b88e-4398-ab31-7bf90499f0c2,7c4c8a24-6e6a-40c9-928c-75c56d9abd93,event invite,content_13,2025-05-07 11:14:22,ignored,39,TRUE,593,Consideration,Decision
+3571044c-412e-46a8-a6dc-f3b0af60ae0c,faef752b-f5c3-4a19-9afb-e1a2f8fa96c8,phone call,content_16,2025-04-11 06:52:51,ignored,169,FALSE,299,Consideration,Decision
+195b7f0d-c833-4697-978e-c0c49eeb7ca8,2d7c70ef-f3d7-4954-b0de-e5d756e2e66b,virtual info session,content_5,2025-05-21 17:02:52,clicked,108,FALSE,540,Awareness,Interest
+021a8bec-3c75-454c-8efb-4a404aa32bd1,79b56764-d0d4-4ac0-9ca5-80c1e924c2fe,phone call,content_16,2025-01-13 18:45:38,replied,36,TRUE,502,Awareness,Interest
+c1c835c1-24ec-44e5-843c-0c28426c32ed,71282f3f-a35f-4ac7-b592-b2e7ff8d9bc5,virtual info session,content_3,2025-02-21 05:33:51,replied,199,TRUE,209,Application,Enrollment
+0fbc4856-54f6-419f-b8b7-705f48a18cd6,c40a90de-c6f0-472f-809e-54ac1b6f330a,sms,content_19,2025-05-16 12:03:43,clicked,111,TRUE,455,Awareness,Consideration
+1ce983b7-4aef-4155-a323-7af25e2ed846,ba84d6b2-5405-41fa-b460-77515ebc0a30,event invite,content_3,2025-05-13 23:51:00,booked,211,FALSE,537,Decision,Application
+5ede497f-20e5-4130-87b6-b92e2043f6e6,14d4ba1f-47b0-42ff-9948-40697c898522,1-1 meeting,content_7,2025-01-28 22:20:23,clicked,131,FALSE,570,Interest,Consideration
+8b757382-6ad5-499a-9220-6d63b2092a89,e139c81f-1282-4b73-aa93-bc59426cd822,phone call,content_12,2025-04-29 14:13:02,replied,192,FALSE,592,Awareness,Interest
+3baa08ee-46ec-4f9d-a7cb-313923af78f8,bf7e5dcd-ff08-44ec-aacf-076df48ebe79,virtual info session,content_12,2025-04-06 22:03:45,ignored,243,TRUE,431,Awareness,Consideration
+f6a465b4-43aa-495d-8286-8c28ed98e2c6,7476fb57-6be4-42d6-94a4-941bd6f0f047,1-1 meeting,content_10,2025-05-13 17:47:57,booked,143,TRUE,499,Interest,Application
+67d25b24-dcce-4167-a566-a165724cb814,96aa9a49-ac94-40d3-a52f-c50e69b45603,webinar,content_14,2025-01-29 12:38:54,clicked,193,FALSE,287,Awareness,Interest
+2d48ecaa-ec31-466b-8d54-bd2b31789eba,52cb11e4-a257-4c61-bb46-44b78fe3e7ec,virtual info session,content_17,2025-04-04 08:38:40,replied,151,FALSE,425,Decision,Application
+dafd6a8d-0d90-4bad-a532-2f579bdce465,c98a1d3b-32fc-4037-8420-78f6929d6b0f,event invite,content_5,2025-02-02 17:13:48,replied,57,TRUE,26,Awareness,Interest
+a40ce542-6e8c-4028-b6e4-ced8d5aecd65,586e38b1-1a01-495d-a80f-b7be21548d87,virtual info session,content_13,2025-02-08 09:21:55,ignored,260,TRUE,62,Awareness,Interest
+4c67a641-d637-4507-a55b-ceffaa3dc8f5,ac9e4da2-8f53-4fab-a6c0-0c2dc02fa30b,virtual info session,content_5,2025-03-21 20:57:38,replied,189,FALSE,151,Interest,Consideration
+d524fe98-3e20-4a3b-930f-bf2bb9158a9d,7367f04a-9425-4812-b996-f6ec162540ca,sms,content_15,2025-04-13 03:50:02,clicked,72,FALSE,67,Interest,Application
+7518618a-9394-40ff-9993-f0475b4ef04a,fcc29a1e-f561-4a7f-89a5-2e805922f004,sms,content_8,2025-05-11 14:54:20,clicked,222,TRUE,394,Awareness,Consideration
+fbb40937-e981-446b-9749-e0970bdcba8a,537446aa-b19e-4d8b-a32e-30eb803d12ba,email,content_20,2025-05-01 07:15:11,booked,140,FALSE,480,Application,Enrollment
+b760f5b5-de27-4996-b82f-9b1758b054ad,c9e43dc5-9ed7-40bd-b2bf-a6916c81195b,phone call,content_14,2025-04-13 12:21:57,joined,271,TRUE,189,Consideration,Decision
+7a04f291-d213-4801-9dba-602294aec73a,d8c037b3-1a49-4575-afce-05ff889e0a08,webinar,content_14,2025-05-01 02:27:34,booked,51,TRUE,357,Awareness,Consideration
+0c78be06-77a2-4398-9ff1-a3ed7c7d0af6,a6ab7d7f-3a8d-4b90-8add-ce710ca98c66,event invite,content_10,2025-03-19 09:51:31,unsubscribed,183,FALSE,226,Interest,Application
+a74c8cfe-b363-4260-bd97-2c3175a05325,b48401e4-bc00-4772-afd3-cfcc8e54250d,event invite,content_2,2025-01-17 12:52:47,unsubscribed,126,TRUE,348,Awareness,Consideration
+c0a246e3-ca79-4589-ad43-ed78d045c7bd,9c6fa19c-b737-426e-b73e-8b8fdb809187,virtual info session,content_7,2025-01-18 11:49:30,replied,66,TRUE,282,Interest,Application
+a629cd86-8291-4671-a644-30ff44abb30a,c764be7f-9ce3-4340-91de-b933f60c53c4,sms,content_7,2025-03-17 16:29:38,unsubscribed,283,FALSE,241,Awareness,Consideration
+7028047a-9d50-4bc8-a432-771d27899235,e55bf3b2-f3fd-42fb-849e-5c0f8d65f50c,email,content_14,2025-02-25 19:42:22,unsubscribed,221,FALSE,523,Consideration,Decision
+a0b6428f-6f96-48e1-8314-c1fb43b6d643,4ede58b6-f359-48bf-bf90-0e07468d8382,sms,content_8,2025-01-19 11:40:41,ignored,132,FALSE,121,Interest,Application
+5cb08a88-0026-4bfc-a802-cd80f167beab,0975bb4e-61e8-45c3-9c43-f44c5547df81,email,content_17,2025-01-14 00:02:22,replied,173,TRUE,11,Awareness,Consideration
+79b144ad-99b3-4c3d-9f6e-2cc15d2eaa83,a6ab7d7f-3a8d-4b90-8add-ce710ca98c66,virtual info session,content_11,2025-03-17 20:42:28,joined,272,FALSE,548,Application,Enrollment
+cc65368d-d953-4add-8d77-480a43c3e6bb,98016002-7305-442c-b354-afcedea04c22,sms,content_9,2025-03-25 00:59:23,ignored,180,TRUE,148,Awareness,Consideration
+9bbd20ec-b749-4dd7-bf1b-84bd6137c864,2e23dc52-5d1d-4582-aa56-82719b2467ae,phone call,content_6,2025-02-14 11:02:07,replied,143,FALSE,495,Interest,Consideration
+f09184fd-4934-4131-a2c7-7a46d216af9f,89ac29ac-fe5a-4704-aeb3-8eae8b95d1cb,virtual info session,content_1,2025-03-19 09:10:13,booked,217,FALSE,41,Awareness,Interest
+b5faa238-9c62-4766-819f-0b98c46b6025,b48401e4-bc00-4772-afd3-cfcc8e54250d,virtual info session,content_10,2025-02-15 10:55:04,booked,185,TRUE,531,Interest,Consideration
+1bc38253-0da0-471a-9aa1-04fb2cae9360,08e4ec84-91b5-4836-88ab-e65b45eb8f4f,event invite,content_4,2025-03-30 04:51:32,unsubscribed,122,FALSE,587,Application,Enrollment
+0dc9f38e-8e9f-4d2d-b689-130b30e68718,39a7930f-ea2e-403a-90eb-dfa66c4e397e,webinar,content_8,2025-02-04 20:29:10,joined,39,TRUE,357,Application,Enrollment
+eb5bfa80-b416-44b3-accf-290e981d357b,0bd989e3-8eae-4e26-9101-7ae404048835,webinar,content_4,2025-06-02 21:44:45,ignored,143,FALSE,244,Interest,Consideration
+4dcb076d-cdaa-42bb-befd-afcdd2e7cf87,70054048-8817-46f5-a44f-4318a9b7fe8c,email,content_1,2025-02-14 10:53:42,joined,60,FALSE,182,Interest,Consideration
+96a86e3c-9cd0-4258-a833-f7336d571221,28437ca6-0f03-4e1e-9812-df393dc88bab,phone call,content_18,2025-04-17 01:28:57,clicked,275,FALSE,410,Interest,Consideration
+1a8e3491-a0dc-45fd-ba25-3ac7351da5c2,8f1ba8b5-e7aa-4f65-a7c7-8796d5c69ad1,email,content_2,2025-05-09 00:41:23,replied,223,FALSE,569,Awareness,Consideration
+744dec3d-8c6c-493e-8c50-893b34957a23,5aef8b43-6d13-426a-87ea-443c8fc72a02,webinar,content_1,2025-01-11 13:56:19,clicked,98,TRUE,240,Awareness,Consideration
+71b46bcd-e1e7-416c-81e4-f0fd8ff0f1fe,90e3006d-d946-4d28-96d1-5014f29b9344,1-1 meeting,content_19,2025-01-12 06:45:18,joined,10,FALSE,56,Interest,Application
+533a775b-3e48-44d4-b68c-6ddd001379b4,de3b3cf3-1347-487d-842c-6b847d105982,virtual info session,content_7,2025-03-06 23:42:45,joined,281,TRUE,64,Decision,Application
+3bc80d46-87ac-429c-99a8-54763c3b4940,36913b75-0fe1-4f82-9565-36e6cdedeb98,phone call,content_12,2025-04-18 12:04:59,unsubscribed,193,TRUE,327,Awareness,Consideration
+620591b1-9e97-40f5-956a-94e3e70fc94a,e919f87e-5859-40ae-a952-97dcd60637a8,phone call,content_12,2025-05-08 05:22:41,booked,60,FALSE,112,Application,Enrollment
+ec215f42-33ba-4b99-80d8-4c1c893c8837,09acc58f-e2b3-41b5-a18a-de73d82fa7be,1-1 meeting,content_10,2025-01-29 06:27:06,clicked,236,FALSE,531,Decision,Application
+291f022c-001c-44e2-ad3c-6340c25abbaf,f1e4f92f-7788-48bb-b315-6edf188f9591,virtual info session,content_19,2025-02-10 02:32:53,replied,64,FALSE,526,Consideration,Decision
+23d5a024-a81b-41f6-bd1b-cae02c815d1f,68194363-11e9-4ac8-be45-1ce928a51c2a,webinar,content_13,2025-04-04 03:54:20,joined,112,FALSE,276,Awareness,Consideration
+76db3cef-3fe2-432e-9a80-bee2d0a4aa1f,d490a884-b3c4-4a09-9756-79fbb4a25352,phone call,content_20,2025-01-25 17:40:25,replied,243,FALSE,144,Interest,Application
+1e3afa00-7045-45e7-aacb-bae4832677d3,29f36fea-dc40-43f9-a0ce-b4a786f18af5,event invite,content_5,2025-02-07 20:00:35,joined,206,TRUE,597,Awareness,Interest
+8baeb8ff-4429-4bf9-8ec5-dfcd4890e1e3,289200c8-5698-4972-96f7-f080f90bf61c,webinar,content_14,2025-01-18 12:45:33,joined,100,TRUE,62,Interest,Application
+7d89dab3-c209-4077-9dff-a4bf9b28d528,6c115fd7-1b8e-453e-a79f-a6793f6c8cda,email,content_14,2025-04-15 05:02:19,joined,258,FALSE,587,Decision,Application
+95bbc2a5-cdcd-47ae-b228-d451fe0c08f5,e996775a-430c-4a0c-aa48-d1fd39e0445f,webinar,content_7,2025-02-28 19:31:29,booked,130,TRUE,473,Awareness,Consideration
+f3ac696a-ae06-4a7e-9830-6be72bb242d6,0975bb4e-61e8-45c3-9c43-f44c5547df81,phone call,content_16,2025-03-27 13:44:38,joined,29,TRUE,203,Awareness,Interest
+79096820-07d8-4128-aef0-4a8c92c75b96,c98a1d3b-32fc-4037-8420-78f6929d6b0f,webinar,content_7,2025-01-31 06:23:02,unsubscribed,238,FALSE,555,Application,Enrollment
+55dcd6bd-fe28-4dc0-8cf2-f6c479957569,bbf5ba28-524a-4b07-8e14-01d707dd691f,sms,content_13,2025-02-12 22:43:22,replied,227,FALSE,289,Interest,Application
+713616a6-9d94-40e2-8398-f5f93f3430fd,67e10089-edda-4c98-8ddd-f379d2595e31,webinar,content_11,2025-03-23 11:49:09,joined,70,FALSE,354,Application,Enrollment
+a36aec22-85e9-42a2-a80b-37e2ef6142cd,faef752b-f5c3-4a19-9afb-e1a2f8fa96c8,1-1 meeting,content_5,2025-05-10 01:19:37,clicked,33,TRUE,177,Application,Enrollment
+2da231e3-26f6-41a5-8623-462fe311b6b1,2e0b2090-f3ad-4c8f-a7cf-5b6510610ca4,email,content_5,2025-01-02 10:27:46,unsubscribed,48,TRUE,415,Application,Enrollment
+72e9f203-54e6-4c78-a94c-d40e701540ea,e508d7c6-3150-48e9-8883-cbcda5e3075f,1-1 meeting,content_4,2025-05-20 12:26:47,booked,57,TRUE,365,Awareness,Interest
+18ca8717-cf54-4a2f-a23f-b6efeaf010b4,63f80a08-68cd-43a7-a48c-eac1e9514cfd,sms,content_13,2025-03-11 15:26:02,ignored,57,FALSE,142,Consideration,Decision
+f75e440b-9a1b-4ef8-ad2c-ff1a5b548e04,a8f6fb2c-aaa9-4cfb-9fae-397831997d75,webinar,content_1,2025-04-19 14:12:36,ignored,228,FALSE,298,Decision,Application
+055caa4c-10cb-454d-897d-ee600ed582fb,9ccd1dc2-43a4-4d9f-a406-db2711d31d9b,virtual info session,content_14,2025-03-31 14:44:54,clicked,101,FALSE,415,Awareness,Interest
+1dd6fa60-83e8-48b6-8465-40d57d3757ba,12a07ea4-298c-4f06-82f6-25c6d65f1092,event invite,content_12,2025-02-19 01:15:27,booked,120,FALSE,430,Application,Enrollment
+b12d937d-13b5-4e0a-a157-bdda9fd4d350,08e4ec84-91b5-4836-88ab-e65b45eb8f4f,phone call,content_1,2025-04-15 07:59:35,clicked,204,TRUE,502,Consideration,Decision
+893acc15-278e-44e4-8016-8acc85d7d3ae,a5187093-6603-4ab5-9476-08768e507adf,event invite,content_4,2025-05-27 00:31:19,replied,97,TRUE,102,Consideration,Decision
+35cd8395-a7eb-4be7-8f7a-27e323928681,5cb3805a-caa7-448e-912b-156568ca5984,event invite,content_3,2025-03-01 14:53:49,booked,255,TRUE,380,Awareness,Interest
+1d69e08a-29dc-4349-99a1-01a7e34938d8,35ab9d2b-5642-43ed-9360-f70d5d2a9f8c,email,content_15,2025-04-02 05:43:27,unsubscribed,185,FALSE,187,Awareness,Interest
+4428d3fc-db9a-46ce-867b-0ab13ba2b212,ebf3d755-e4b3-4855-9fdb-1a20bd3c6e7e,phone call,content_7,2025-01-25 11:03:51,clicked,50,FALSE,203,Interest,Application
+75a73f09-33b9-49b8-b72f-2e707616463d,d795fd1e-e643-40e4-97a0-a01b11dcf3a6,sms,content_11,2025-03-30 13:35:21,booked,229,FALSE,243,Consideration,Decision
+afd4b4ff-541c-4346-80fb-998d9bb7c646,79b56764-d0d4-4ac0-9ca5-80c1e924c2fe,email,content_19,2025-05-07 07:16:44,unsubscribed,124,FALSE,454,Awareness,Interest
+39954cc2-0d36-4467-8e6a-8c57ed3772a3,382d60f9-f976-4036-a9b9-a9b600062903,phone call,content_2,2025-03-10 22:00:42,joined,264,FALSE,258,Decision,Application
+4dcc975f-f522-426d-bed4-895764e0bf82,694597df-f7ee-4dca-8a54-b0068f66057e,email,content_18,2025-04-17 18:51:40,replied,120,TRUE,20,Consideration,Decision
+2abcdc71-5bc7-4f39-8c40-56995178b6c0,23e375eb-87a1-4179-b57f-d6162717ff01,1-1 meeting,content_3,2025-04-02 22:33:24,booked,286,FALSE,421,Awareness,Consideration
+969b62e2-4574-4c07-a090-06edbbde8f62,713df7cd-62de-4923-95f5-0e45f17c8d44,1-1 meeting,content_7,2025-02-23 15:13:40,clicked,56,FALSE,147,Awareness,Consideration
+1fc250e2-aee1-4679-a879-72d7e46af2cf,6393f6d1-986f-478c-a608-f322fd80f56b,phone call,content_17,2025-05-24 16:44:02,joined,214,TRUE,67,Interest,Consideration
+d645f615-ed57-4bc4-8bd0-ec44a0300487,71282f3f-a35f-4ac7-b592-b2e7ff8d9bc5,event invite,content_14,2025-04-14 13:22:34,booked,138,TRUE,338,Application,Enrollment
+58931b1c-5ece-43de-972d-24f4b77efe32,679a8258-fd44-4835-b0e4-59cf01952823,sms,content_15,2025-02-09 19:49:24,ignored,43,FALSE,515,Awareness,Interest
+1395c763-fd1f-4b91-9929-ed287529c608,3a726f45-11e4-4cc1-bad0-23b3516a0ced,event invite,content_1,2025-05-09 02:26:06,replied,163,FALSE,387,Consideration,Decision
+ea384681-4b48-4026-88ee-45b3c5a9698d,7947252d-c6d0-4599-ba0d-e8ec40cf58e0,email,content_8,2025-03-24 03:49:08,booked,249,FALSE,179,Consideration,Decision
+c17c924c-2ff1-4aa0-9b4e-ceda37dd72c7,dd246bf1-973c-4532-bef3-690bcda95e12,event invite,content_8,2025-04-11 20:03:51,clicked,4,TRUE,140,Application,Enrollment
+0baa6c8d-cfc5-4d18-8fe8-ec2ce9cdf2a4,7c4c8a24-6e6a-40c9-928c-75c56d9abd93,sms,content_2,2025-03-26 04:10:33,booked,167,FALSE,473,Consideration,Decision
+3a2ede3d-63d3-4757-a2fd-371df973815b,89ac29ac-fe5a-4704-aeb3-8eae8b95d1cb,event invite,content_16,2025-05-10 10:58:12,replied,211,TRUE,452,Consideration,Decision
+fc98ff63-fcda-46b7-9045-7351f9ad7583,6393f6d1-986f-478c-a608-f322fd80f56b,sms,content_13,2025-01-16 02:55:20,booked,84,TRUE,364,Interest,Consideration
+6077fc50-a235-4e57-be3b-2a8f648169b9,1cc9b034-be63-411e-aa8b-c25010301979,email,content_14,2025-03-11 14:42:12,replied,17,TRUE,113,Awareness,Consideration
+55a21c92-5066-4b53-8511-8e9ab280d624,2588dcee-ed9e-4027-85d2-c242e3e72449,virtual info session,content_3,2025-04-23 11:25:23,replied,90,FALSE,179,Decision,Application
+af934432-33fe-4bd4-9ff3-3e6433ca86a0,d2584944-0110-4f6d-a446-666b376a9c28,email,content_4,2025-05-21 06:39:09,replied,164,FALSE,383,Interest,Application
+caa77a00-97a3-438d-bee4-891a582cf0f9,72addafa-0341-4ee6-a6eb-f608f319421b,email,content_6,2025-03-07 10:45:19,unsubscribed,79,FALSE,480,Consideration,Decision
+30afdafb-e2d1-4e61-8eb8-12b7ea4edc2e,25af74a2-1abf-4447-8cab-73b125b1030f,sms,content_8,2025-04-18 08:09:09,replied,245,FALSE,80,Consideration,Decision
+396cc15d-155e-4fb5-a5ee-1cbdbf7a50e0,c2c27778-09c7-4f51-a982-4654137a6c27,virtual info session,content_10,2025-01-14 08:32:30,ignored,157,TRUE,265,Interest,Consideration
+51aedbe2-1910-4452-a2c6-26e27f37082e,05d9dd24-e956-4cf1-99ba-e9c283ca32fd,virtual info session,content_4,2025-01-21 23:09:29,clicked,70,TRUE,277,Decision,Application
+1aaa6067-4e9f-4026-a600-2dd88cd6690c,2a6cf2fd-07b4-4783-816e-2532955e6b68,1-1 meeting,content_16,2025-01-13 03:59:54,booked,289,TRUE,144,Decision,Application
+d55d487e-9453-4e4c-8e9d-43008ce6a12c,5a9f32da-b239-405a-b703-363d51fdb5f9,email,content_2,2025-01-12 09:41:28,joined,180,FALSE,143,Application,Enrollment
+12618285-3068-46d2-8a96-28cf3ada1bea,f2b5b9f6-240c-48d7-828a-b8d81ab8717f,email,content_3,2025-02-18 18:13:25,joined,136,TRUE,322,Decision,Application
+f420614c-8d33-4dcc-b3e1-2c1617179605,26abb021-2e8c-4527-9e45-1f8964436548,virtual info session,content_14,2025-06-01 04:57:50,ignored,60,FALSE,242,Decision,Application
+29b3c675-6b4e-4aa5-9445-f407166a25c3,81202338-eec9-4b10-af7f-fd72a13bb52f,1-1 meeting,content_1,2025-05-15 12:58:44,replied,14,FALSE,221,Interest,Consideration
+cbab0699-58df-4100-856a-c64a0aa1d648,3ccf7ca7-f2cb-4b42-92ee-70365358ef81,email,content_6,2025-04-29 11:25:37,clicked,242,TRUE,407,Application,Enrollment
+74f0b74f-c31f-4b85-b80f-46cbe58d2bf0,8514f001-bd67-4fc3-8afd-2f386c4a1897,1-1 meeting,content_11,2025-01-04 17:35:57,clicked,278,FALSE,353,Awareness,Interest
+92d4f51d-3ae8-4a8e-81d5-4b3f07671800,5493bd5f-2d44-40d2-8a0a-e6683ea67545,sms,content_16,2025-01-02 18:05:06,replied,287,FALSE,42,Awareness,Consideration
+383bdb3e-6a1d-4ed7-a7e7-f9ec6bde1916,90a82c6c-e2f4-49a8-ad91-ae09bea3b0da,email,content_3,2025-04-09 20:42:17,replied,151,FALSE,390,Interest,Consideration
+9ffc80fc-c42b-4248-86a2-bb2e0a91a8c7,f092112b-129b-459b-aeba-a3d65420e7e1,phone call,content_1,2025-05-11 15:20:54,unsubscribed,24,TRUE,60,Awareness,Consideration
+7b89d199-ee2f-4d69-870b-1ee462e148b4,aadee8f7-47cb-4075-8bcd-6de1c62996d6,1-1 meeting,content_14,2025-05-27 15:13:06,joined,278,TRUE,202,Interest,Consideration
+4a880d44-80ab-4929-99ca-7f0597fd73f5,76bf8028-ef15-4a8d-bd72-b819535ec437,virtual info session,content_4,2025-04-12 17:13:28,replied,159,FALSE,567,Consideration,Decision
+0d4618f4-83d0-48d1-9a4e-44956322353f,fb040b70-392d-41a8-907d-55e26c995f42,phone call,content_9,2025-02-22 16:27:40,clicked,225,FALSE,302,Interest,Application
+0731f105-10f7-4ead-9fca-7728141d0923,679a8258-fd44-4835-b0e4-59cf01952823,email,content_9,2025-04-03 04:53:00,booked,148,FALSE,525,Decision,Application
+216ba903-24cd-4fde-b6be-271e2c1003fa,454adf74-260f-4330-b5ed-f8393a0e42ac,sms,content_10,2025-03-10 09:34:13,clicked,238,TRUE,177,Consideration,Decision
+b0197c87-f8b3-4411-9610-46eb96f44645,dce4f3f6-1e19-4be6-a417-09f78b744740,event invite,content_17,2025-02-26 15:45:48,ignored,109,TRUE,554,Decision,Application
+400d3090-7021-4599-b762-3c4345ddc86b,81202338-eec9-4b10-af7f-fd72a13bb52f,1-1 meeting,content_17,2025-01-04 10:08:00,unsubscribed,271,TRUE,392,Awareness,Interest
+e77e4397-800a-49ba-b7df-1179d927c5f8,ef75a04e-8689-4d47-8c8d-fa03e3779c81,email,content_11,2025-01-19 15:44:41,unsubscribed,30,TRUE,205,Interest,Consideration
+3b2f54c6-d18c-4cbc-9ecc-e307c8e3c5b8,127b71fa-7989-4591-a092-f30645681e0d,1-1 meeting,content_19,2025-02-20 02:13:13,booked,257,TRUE,514,Interest,Application
+7c525331-2f4f-417f-a48e-32e76c7f85d6,cced4ba4-23e6-4635-a062-45641ed41eb2,event invite,content_8,2025-04-05 17:52:23,joined,287,FALSE,139,Consideration,Decision
+183b3487-0f45-4602-b76a-0750ae980fb5,8bfff612-859a-4885-b4b1-de1fd12f5a92,phone call,content_10,2025-03-13 00:47:08,clicked,12,FALSE,184,Interest,Application
+994ed142-17cf-40e6-ba2c-89ae28330150,35fdc374-63f6-4d05-b81c-d18318f83930,email,content_1,2025-05-04 12:52:29,ignored,99,FALSE,355,Awareness,Consideration
+5780f74a-e498-4123-9ec9-7ab8e32eb64d,0198df64-1de7-4f7d-9767-baabd055a795,phone call,content_3,2025-05-18 04:36:04,replied,245,TRUE,52,Interest,Application
+364e69f6-2927-4072-9f55-fe8b10aa3ef4,3a31ab32-59b4-4239-b835-ea6b6b906946,sms,content_15,2025-02-24 02:02:35,ignored,291,FALSE,18,Application,Enrollment
+6e27dc01-a533-453c-975e-90376afa1c0e,0cb38777-7e45-43e0-b7f9-d0e2ddb338f3,1-1 meeting,content_20,2025-05-10 03:18:43,replied,69,FALSE,382,Interest,Application
+19846700-f188-4cf3-908a-8016e2eb1fb0,ee91ff30-d579-4e74-94a3-c7f4fd3cef73,event invite,content_7,2025-04-05 19:01:15,replied,204,TRUE,454,Application,Enrollment
+a0ed5a5f-3ccf-4bc9-8685-3fbc3c433008,7bf12e9c-00ab-4462-a35a-11064b7bf419,webinar,content_16,2025-02-19 05:11:20,ignored,1,FALSE,350,Decision,Application
+cd0e4da9-a538-4da5-8ade-1fda3334ffc1,db6aa836-1668-4f82-95ff-edd4b2f10c05,sms,content_10,2025-06-03 08:48:15,clicked,80,FALSE,144,Awareness,Interest
+0678fcd3-f7f3-46bf-aa20-8f31ceb5d580,0024a01e-8496-4a38-add0-631b8e072208,webinar,content_18,2025-01-20 00:00:46,replied,135,FALSE,167,Awareness,Consideration
+5acc089c-ee69-4b5d-9f24-ebf98de6f775,fe31d53e-7435-4075-80a2-d89e9cb1e255,sms,content_2,2025-05-24 12:24:27,joined,119,TRUE,421,Consideration,Decision
+d1d65ac6-b0dd-43cd-b352-80f68080aab8,98016002-7305-442c-b354-afcedea04c22,email,content_16,2025-03-16 04:57:54,ignored,294,TRUE,483,Interest,Consideration
+0f64a888-15b8-4550-ab8e-80a5fbcea7af,703cd1aa-bfcf-4ca1-b343-abf32a5c7fa7,virtual info session,content_13,2025-05-31 22:41:42,replied,136,FALSE,408,Application,Enrollment
+31f6eaff-5ac2-4f54-8677-3da9b37e723f,ed01c031-6a49-473c-8fc6-a4ccc0f62328,1-1 meeting,content_18,2025-05-05 23:37:37,booked,256,FALSE,208,Awareness,Consideration
+4970632a-d7e9-40fe-a90e-c704a63a9fc5,c0d84b81-9d31-4f2e-bfcb-49c6518b6599,event invite,content_12,2025-05-30 20:47:33,joined,18,TRUE,148,Awareness,Interest
+8c1107ba-4a81-49e0-a78b-651fb8b00778,34adeb70-6eb9-4281-b35b-f9afc7fc0ef8,email,content_12,2025-04-03 13:40:04,ignored,254,FALSE,306,Interest,Application
+42e320ed-2472-47c0-b9b9-66dfe64271ae,38aa0d40-e8d1-402e-b116-950e017b4423,phone call,content_19,2025-04-11 16:12:22,booked,134,TRUE,94,Interest,Application
+ca3b9ddf-d67a-4e01-b7f4-70ff63ca5591,7e0cb661-ab8d-44bd-8a4f-8cdbbf7bb6ff,phone call,content_13,2025-05-25 08:31:12,clicked,187,TRUE,229,Consideration,Decision
+f35c84f5-d282-4664-b2b7-2228f483341c,e508d7c6-3150-48e9-8883-cbcda5e3075f,email,content_15,2025-03-04 14:47:55,unsubscribed,120,FALSE,341,Awareness,Consideration
+327b1256-71ad-444b-beee-1932e385cecd,8036eb8d-755b-4c31-a37c-4c209e4f38bd,webinar,content_15,2025-03-26 22:18:12,booked,273,TRUE,445,Application,Enrollment
+d4cc6b2e-736c-4bda-91db-027c1846cba5,21a43e3e-70aa-497d-9264-fbf18dc028e2,webinar,content_1,2025-03-05 06:28:46,joined,280,TRUE,538,Decision,Application
+95075116-cb8c-4471-a472-26f80317b056,bc9e02cb-618c-4ed2-9b4f-53d3d0dc7616,sms,content_2,2025-04-09 23:08:11,clicked,45,TRUE,91,Decision,Application
+74386896-2674-427a-b930-61af31461314,7775a3d6-85ba-4d1d-8732-8f59b78b9acb,1-1 meeting,content_4,2025-05-30 16:06:41,ignored,190,FALSE,390,Consideration,Decision
+33774132-3bb1-439d-aee9-b228db25c48e,63f80a08-68cd-43a7-a48c-eac1e9514cfd,1-1 meeting,content_11,2025-06-03 19:20:51,clicked,127,FALSE,441,Awareness,Consideration
+3cd7d72d-8ce8-4da1-a603-911566ad74e9,d3cd0ace-e218-421a-bd4c-e73428a09800,1-1 meeting,content_20,2025-03-27 03:08:53,replied,298,FALSE,112,Application,Enrollment
+8e8349cd-8f41-4929-824c-06ec730b38fa,d36748f3-1545-409b-bc29-308342c922c1,email,content_7,2025-03-31 16:13:58,clicked,110,TRUE,67,Interest,Application
+96a76081-8d19-43a9-8da3-195dd82f721d,537446aa-b19e-4d8b-a32e-30eb803d12ba,1-1 meeting,content_9,2025-05-18 08:45:42,joined,130,FALSE,242,Consideration,Decision
+03e171c1-6d26-461f-8a24-3923f79120f9,26b8a496-c7da-4b28-84e4-540aa0666399,sms,content_6,2025-05-20 18:35:15,unsubscribed,195,FALSE,207,Interest,Consideration
+032e7e03-964f-4e11-bdd2-54d0e937f50c,bbf5ba28-524a-4b07-8e14-01d707dd691f,sms,content_11,2025-03-19 02:08:13,joined,3,TRUE,410,Interest,Application
+3430f0b4-bbd0-4a92-9276-f41b3f169149,fcc29a1e-f561-4a7f-89a5-2e805922f004,webinar,content_13,2025-02-22 05:44:46,clicked,192,FALSE,342,Application,Enrollment
+f05a04d0-e9b7-4864-ab21-5b470f4a0317,050fe53e-4963-4ae4-b38a-9661f0ae4a40,phone call,content_6,2025-05-02 12:57:55,replied,296,TRUE,225,Interest,Application
+eea3e33f-d441-444c-ab08-f3dfcb490132,2464d8e8-423c-492d-bd3f-3ecbf8ea0307,1-1 meeting,content_2,2025-03-16 18:07:54,booked,157,TRUE,369,Decision,Application
+c66208ca-399f-4f06-bf35-c7fc24c524b9,8fe5d687-993c-46d5-bd37-619db1811b2e,1-1 meeting,content_6,2025-04-25 10:45:12,replied,239,FALSE,510,Awareness,Consideration
+8cf63374-01c0-465a-9943-328118bad1cd,2787b160-f88b-49e1-853f-bc00a79332ef,virtual info session,content_13,2025-04-30 18:55:18,clicked,49,FALSE,390,Interest,Consideration
+83885457-17c4-4982-aafd-a9b4563073f6,c0d84b81-9d31-4f2e-bfcb-49c6518b6599,virtual info session,content_3,2025-01-18 08:21:23,joined,106,FALSE,150,Interest,Consideration
+c6979077-c6cb-4cc2-a14a-3f701fa0b9dc,b421f077-2500-4000-a9f9-941413625b3b,event invite,content_17,2025-03-30 10:53:12,replied,282,FALSE,203,Awareness,Interest
+ac65c71b-013c-4cce-83eb-64669e531367,dbf17263-f5e0-4c2b-9395-627de5f5c972,virtual info session,content_8,2025-03-08 21:30:57,booked,37,FALSE,167,Awareness,Consideration
+a87aeba7-53fe-4d9e-a330-f5b7fe44cd76,73357cf9-99fe-42ab-b480-55cd616df691,event invite,content_3,2025-02-06 16:06:50,ignored,121,TRUE,518,Awareness,Interest
+f76e1216-d050-4ce4-bf87-1664c39dad25,82e7040b-989e-4d6a-a0a7-12a82db9a6f5,phone call,content_14,2025-04-28 10:19:08,ignored,98,FALSE,307,Interest,Application
+89c2a8e0-94da-4ff0-93bb-4e774f0ea4d4,4f7475c6-b1fc-41e9-be3d-f9b4a7e714b8,event invite,content_11,2025-04-11 16:43:30,replied,64,FALSE,73,Interest,Application
+ec50b0f5-b0ad-4a54-92d1-ab8f4010150f,9c6fa19c-b737-426e-b73e-8b8fdb809187,event invite,content_13,2025-02-10 20:09:18,ignored,37,FALSE,32,Consideration,Decision
+f2221086-7231-40ad-9796-4de87742eb48,812dd96b-9baa-411f-9388-48594e2270eb,phone call,content_4,2025-03-16 06:10:39,clicked,106,TRUE,445,Interest,Consideration
+c5c64868-f5b6-4bff-a794-e358d70a0db7,3c9933b0-5005-493e-8fc0-ce445b9414f3,1-1 meeting,content_2,2025-05-06 04:29:12,clicked,62,TRUE,249,Awareness,Consideration
+0f3f259b-446a-472a-9c8b-2eda7d1c8894,178dc526-cff6-44b5-87c0-c9e86edd2580,1-1 meeting,content_11,2025-05-17 06:02:26,unsubscribed,206,FALSE,110,Interest,Application
+a77a26d3-861c-494f-8312-99bc1d3fe664,c4a573d4-1643-41a5-891c-547da2f4d556,virtual info session,content_5,2025-02-24 20:53:38,clicked,12,FALSE,403,Consideration,Decision
+245eec5e-86b2-4027-a246-6cb2fdddb64b,548697f9-c2fd-438e-a899-94a7b7e70605,virtual info session,content_6,2025-01-07 08:57:35,unsubscribed,19,TRUE,501,Interest,Application
+cd4cf7b2-34da-428d-af90-93c39b3c7615,382d60f9-f976-4036-a9b9-a9b600062903,virtual info session,content_13,2025-05-29 02:42:33,booked,112,FALSE,291,Consideration,Decision
+e242e1ba-3be2-437c-9b76-bf778ce093fb,e475e947-e5c6-4d4e-ae4b-127e73856160,event invite,content_3,2025-05-05 20:05:12,unsubscribed,94,FALSE,297,Awareness,Interest
+0c510f37-1752-4829-853c-d3c3a87e907a,588bf3c9-f0ba-45ee-a3af-0500b39e54e0,sms,content_18,2025-04-18 10:31:11,joined,275,FALSE,183,Awareness,Consideration
+668bb4f8-56dc-4125-b05f-92098e4377f5,84af8fd1-5aec-46d7-8b32-a1a5bb4ef45c,webinar,content_17,2025-01-15 07:05:01,replied,53,FALSE,404,Application,Enrollment
+7cc4eb03-8f32-4c27-b801-431b4c777d89,93a554ce-0984-4dd2-a0df-0240a9284132,phone call,content_14,2025-03-18 01:29:22,unsubscribed,136,TRUE,483,Awareness,Interest
+e8e67e40-279e-481b-b1cc-6ac3e7738935,ed01c031-6a49-473c-8fc6-a4ccc0f62328,email,content_10,2025-01-30 14:57:16,clicked,278,FALSE,449,Consideration,Decision
+f4ae0b4d-26c8-43aa-a1c7-329d721280a3,d2584944-0110-4f6d-a446-666b376a9c28,phone call,content_7,2025-01-23 12:33:05,joined,133,TRUE,473,Interest,Application
+c899dfa1-a2a9-4bc7-b1e9-1a1b2c6c2290,53a95ada-e891-415d-abe9-175785a65bca,email,content_3,2025-01-18 13:46:27,booked,236,FALSE,100,Decision,Application
+d453eb7a-096d-4ef7-90cf-6f9415660d2b,5266e49a-5de0-43c2-b840-a66f4641f30d,email,content_3,2025-01-03 12:07:10,unsubscribed,128,TRUE,258,Awareness,Interest
+7a2cb5ab-f0cc-4ba0-b204-a5e09783af59,5aef8b43-6d13-426a-87ea-443c8fc72a02,sms,content_9,2025-03-23 10:12:16,booked,53,TRUE,349,Awareness,Interest
+d14ffee2-0d91-4bd9-9d5a-5d8bebc2ae23,2464d8e8-423c-492d-bd3f-3ecbf8ea0307,email,content_4,2025-01-05 01:38:20,booked,138,FALSE,124,Application,Enrollment
+660beb3b-5c8e-4566-bf62-9db9b407dc76,26506a2c-1842-49b1-a4d0-addf8db1c0ca,virtual info session,content_11,2025-02-26 14:35:48,clicked,23,FALSE,206,Interest,Consideration
+a01884e0-87a1-45ad-9e8d-3271d8929076,588bf3c9-f0ba-45ee-a3af-0500b39e54e0,virtual info session,content_7,2025-03-05 15:49:07,replied,175,TRUE,247,Awareness,Interest
+3d6225a3-799c-41ea-ae9a-39df56d98a01,af5825eb-51d6-4749-bfb6-79d0c4fcba48,virtual info session,content_6,2025-05-11 03:33:15,ignored,132,FALSE,267,Decision,Application
+ab733ef0-11dd-493d-b47d-5f77c72b430e,d2584944-0110-4f6d-a446-666b376a9c28,phone call,content_9,2025-01-25 09:16:15,clicked,172,TRUE,145,Decision,Application
+cb4ebaf1-e02a-4070-8828-14e04f299378,19c32bcd-5394-471e-bc88-3a33f44819c3,phone call,content_1,2025-05-11 21:11:14,unsubscribed,176,FALSE,214,Consideration,Decision
+d5466b3e-422f-448f-8f28-5c0f9fbd1ee8,c9e43dc5-9ed7-40bd-b2bf-a6916c81195b,1-1 meeting,content_10,2025-04-03 05:27:47,booked,60,TRUE,52,Decision,Application
+6203bddd-a26f-4498-8f2c-365ee46886d2,b55da813-e098-4f0e-9316-6ce4ce75eeae,virtual info session,content_18,2025-04-08 10:28:24,unsubscribed,217,FALSE,215,Awareness,Consideration
+54b68221-d3bb-4b13-bc96-2830cd073f9c,4f7475c6-b1fc-41e9-be3d-f9b4a7e714b8,phone call,content_9,2025-03-29 07:15:14,booked,120,FALSE,373,Awareness,Interest
+f3dd2313-7c40-4a45-88a4-bb296665c858,b362bde1-1201-4ef7-8b92-bd1d29ce7776,webinar,content_5,2025-01-08 09:51:42,ignored,279,FALSE,579,Consideration,Decision
+763ce990-8730-4672-9690-d97eea47f81c,845fbba2-59b0-4423-9114-012df3d3fb39,1-1 meeting,content_11,2025-03-23 16:12:08,unsubscribed,189,FALSE,267,Consideration,Decision
+12b829d6-4006-4d4b-9eb5-6e32ffc35034,74101da6-5c39-4e9d-88c2-ba91f762f3cc,sms,content_12,2025-01-26 21:59:37,joined,265,TRUE,347,Decision,Application
+3e4d4d16-4c0d-48d1-84d7-cc61135f12d1,23e375eb-87a1-4179-b57f-d6162717ff01,event invite,content_14,2025-02-26 17:04:46,clicked,221,TRUE,337,Awareness,Consideration
+2af91804-62a3-45e4-b297-4f7e5af71335,8dbe976d-2799-40ad-9a72-bb0fd77bd500,event invite,content_4,2025-05-18 20:15:24,ignored,58,TRUE,538,Interest,Consideration
+b8c0ef6c-b17a-4ceb-8f7b-4ddd885a9509,bb1942c3-38bf-474e-b519-a6c8abbbd289,webinar,content_5,2025-03-03 20:20:47,unsubscribed,111,TRUE,550,Consideration,Decision
+b6709a00-e5db-43bb-8caf-1276c672bde7,2e0b2090-f3ad-4c8f-a7cf-5b6510610ca4,event invite,content_17,2025-01-02 16:22:30,booked,107,FALSE,86,Application,Enrollment
+c09e61c2-bcf0-454e-8117-3c8f97132fcb,d490a884-b3c4-4a09-9756-79fbb4a25352,email,content_2,2025-01-15 06:16:52,replied,30,TRUE,191,Decision,Application
+0973676d-4747-4d0d-8831-2be34e666ac5,583a8206-bbd2-47dc-b85a-d8188e67d473,1-1 meeting,content_18,2025-01-05 08:44:09,joined,145,TRUE,591,Awareness,Interest
+26b6a67f-59e1-4964-8532-7d7a16439a15,22f0ea9a-fe31-4582-8c04-70496a898348,email,content_13,2025-04-25 20:18:39,joined,160,FALSE,411,Interest,Consideration
+c9459845-822e-4b9a-bcff-80694a613c10,346ad9a7-f637-48ed-b84d-962a43d3ceb9,virtual info session,content_17,2025-04-15 09:34:29,ignored,78,TRUE,484,Application,Enrollment
+bca64198-15d0-4e5d-92d5-e2eaf2f0d7db,19c32bcd-5394-471e-bc88-3a33f44819c3,sms,content_17,2025-01-17 14:19:06,replied,271,FALSE,533,Application,Enrollment
+6408c0e6-18c9-44f0-a6ed-b7b12c77c08a,289200c8-5698-4972-96f7-f080f90bf61c,email,content_20,2025-02-07 09:29:46,replied,54,TRUE,263,Awareness,Interest
+e83008ac-93a8-4665-8020-2254fde6b965,4f7475c6-b1fc-41e9-be3d-f9b4a7e714b8,virtual info session,content_3,2025-04-21 09:42:54,clicked,38,FALSE,326,Awareness,Interest
+22d480f2-ea55-43c9-ba1d-b7579729fec9,26b8a496-c7da-4b28-84e4-540aa0666399,1-1 meeting,content_1,2025-01-09 01:53:46,booked,158,FALSE,443,Application,Enrollment
+7338bd72-52e1-460b-8b01-ca638cca8e29,1d4d317f-d984-4c64-ada0-72d12d00fc2f,1-1 meeting,content_1,2025-04-19 04:57:09,replied,117,TRUE,420,Interest,Application
+fbfccdad-2f40-4fc5-9d19-5ec3a98126db,34adeb70-6eb9-4281-b35b-f9afc7fc0ef8,1-1 meeting,content_14,2025-05-13 11:11:37,clicked,190,FALSE,44,Awareness,Interest
+acf8f666-d997-4fd5-b273-ad4c7db59f4e,c33bb77c-4fd8-4f17-8e63-687f3820f845,email,content_6,2025-05-07 18:19:36,clicked,157,FALSE,374,Awareness,Interest
+f29df32c-7c61-4d90-99ee-bd8132ced168,70054048-8817-46f5-a44f-4318a9b7fe8c,email,content_19,2025-02-28 10:59:50,joined,149,TRUE,540,Awareness,Interest
+722b6eeb-8a9c-4c94-a81f-e3bea585a5c7,b55da813-e098-4f0e-9316-6ce4ce75eeae,1-1 meeting,content_7,2025-04-27 17:42:15,joined,106,TRUE,212,Interest,Application
+250bb584-cc74-4829-85ca-f02bb6f86417,35a39032-9418-4fc2-8080-59fd3e4ae794,event invite,content_7,2025-05-18 02:32:43,ignored,269,TRUE,348,Application,Enrollment
+e9aca012-4543-4d65-9263-6b71216e32c1,25416563-05d9-4040-a1cb-b1004f0380ba,event invite,content_13,2025-03-07 08:26:58,booked,151,TRUE,58,Decision,Application
+1e0c2993-ab26-4849-b6d4-f82dd8d1743a,dbe6042c-db04-400e-bb60-18cbea37b8fb,email,content_9,2025-03-19 10:45:13,unsubscribed,107,FALSE,441,Interest,Consideration
+d0fa5d0b-b353-4703-86c2-2340cfe72a0c,cd6c9802-c1b6-4c23-a72a-e70cf5814eea,phone call,content_13,2025-04-26 16:47:06,unsubscribed,102,FALSE,96,Application,Enrollment
+f44720d0-c54a-4b48-adb1-251afb56c4c1,f0c3c942-5f12-40f8-80e8-3d1bf1752efb,webinar,content_8,2025-05-11 09:53:11,unsubscribed,277,TRUE,423,Interest,Application
+5e9f2b3e-5c3b-4317-9441-7fef2c04e480,736ad7dc-c410-4cd9-8225-cebe6da9d411,email,content_8,2025-05-03 17:31:31,ignored,207,FALSE,472,Application,Enrollment
+2ba3563c-d0ce-43ff-86df-a8349d03bee2,9525fa34-a929-4c3e-a304-c40bd18309a7,event invite,content_9,2025-03-27 10:00:49,ignored,230,FALSE,25,Decision,Application
+2d8ae414-6c1a-4117-9974-e49ad96d5a30,b9b17d36-f851-4e2b-9bf3-291ee6f16db8,webinar,content_6,2025-04-13 13:55:57,clicked,125,TRUE,481,Interest,Application
+d1fb31dc-73d9-4ba7-b92c-614d8cbaefb2,c77d8edc-2595-41a0-9387-4a34ce4d347e,webinar,content_3,2025-04-12 12:49:38,joined,118,FALSE,396,Interest,Consideration
+1a81a030-5a26-41d7-9c35-c3d24bed2358,ef75a04e-8689-4d47-8c8d-fa03e3779c81,sms,content_1,2025-02-11 17:34:17,ignored,230,TRUE,371,Interest,Application
+7bdae191-ad78-4f5e-9749-3f1431390763,9c68b336-72ed-4bdf-afaf-d97f38ca7407,1-1 meeting,content_10,2025-04-18 05:10:55,booked,285,FALSE,125,Decision,Application
+00754c3a-a105-48a9-8286-39af7e3697d4,19c32bcd-5394-471e-bc88-3a33f44819c3,virtual info session,content_8,2025-06-04 00:53:42,replied,90,FALSE,134,Interest,Application
+1fd4d1fb-5d65-426d-a98b-c82696274366,98016002-7305-442c-b354-afcedea04c22,1-1 meeting,content_2,2025-01-29 11:02:01,clicked,263,FALSE,404,Awareness,Interest
+06c46e1f-3221-4a88-88f8-8c54f9950820,56389bfb-b9fc-4f59-a823-9f6d2fed749b,phone call,content_1,2025-02-28 11:47:56,booked,53,TRUE,483,Awareness,Consideration
+7f241347-39ed-4f75-b0aa-405b18eecdf5,789dfc9d-78ea-41b7-a0ca-6e2de2f517d6,virtual info session,content_16,2025-02-25 19:28:17,joined,257,TRUE,317,Application,Enrollment
+467786f2-1be3-4898-9dc0-c1cb71c764aa,235763c3-1bcb-44ba-90f3-10068fa753c4,webinar,content_11,2025-05-21 15:43:04,booked,186,FALSE,272,Interest,Application
+548ccc58-1842-41af-ae27-e749d90c8890,01d7962c-138a-4bbb-bc3d-7c6b761fb8c9,sms,content_8,2025-03-27 15:43:48,joined,48,FALSE,73,Awareness,Consideration
+d6152d66-0fb6-48ae-9a76-0f0e4c70071a,ee691eed-0386-436d-a48f-6a480e64373f,virtual info session,content_11,2025-02-13 11:47:26,unsubscribed,112,FALSE,511,Decision,Application
+a56c494e-314d-466e-ab71-4f33a8acd191,e9bfbd59-1213-4c7b-a452-f0fc16a36938,virtual info session,content_6,2025-03-02 23:21:39,unsubscribed,235,TRUE,234,Interest,Application
+5c717245-4e90-49ef-8474-5faccb878c6a,b9b17d36-f851-4e2b-9bf3-291ee6f16db8,event invite,content_3,2025-02-06 17:45:31,replied,193,TRUE,434,Interest,Application
+5e08d066-625d-463d-b32a-5b0027ead8fb,14df0d8d-a1c3-40a9-aaa8-961df5a4b4d4,1-1 meeting,content_17,2025-03-20 04:04:25,clicked,41,TRUE,314,Awareness,Interest
+372de1c9-b223-4742-8162-e33d1e7d1b8f,cbb3bc0a-d818-4d26-8656-7aee637c43ac,phone call,content_5,2025-03-19 07:42:08,unsubscribed,6,FALSE,154,Awareness,Interest
+78a9f7ae-c34c-4259-9796-c52d1f313c9e,f5176548-64a8-4275-97ec-d7e4eab62c04,1-1 meeting,content_9,2025-05-02 03:28:25,joined,34,FALSE,299,Application,Enrollment
+ac870e37-f493-4749-b802-cc0c437418ca,bf5cdd74-33d8-49e3-baa7-da73b9f64d45,sms,content_1,2025-03-03 17:31:29,ignored,200,TRUE,268,Awareness,Interest
+740da00c-aeaa-4b28-9ded-c06a9da4bd0d,e003cb66-7b4d-4477-b49f-97478f71abda,virtual info session,content_8,2025-04-27 09:58:43,replied,70,FALSE,543,Awareness,Interest
+8202ee84-ec71-40b5-b379-43c4b36eb817,08448f02-9297-4113-aa9b-69ed22ed3f45,webinar,content_10,2025-02-04 19:00:58,replied,124,TRUE,204,Interest,Application
+acce20a8-1d3d-4378-87db-b130fa6a32b3,7c4c8a24-6e6a-40c9-928c-75c56d9abd93,event invite,content_12,2025-04-04 02:13:52,booked,282,TRUE,192,Decision,Application
+0ac0b39c-e755-494b-a6aa-2d0e8cc9fd02,d795fd1e-e643-40e4-97a0-a01b11dcf3a6,virtual info session,content_14,2025-03-19 22:01:07,ignored,25,TRUE,99,Awareness,Interest
+1abc8dfa-8de8-4f0e-a811-a4681acadb7e,454adf74-260f-4330-b5ed-f8393a0e42ac,event invite,content_11,2025-03-15 09:34:22,ignored,218,TRUE,478,Consideration,Decision
+fc0a9ae1-563b-4f65-9103-217d1b0eecf2,2464d8e8-423c-492d-bd3f-3ecbf8ea0307,email,content_1,2025-03-29 23:01:33,booked,167,TRUE,89,Awareness,Interest
+d6819a07-7413-4928-a4e5-4f9f4a99c8bc,dbe6042c-db04-400e-bb60-18cbea37b8fb,phone call,content_13,2025-02-06 13:46:48,joined,102,FALSE,111,Awareness,Consideration
+3910089f-d5c1-4416-b8fd-aeece8f51c18,22327571-8a55-4625-9020-60a38e6e9de1,email,content_8,2025-02-16 02:46:56,clicked,42,FALSE,474,Awareness,Consideration
+f917d9a4-cb2f-40c4-86c5-da639a734f6c,caa8237f-b62f-46c9-8c69-5ddc9e44c153,email,content_8,2025-02-03 12:30:17,unsubscribed,112,TRUE,226,Interest,Application
+8b925558-27df-4d14-a72d-a65b2adac489,2756af4d-af21-42df-94a9-f999831853c7,phone call,content_7,2025-06-02 16:29:51,replied,19,FALSE,157,Awareness,Consideration
+c0242da5-0238-42b9-9cfa-68cac790c9c1,853f5f63-7f91-49e5-aed3-410bc2134e13,phone call,content_4,2025-02-21 22:30:35,joined,128,TRUE,14,Consideration,Decision
+11de4352-6b33-4614-b3b7-8aced89b3078,2e0b2090-f3ad-4c8f-a7cf-5b6510610ca4,1-1 meeting,content_2,2025-05-27 16:45:57,clicked,157,FALSE,511,Awareness,Consideration
+e674721d-9e77-4b02-8af8-f395e7456675,53a95ada-e891-415d-abe9-175785a65bca,sms,content_8,2025-04-18 12:44:32,joined,63,TRUE,50,Awareness,Interest
+db473237-9b2f-406b-a9ca-bdf3b003fe26,dd32a1f1-05d7-4f70-b25b-151931f19624,virtual info session,content_17,2025-05-20 08:05:55,replied,58,FALSE,370,Decision,Application
+9908057b-dc92-4cb9-afd1-bc79f4f84d80,431c43ae-64d8-41b6-af96-899434b5e70f,virtual info session,content_15,2025-04-26 18:31:04,clicked,226,FALSE,270,Consideration,Decision
+f58625af-df35-416a-8ce8-f6441f4141fc,0e88ec6b-9c23-4a5a-bf31-644bfa4bbfc6,event invite,content_8,2025-01-30 06:11:26,unsubscribed,202,FALSE,416,Awareness,Consideration
+4e1b0c69-f0d0-4163-8801-2ac10b27e735,c4a573d4-1643-41a5-891c-547da2f4d556,sms,content_5,2025-04-19 19:40:43,replied,161,FALSE,439,Application,Enrollment
+df1836f2-51d3-4596-8a7b-05d38559a84f,de5f35e1-e962-4bec-8cf4-923cf5b16f61,email,content_3,2025-02-02 22:15:01,clicked,240,TRUE,14,Awareness,Consideration
+ec211224-c92b-4208-adb4-d9706e5de74e,2e0b2090-f3ad-4c8f-a7cf-5b6510610ca4,event invite,content_18,2025-02-17 00:44:11,ignored,176,FALSE,109,Awareness,Interest
+1ade6f01-501b-4e6c-a08e-e1922fd75e54,c40a90de-c6f0-472f-809e-54ac1b6f330a,sms,content_2,2025-05-21 23:08:51,booked,199,TRUE,257,Application,Enrollment
+9109b8e1-1579-4d10-8b73-8f847f789bcd,b5368640-f8ba-41c1-b439-92ae2ed290b9,virtual info session,content_11,2025-05-09 08:23:36,clicked,57,TRUE,188,Interest,Application
+96bf6766-afa5-4147-9548-d84521a2ec70,dc0623c7-97b8-4d1d-ad30-a7055bcbeffa,email,content_12,2025-03-15 06:33:09,unsubscribed,121,TRUE,497,Awareness,Consideration
+d83ef59b-faff-41be-9a39-733c507f1188,92fc4ab1-854e-4fe8-8ff4-f49a6985484c,email,content_5,2025-02-05 10:12:19,unsubscribed,138,TRUE,554,Application,Enrollment
+c955bbdb-c758-4147-b860-5af8c8f592b0,1f98c592-d9d9-46de-b7ee-9fae64ea42d2,event invite,content_1,2025-01-01 08:00:43,replied,11,TRUE,263,Consideration,Decision
+009ca0b9-ded4-4821-9a20-fb1446445238,07018d3c-7ed5-414c-b494-9ad21f776cd8,1-1 meeting,content_2,2025-05-31 12:55:15,unsubscribed,95,TRUE,382,Consideration,Decision
+8b63baa7-e986-4b5f-8b29-29c5d13dc2ae,3fb76ac7-81eb-41e2-bb64-088f3f8db0b8,phone call,content_12,2025-01-22 18:48:05,replied,40,TRUE,161,Application,Enrollment
+74ce953d-6f96-4c7b-84f7-98c7488dcfda,f6ced8c1-b878-4134-a5d6-1c5647829517,1-1 meeting,content_16,2025-03-22 08:26:06,clicked,37,FALSE,60,Decision,Application
+c3b555c0-168d-4e7f-b13d-85ec3e548be5,82d6b618-ffc4-4f4f-a800-943cda53ed9d,email,content_5,2025-05-05 12:05:45,replied,255,FALSE,324,Awareness,Interest
+c78bd226-a800-4673-9425-f98be0a03ccc,aadee8f7-47cb-4075-8bcd-6de1c62996d6,webinar,content_2,2025-02-07 03:19:25,unsubscribed,90,TRUE,445,Application,Enrollment
+66abf84d-f831-43b1-8c4f-b2e34e1e8cf1,ba3ea67e-bd26-4520-bae0-9979df94c512,email,content_16,2025-01-03 00:32:25,booked,104,FALSE,332,Application,Enrollment
+4719bc5e-1572-4992-a66e-509f3f418d30,c2c9d38e-bdbf-4e3b-bb6f-6dd06820d2db,1-1 meeting,content_18,2025-04-27 21:27:16,replied,79,FALSE,116,Decision,Application
+43906d9f-4cff-44da-a5ce-28f7ab6aaf45,5266e49a-5de0-43c2-b840-a66f4641f30d,virtual info session,content_6,2025-03-12 05:56:26,ignored,113,FALSE,113,Awareness,Consideration
+2543381e-2882-464c-83f9-3f993fe63e40,431c43ae-64d8-41b6-af96-899434b5e70f,1-1 meeting,content_19,2025-01-19 11:35:46,clicked,200,TRUE,534,Interest,Application
+dbffa64e-b1cf-40ed-b86a-6ff3986b4c0d,0b3201fc-a42c-40e7-aa9a-2f0274cd6523,webinar,content_10,2025-05-14 05:05:28,booked,227,TRUE,472,Decision,Application
+5623aef5-ca93-488a-90b3-24794f283965,6eb5c91c-0150-41ff-9ef2-b6a27cd638e7,sms,content_9,2025-03-21 01:08:34,replied,184,FALSE,591,Interest,Application
+cb02db58-28a3-4d5e-ba25-195b715f0607,1b551f7c-bcae-4bab-8db8-ef41f769c6cc,event invite,content_11,2025-05-20 07:59:11,ignored,235,FALSE,24,Decision,Application
+90e62667-c20d-4e06-8b6a-1f0edd97f267,79b56764-d0d4-4ac0-9ca5-80c1e924c2fe,1-1 meeting,content_9,2025-04-03 00:56:58,joined,113,TRUE,467,Application,Enrollment
+ef1c2d62-dfa3-4571-b94b-15f9d9ff0ab6,09acc58f-e2b3-41b5-a18a-de73d82fa7be,virtual info session,content_13,2025-03-04 15:46:22,unsubscribed,128,FALSE,483,Awareness,Consideration
+624d3cee-e365-490e-809e-39a18333817e,14676044-902e-4693-8a01-efb111b637c2,virtual info session,content_11,2025-02-02 03:55:34,unsubscribed,222,FALSE,440,Consideration,Decision
+439834c2-4983-4485-9d05-abebb92a50a2,ab19afb1-0921-496f-bb12-02cf55361f80,webinar,content_15,2025-04-16 18:12:55,ignored,107,FALSE,530,Decision,Application
+cc99bbfe-25bb-4faf-9458-5903afeba19a,2c04981d-3895-42af-987c-801ca905a437,webinar,content_6,2025-02-24 21:35:53,ignored,6,FALSE,577,Awareness,Interest
+1af5d307-a74d-45d6-be11-6dd6061d2eea,e508d7c6-3150-48e9-8883-cbcda5e3075f,event invite,content_6,2025-03-14 18:10:51,replied,125,TRUE,248,Awareness,Consideration
+b8cf9242-4f23-40c0-bb7d-f85e19fd4175,bc9e02cb-618c-4ed2-9b4f-53d3d0dc7616,event invite,content_20,2025-01-16 02:04:54,ignored,61,FALSE,126,Application,Enrollment
+67ab181d-97bb-43d5-8a19-77d9cb4fe687,a048f448-2ea0-470a-9411-b72c21cddcb3,email,content_1,2025-04-15 13:21:51,joined,172,TRUE,132,Decision,Application
+3f50f266-5aad-409a-9847-29942a467d0e,ea121d79-f53f-44c6-8230-9c024ccb22d1,webinar,content_15,2025-03-31 21:28:21,unsubscribed,112,FALSE,398,Awareness,Consideration
+3943d62b-a0fb-4da7-b5e1-6b35d615498d,645a0124-c233-4086-8377-a517b00332f4,sms,content_14,2025-01-31 08:52:25,clicked,94,FALSE,513,Interest,Application
+96dd77a7-2b83-4a6b-9412-d89e961cb9a6,e2a7c4b5-682a-4b76-be28-9d2f534ee66e,webinar,content_17,2025-03-27 07:54:16,joined,146,FALSE,234,Interest,Application
+6f243384-9ebb-451c-94e2-a11b3850b024,8514f001-bd67-4fc3-8afd-2f386c4a1897,phone call,content_2,2025-03-09 15:11:17,booked,203,FALSE,236,Interest,Application
+362618aa-a083-4a67-994a-253413c9a461,af5825eb-51d6-4749-bfb6-79d0c4fcba48,phone call,content_16,2025-02-17 22:19:53,booked,300,FALSE,205,Decision,Application
+2b528dbc-46cd-4a57-9193-279df3d94e2f,83e480ff-0c7a-4502-9cea-cd6409281db9,sms,content_3,2025-02-27 11:07:58,ignored,10,TRUE,111,Decision,Application
+0c972d2a-d5c2-465a-ac94-0074563c86b5,8c4d83a3-4f17-4f7d-86c6-f3b0cbe6b376,email,content_9,2025-02-12 01:12:41,joined,63,TRUE,378,Interest,Application
+c7415fe4-2d76-413f-be7e-a2034819d393,289200c8-5698-4972-96f7-f080f90bf61c,email,content_18,2025-06-01 19:23:59,clicked,191,TRUE,231,Application,Enrollment
+93e12400-cc24-4c08-a499-f90989ba46ce,c4b03d39-9eeb-4a3a-a0c5-05301ec2410c,phone call,content_5,2025-01-07 03:54:44,booked,16,TRUE,176,Decision,Application
+626a955b-a346-4e3d-a364-fd9da7c981e0,a65920b5-af80-47ac-a937-fa52a16ece51,email,content_14,2025-02-18 05:29:59,clicked,75,FALSE,181,Awareness,Consideration
+af740e74-6f50-4c2a-bb67-6a2202248ab0,8f1ba8b5-e7aa-4f65-a7c7-8796d5c69ad1,webinar,content_18,2025-02-13 05:54:18,clicked,152,TRUE,587,Application,Enrollment
+d33200cd-bf19-4340-88e0-36f06036c591,bf5cdd74-33d8-49e3-baa7-da73b9f64d45,virtual info session,content_20,2025-03-04 13:56:38,clicked,160,TRUE,287,Awareness,Interest
+23f96a59-83a2-4c43-b58a-2fb8ef2d9843,4ede58b6-f359-48bf-bf90-0e07468d8382,phone call,content_8,2025-02-27 04:42:23,replied,286,FALSE,204,Interest,Application
+59609aee-0f72-49a3-9ea5-e4c7661a1a97,28437ca6-0f03-4e1e-9812-df393dc88bab,virtual info session,content_12,2025-04-11 03:11:27,clicked,133,FALSE,398,Decision,Application
+37997f4d-b76c-4aed-b219-bf26c41312b6,588bf3c9-f0ba-45ee-a3af-0500b39e54e0,phone call,content_1,2025-03-13 00:41:09,booked,96,FALSE,193,Awareness,Interest
+d67a1e0e-6392-42ad-a77e-c888699e1926,9cbe0b30-62f4-47a9-85dd-a083b4b4c30f,virtual info session,content_16,2025-01-06 03:49:49,joined,175,TRUE,584,Consideration,Decision
+e68281e9-bd48-4984-8446-0b8b9a599239,16fe768e-e674-4b55-94b9-5e067c30e972,email,content_15,2025-04-02 22:19:25,joined,151,FALSE,79,Interest,Consideration
+642b20d7-a5dd-4141-b33a-1a78740bb1cb,dc0623c7-97b8-4d1d-ad30-a7055bcbeffa,phone call,content_10,2025-03-05 23:40:01,ignored,168,TRUE,155,Consideration,Decision
+cabd3156-ef76-4405-bb7a-34520d748403,45075250-19b3-4cca-b61c-ebd55b7f8f56,sms,content_8,2025-04-23 21:12:15,joined,28,TRUE,210,Decision,Application
+e4f5020f-8210-4c76-8ea5-588caf4d71a8,162304ad-4b70-4154-9dac-3aac6f6d2387,webinar,content_15,2025-05-02 12:50:46,booked,162,FALSE,561,Consideration,Decision
+88acf4ce-6e1b-47c7-8532-e4478f1a8e8c,77addcbb-cfd8-40fc-8744-2eb2161560a7,1-1 meeting,content_14,2025-05-25 11:18:15,replied,53,TRUE,574,Awareness,Interest
+0abf6d43-1302-4760-bd25-ce7a534516cf,9ccd1dc2-43a4-4d9f-a406-db2711d31d9b,virtual info session,content_14,2025-01-13 15:53:53,replied,115,FALSE,420,Consideration,Decision
+f81093c9-ec21-4228-99c7-556adfa86928,8eba3bec-03ea-444d-bc92-9fdf8e36a436,1-1 meeting,content_2,2025-01-16 07:28:13,joined,296,FALSE,78,Interest,Consideration
+ff343121-29c1-4bd4-89a7-2430d70e303b,e508d7c6-3150-48e9-8883-cbcda5e3075f,sms,content_7,2025-04-09 19:53:12,replied,105,TRUE,407,Consideration,Decision
+9457a63a-e1a6-417d-8167-b220ad4eb6ea,dc0623c7-97b8-4d1d-ad30-a7055bcbeffa,event invite,content_19,2025-01-19 09:10:25,joined,181,FALSE,16,Application,Enrollment
+f0890fea-f4a1-40b7-b2b5-e3ceb8990c88,2a6cf2fd-07b4-4783-816e-2532955e6b68,event invite,content_1,2025-05-18 09:35:40,clicked,102,FALSE,396,Consideration,Decision
+9b90daca-0378-424d-9985-06e4efd3d6e1,8b9c6965-3dec-4006-bb4e-2feec8c06939,sms,content_1,2025-01-12 11:37:04,replied,179,FALSE,537,Interest,Application
+91428104-abd3-4398-b1ec-32c1c1171eec,84e40bdd-6f4d-4d33-8ee5-469e145bbe89,event invite,content_18,2025-01-09 13:07:56,clicked,4,TRUE,306,Consideration,Decision
+f195fea6-fd0e-4bbe-8245-3eea431df33c,c1608051-1357-4cdd-9b71-387134559ffa,email,content_5,2025-03-10 09:32:04,unsubscribed,281,FALSE,284,Interest,Application
+abb4b8ae-fe88-4cda-b12d-dfe309a3c118,49973f88-ae95-4685-82f9-604a1c72b05d,sms,content_7,2025-02-02 00:58:04,joined,100,TRUE,192,Interest,Consideration
+fe242378-3658-41be-8b4e-aca2b12eea09,5cb3805a-caa7-448e-912b-156568ca5984,sms,content_8,2025-03-27 21:56:30,replied,71,TRUE,550,Decision,Application
+8215b163-5d77-4bca-b2ee-66ad0502d439,39a7930f-ea2e-403a-90eb-dfa66c4e397e,sms,content_14,2025-01-02 04:25:13,unsubscribed,259,FALSE,165,Decision,Application
+69a52520-35b3-4a79-b18d-439f678258b3,2863169c-702e-4738-941e-9827bbafcde2,virtual info session,content_15,2025-02-03 13:18:02,unsubscribed,278,TRUE,229,Awareness,Interest
+bb57419f-5b6b-44c8-9bdd-1d0d95647640,5b233112-2183-4e7f-8f71-0c68ddbb9dce,event invite,content_10,2025-03-20 11:06:06,replied,277,FALSE,413,Application,Enrollment
+b74c995e-6ff1-4b23-a41f-906936445a4b,67e10089-edda-4c98-8ddd-f379d2595e31,sms,content_13,2025-02-06 01:55:04,booked,60,TRUE,535,Consideration,Decision
+97f08158-708f-446e-9378-a471186b51a3,2d866095-31ad-4d2e-ac01-98b449986d49,sms,content_20,2025-04-26 09:48:02,ignored,281,TRUE,315,Decision,Application
+1dcf45bc-11b9-4cd7-9fbb-b63b98e5903d,34adeb70-6eb9-4281-b35b-f9afc7fc0ef8,phone call,content_6,2025-01-05 13:56:28,joined,210,FALSE,112,Interest,Consideration
+87845a30-483c-43cf-b69f-e47436ebe137,2863169c-702e-4738-941e-9827bbafcde2,phone call,content_16,2025-01-16 15:47:00,booked,210,TRUE,207,Interest,Application
+8a292990-f44f-477a-ac11-31f25128b7a8,36913b75-0fe1-4f82-9565-36e6cdedeb98,event invite,content_7,2025-03-29 06:12:49,joined,40,FALSE,535,Awareness,Consideration
+aef58eaf-3f11-46fe-b607-db06c72dcee0,548697f9-c2fd-438e-a899-94a7b7e70605,phone call,content_4,2025-04-05 14:01:13,ignored,25,FALSE,571,Interest,Consideration
+28191e06-8237-4700-8a4b-0f3f5e59f325,bf5cdd74-33d8-49e3-baa7-da73b9f64d45,phone call,content_14,2025-03-27 06:27:08,replied,97,TRUE,518,Awareness,Interest
+f989d123-f46b-45b0-a5d2-aa27ef250918,a0e8c4e9-d439-41b2-ac0f-40bf57ad1bff,event invite,content_11,2025-05-21 14:04:26,joined,159,FALSE,345,Application,Enrollment
+575d22d8-0115-4c37-af9b-044b99e33dd1,543b120e-a1b8-44ff-9149-c2c475dfdd9f,email,content_2,2025-03-01 20:38:38,booked,46,FALSE,132,Awareness,Interest
+dc33ad52-1d6a-40c2-8795-bc2bc19b618d,c0ba3662-622e-4bb5-bdd5-1e598520b73d,webinar,content_7,2025-02-19 10:51:59,clicked,80,FALSE,550,Interest,Consideration
+01cd7778-ff6b-4250-8800-e063f72586f2,a8f6fb2c-aaa9-4cfb-9fae-397831997d75,sms,content_20,2025-04-20 03:22:18,clicked,107,TRUE,396,Awareness,Consideration
+7c02383b-8d28-4ef1-b463-01d90ce1af7b,8514f001-bd67-4fc3-8afd-2f386c4a1897,sms,content_4,2025-02-08 01:48:18,booked,173,TRUE,290,Interest,Consideration
+5e6485fe-ec77-4248-92ca-f81aa1b2ddb4,92fc4ab1-854e-4fe8-8ff4-f49a6985484c,virtual info session,content_4,2025-01-12 08:36:08,ignored,44,FALSE,377,Interest,Application
+acd61c34-c99b-4d80-86cf-cd306319c767,17bfac6c-ec8f-42a3-ad5d-1990fed9db7b,virtual info session,content_13,2025-01-27 12:08:04,replied,8,TRUE,80,Decision,Application
+0de8a303-a9e1-46a7-907a-c91ae24913b5,4a2bd9fd-8be8-4445-a122-c0251b3a0cad,webinar,content_16,2025-01-22 13:02:50,clicked,236,TRUE,346,Awareness,Consideration
+c89db251-d7f1-405b-8ba2-705af226ea58,92598e19-bcfc-4152-9ae6-32a42f9186cf,virtual info session,content_13,2025-01-25 08:06:05,clicked,198,TRUE,200,Interest,Consideration
+4a8cfd3b-52ee-43af-a8cd-94f4d6008e73,70f23459-5c6e-42ad-979a-008afecbaf9c,webinar,content_19,2025-01-24 11:25:50,booked,27,FALSE,101,Interest,Consideration
+a5abbdc2-c468-4e4d-82fe-0c3d87ce1290,faef752b-f5c3-4a19-9afb-e1a2f8fa96c8,email,content_7,2025-02-06 04:57:09,joined,49,FALSE,84,Interest,Consideration
+581401d9-1084-40cd-a537-255c2dfc37e2,ebc0eed6-5767-429c-951e-8375c5da221e,virtual info session,content_4,2025-05-09 00:19:16,replied,153,TRUE,287,Awareness,Consideration
+0eb49b07-105d-4c84-a21c-4166933b5870,0024a01e-8496-4a38-add0-631b8e072208,1-1 meeting,content_18,2025-04-25 21:46:29,unsubscribed,88,FALSE,361,Interest,Application
+35be230d-93dc-4637-a5bc-3ed370bf0d75,bf7e5dcd-ff08-44ec-aacf-076df48ebe79,sms,content_9,2025-01-21 17:29:09,booked,213,TRUE,183,Decision,Application
+9302f130-7b70-4c89-a960-2776d3cf6837,4cb0161f-b4d5-467d-bd7d-e87211aa331f,virtual info session,content_2,2025-03-26 18:38:58,replied,160,FALSE,254,Consideration,Decision
+724b956a-0116-4476-aa45-c284a3948eac,2d866095-31ad-4d2e-ac01-98b449986d49,webinar,content_3,2025-05-08 09:46:30,ignored,13,FALSE,315,Awareness,Consideration
+7369b742-5f25-422c-b493-81754446fe03,845fbba2-59b0-4423-9114-012df3d3fb39,sms,content_3,2025-01-02 06:26:40,joined,36,FALSE,464,Interest,Application
+77faef79-0ae8-4d7c-8c55-28fe99785a39,645a0124-c233-4086-8377-a517b00332f4,webinar,content_17,2025-02-22 20:11:07,unsubscribed,249,FALSE,585,Awareness,Consideration
+bc17c702-9587-44d2-8f3e-91d30cbb9a3d,e00973c3-60df-48b0-9e40-64897980d846,email,content_1,2025-05-06 08:31:23,ignored,217,TRUE,371,Interest,Consideration
+1a7c165a-6d2a-4a94-a765-2f56cbb78d92,556b7a04-fa58-427f-ba15-e901db0a32e7,webinar,content_2,2025-03-10 08:12:54,booked,185,TRUE,233,Application,Enrollment
+2d2a6d65-2f29-4254-84df-dd65918f4ef2,e9bfbd59-1213-4c7b-a452-f0fc16a36938,event invite,content_4,2025-05-04 21:59:21,joined,4,FALSE,479,Application,Enrollment
+016daf8e-60e8-4b37-8d3f-3ffe8b760efe,65ef3ab4-ac4d-4033-aabd-f972e8f2d9cf,virtual info session,content_17,2025-02-03 14:41:14,joined,245,TRUE,353,Interest,Consideration
+bd45ed65-af7d-436a-8238-3a3dc4d31948,a379b07c-68b8-4a03-bd6b-dbb986d9bec8,email,content_12,2025-05-07 17:40:11,ignored,299,TRUE,389,Application,Enrollment
+3f750c81-aff9-43a0-9f08-bcc155e3de03,aadee8f7-47cb-4075-8bcd-6de1c62996d6,event invite,content_8,2025-03-17 23:28:37,unsubscribed,34,FALSE,79,Interest,Application
+3f88f0e1-f64b-48f6-a81c-4df46442e6a8,0e0c8c43-edf0-4e54-b088-c1d0e47210fd,1-1 meeting,content_2,2025-01-27 10:12:32,replied,115,FALSE,132,Application,Enrollment
+2502dcd4-2777-4e78-a3a3-f14b58a52dc7,23e375eb-87a1-4179-b57f-d6162717ff01,virtual info session,content_9,2025-01-01 12:20:35,joined,76,TRUE,264,Awareness,Consideration
+045cbe4c-eb44-43d4-8e65-f1450cbfca76,56cdc4d4-4e9e-4835-a635-42fcb3f9709e,email,content_8,2025-04-19 06:48:52,booked,173,TRUE,272,Awareness,Consideration
+223341e0-e72f-408b-88e2-e291fae0495e,7bc2eeff-ee36-4be7-8527-a04312d352ed,sms,content_10,2025-01-17 23:26:37,joined,52,TRUE,131,Awareness,Consideration
+20ab9b77-b43d-4b26-96da-2cef2c46da19,a048f448-2ea0-470a-9411-b72c21cddcb3,email,content_9,2025-04-24 14:20:53,joined,89,TRUE,323,Interest,Consideration
+a3f9d0b5-5e8f-41f1-bd67-8d0ff8544a82,845fbba2-59b0-4423-9114-012df3d3fb39,sms,content_16,2025-05-02 09:36:34,booked,18,TRUE,334,Interest,Consideration
+bc708bb1-f044-4a54-ae85-e08a0cbfcad7,c40a90de-c6f0-472f-809e-54ac1b6f330a,email,content_10,2025-03-11 02:37:32,joined,170,FALSE,573,Awareness,Interest
+a00d04ac-cf54-49f8-a455-1ca189b729aa,79b56764-d0d4-4ac0-9ca5-80c1e924c2fe,event invite,content_3,2025-03-27 10:19:29,booked,39,FALSE,121,Interest,Application
+3929fdb5-b63a-40a5-8585-62694d5ab7b4,b5d292d0-c2fa-42b5-9dcb-589883ff707b,sms,content_3,2025-03-10 09:15:07,ignored,55,TRUE,456,Awareness,Interest
+38f0c714-45da-448b-a4b9-0595ffd16993,fb040b70-392d-41a8-907d-55e26c995f42,virtual info session,content_7,2025-02-19 20:02:38,replied,239,TRUE,211,Application,Enrollment
+0ac18bf9-e673-43d2-995f-394c69d8ea5c,0024a01e-8496-4a38-add0-631b8e072208,event invite,content_6,2025-01-08 07:45:25,unsubscribed,280,FALSE,234,Interest,Application
+8a960808-887a-4265-9612-1396438a4a87,90a82c6c-e2f4-49a8-ad91-ae09bea3b0da,sms,content_3,2025-03-23 17:30:28,replied,30,TRUE,186,Interest,Application
+4021365e-9f38-4adb-97d1-9b2227244215,94169a2b-b039-4d86-b681-5d77877e934d,1-1 meeting,content_2,2025-02-21 07:49:18,unsubscribed,235,FALSE,571,Consideration,Decision
+335caf48-4264-4390-bf13-52b2f53b9fdd,da9c4321-ec15-47f1-a757-1bdab00eea6b,1-1 meeting,content_14,2025-01-09 19:04:41,booked,121,TRUE,171,Consideration,Decision
+bfa78b04-2066-4674-8afb-2cb4d2be6b0b,1cc9b034-be63-411e-aa8b-c25010301979,email,content_8,2025-02-03 21:16:14,unsubscribed,59,FALSE,567,Decision,Application
+9fa1f88d-5558-4bcc-b806-3be8e7291300,c0ba3662-622e-4bb5-bdd5-1e598520b73d,virtual info session,content_15,2025-02-27 08:08:58,clicked,71,FALSE,555,Consideration,Decision
+4dd31a01-7f57-41e8-9364-d9067a06e330,63959cce-4df1-41a8-ad91-ee9997dceadf,event invite,content_17,2025-05-05 07:23:47,unsubscribed,124,TRUE,417,Awareness,Interest
+12d370a9-02e9-4079-849b-ef6a7ac54294,de3b3cf3-1347-487d-842c-6b847d105982,sms,content_3,2025-01-22 10:42:51,ignored,263,TRUE,244,Awareness,Interest
+31cac7fc-cf53-4590-be85-1a254a96add2,ebf3d755-e4b3-4855-9fdb-1a20bd3c6e7e,virtual info session,content_1,2025-05-10 04:34:58,clicked,180,TRUE,547,Awareness,Interest
+4817d51b-acfc-4c86-af8a-c09847f481fe,71282f3f-a35f-4ac7-b592-b2e7ff8d9bc5,virtual info session,content_19,2025-02-20 10:04:40,clicked,120,FALSE,521,Decision,Application
+ad73b6c2-258f-471a-a712-aafa9c905590,8b9c6965-3dec-4006-bb4e-2feec8c06939,event invite,content_12,2025-03-09 10:45:54,clicked,54,FALSE,112,Decision,Application
+b0978126-aa16-4574-acda-3d05850c5911,f50ee5ad-1394-4ccb-a897-8ddfb8c65c61,webinar,content_4,2025-04-20 08:09:02,clicked,189,FALSE,197,Application,Enrollment
+2751272b-4229-4bf2-affc-8cf3ba93a3b1,1095aabb-d9a9-4883-b1ef-4a2e5662b1e8,email,content_19,2025-04-20 18:04:44,clicked,217,FALSE,538,Interest,Consideration
+f7cf6f85-1c3a-4ac4-9efc-566cca277266,56655566-9b9e-4563-b477-d2289428fb11,1-1 meeting,content_12,2025-01-17 02:25:07,joined,120,FALSE,156,Application,Enrollment
+7437bb41-6769-4eaf-a867-a5cd05922904,ecce62c0-8b95-41b4-aec5-610209411ad1,email,content_5,2025-01-08 22:02:35,clicked,185,FALSE,589,Awareness,Consideration
+40235c30-f5bc-44ce-96c4-9dc51021b8b5,ab19afb1-0921-496f-bb12-02cf55361f80,virtual info session,content_19,2025-01-17 02:11:56,joined,64,TRUE,446,Consideration,Decision
+913a7d0f-f1f6-4b58-8569-3dd18a63dc07,213214d5-add2-4269-b228-7bb07dccb900,phone call,content_2,2025-03-29 15:29:19,joined,60,FALSE,180,Interest,Application
+031d23d4-b8c9-4ddc-a831-a0a54e34c27a,16fe768e-e674-4b55-94b9-5e067c30e972,email,content_10,2025-05-27 13:20:58,unsubscribed,222,TRUE,401,Application,Enrollment
+8ea67c3b-4032-4ca3-be3e-e59dd8b8257b,35ab9d2b-5642-43ed-9360-f70d5d2a9f8c,1-1 meeting,content_3,2025-05-19 08:36:44,replied,182,FALSE,540,Application,Enrollment
+c725683e-89f9-47c3-849e-4c30da940e5f,4f16ff26-e240-4a30-9f25-45e0214bb08d,sms,content_7,2025-02-12 19:33:47,replied,249,TRUE,429,Decision,Application
+fa76fbaf-b5e9-462c-a686-63ca41cf3cbe,6393f6d1-986f-478c-a608-f322fd80f56b,email,content_15,2025-03-13 18:38:31,clicked,244,FALSE,113,Awareness,Consideration
+fc4037bf-686f-4df6-82a0-381f69d0d52d,467812bf-948b-478b-9b1a-08fd53eab559,email,content_9,2025-01-25 18:20:50,replied,85,FALSE,26,Interest,Consideration
+0b35f98a-4b92-4995-ab93-dadff409eee1,7947252d-c6d0-4599-ba0d-e8ec40cf58e0,event invite,content_11,2025-03-09 18:54:16,clicked,165,TRUE,11,Awareness,Consideration
+a4f04d50-f68e-49b7-be90-d5db4bd6ef65,db6aa836-1668-4f82-95ff-edd4b2f10c05,virtual info session,content_16,2025-02-14 12:49:23,unsubscribed,266,TRUE,347,Interest,Consideration
+82ded12a-80b6-4ac7-99d7-476f204e802e,e9a4df83-0e63-404c-9f48-816698dcf828,1-1 meeting,content_20,2025-02-15 11:49:20,clicked,139,TRUE,498,Interest,Consideration
+529901b8-e4cb-4c5f-9bff-10e7e8d8d5cd,38aa0d40-e8d1-402e-b116-950e017b4423,phone call,content_17,2025-02-14 04:42:25,clicked,27,FALSE,137,Interest,Application
+d3a6de63-af46-4308-b1b3-9349eea7500b,e3e7eae0-80ed-47fc-9039-3b9b45ba8e3e,email,content_16,2025-05-08 04:30:48,clicked,110,TRUE,597,Interest,Application
+db59e0a4-6d30-4738-8104-dc582ae82787,dc0623c7-97b8-4d1d-ad30-a7055bcbeffa,phone call,content_20,2025-01-13 12:04:34,booked,90,FALSE,576,Awareness,Interest
+b7f7b422-e727-4624-98ab-597928d83b9d,346ad9a7-f637-48ed-b84d-962a43d3ceb9,webinar,content_10,2025-04-10 10:28:55,joined,131,FALSE,314,Consideration,Decision
+0c9678ea-95f8-40aa-8dac-eb291d29d0b5,26506a2c-1842-49b1-a4d0-addf8db1c0ca,sms,content_4,2025-03-14 03:20:03,unsubscribed,177,FALSE,254,Awareness,Interest
+6e7dc04b-224f-4b3f-9d1e-a50879bbbb8e,82e7040b-989e-4d6a-a0a7-12a82db9a6f5,phone call,content_17,2025-05-02 20:15:36,clicked,178,FALSE,251,Awareness,Interest
+67935ae3-f784-4be8-9ac7-0b03261961d3,2d866095-31ad-4d2e-ac01-98b449986d49,event invite,content_15,2025-02-24 00:31:30,ignored,6,TRUE,100,Application,Enrollment
+6798eb5d-6e71-4c68-a359-f63a8201c1c0,2e23dc52-5d1d-4582-aa56-82719b2467ae,sms,content_7,2025-05-31 21:21:07,clicked,95,TRUE,108,Interest,Application
+93d8e9db-d626-48dc-abba-10e7c3aa4cf6,853f5f63-7f91-49e5-aed3-410bc2134e13,sms,content_5,2025-05-23 18:31:25,unsubscribed,82,FALSE,307,Consideration,Decision
+c57550b7-1c88-4abb-aaab-b562d4df3779,f7669cd0-8d16-4b9c-86fb-b8a4cbf94efb,virtual info session,content_15,2025-05-24 00:00:23,replied,129,FALSE,64,Interest,Consideration
+972034e2-f9e8-45c4-b61d-59c0ff0d7f80,5cb3805a-caa7-448e-912b-156568ca5984,sms,content_8,2025-05-11 14:24:26,joined,2,FALSE,477,Awareness,Consideration
+afd95c3d-ee16-4c20-8d42-4dd13914b24a,ef23ccab-954f-48ed-b477-db0437290373,webinar,content_15,2025-03-19 03:18:24,clicked,6,FALSE,108,Interest,Application
+875b63fa-0ac7-456b-9b0b-0a147d7ba790,d8c037b3-1a49-4575-afce-05ff889e0a08,1-1 meeting,content_19,2025-02-06 08:33:43,unsubscribed,135,FALSE,212,Decision,Application
+59f4e768-680d-4fe1-bc77-c787ad0c0e9f,e49c7594-2930-40f7-935a-2c0b878438a1,sms,content_10,2025-03-01 04:35:18,replied,65,TRUE,454,Interest,Consideration
+9b6943e0-df20-4a08-a85a-6a5f37697d28,ea121d79-f53f-44c6-8230-9c024ccb22d1,webinar,content_13,2025-05-01 21:02:50,unsubscribed,172,TRUE,338,Consideration,Decision
+bbc8b6af-1db2-409b-abee-8584b5f3cf5d,8d50a67f-affc-45e3-88f6-1672a59fa0fc,phone call,content_8,2025-02-25 14:18:50,clicked,112,FALSE,408,Awareness,Consideration
+c7caee27-e115-4644-80dc-8156acb02c35,a5187093-6603-4ab5-9476-08768e507adf,1-1 meeting,content_15,2025-05-22 08:41:25,joined,166,FALSE,151,Interest,Application
+a9976309-2855-4061-a7e4-200e0f9ade23,a2ce72a8-2451-429e-aa34-25baf1be5fdf,webinar,content_12,2025-03-22 23:39:16,clicked,186,TRUE,450,Interest,Consideration
+cbb38b8e-fbc6-4a13-9853-f7e06a76475e,47d2d03d-5680-40bb-91b4-85c7d0752e21,sms,content_11,2025-03-05 21:28:10,replied,183,TRUE,191,Consideration,Decision
+18297172-5b1f-471e-a475-9cea30e19865,6393f6d1-986f-478c-a608-f322fd80f56b,event invite,content_14,2025-04-25 07:31:03,clicked,184,TRUE,220,Awareness,Consideration
+1ed97a68-b33e-493d-91ed-fb3175f6f21c,ba0d286c-b129-4d2b-bc6a-1c6d66440617,1-1 meeting,content_5,2025-01-21 05:36:02,replied,207,FALSE,544,Interest,Application
+6db3d2b5-9704-47f3-8e24-89e159be7d71,1d4d317f-d984-4c64-ada0-72d12d00fc2f,1-1 meeting,content_3,2025-05-26 07:41:29,replied,160,TRUE,336,Interest,Consideration
+328bdb9c-36d6-4ab6-8833-82a2129d2c14,3a811d98-93f1-4a00-aecf-a3de9fe913c3,phone call,content_11,2025-03-11 06:22:13,booked,82,FALSE,329,Consideration,Decision
+9d853a14-76bb-4e00-93d8-ce493d668d2d,da38efc1-06ba-47c3-bff8-d39597edb819,event invite,content_20,2025-03-02 15:45:44,ignored,54,TRUE,293,Awareness,Consideration
+2d16277a-42c6-4e9d-b19d-01f6994c0ed2,06ac695b-d787-4216-8291-dc568fd355c0,phone call,content_16,2025-02-03 18:48:44,replied,34,TRUE,351,Awareness,Consideration
+5d23fd46-8295-4377-bc7f-f6253e0c3a37,aca39d72-6874-48c4-91f8-bda393f4e4b8,webinar,content_14,2025-01-13 03:49:23,booked,3,TRUE,330,Interest,Application
+79ca5f82-dba9-4abe-9487-a69db34dc8ea,34adeb70-6eb9-4281-b35b-f9afc7fc0ef8,phone call,content_20,2025-04-11 04:05:28,unsubscribed,65,FALSE,119,Awareness,Interest
+c7a1c02a-4c4c-4c06-a9f0-33b3ce91cdd6,de3b3cf3-1347-487d-842c-6b847d105982,email,content_5,2025-05-09 04:12:56,clicked,126,FALSE,10,Application,Enrollment
+eb5c33db-134b-4eae-9457-603e6e19bb72,fe31d53e-7435-4075-80a2-d89e9cb1e255,email,content_9,2025-02-07 19:24:33,ignored,86,TRUE,276,Awareness,Consideration
+d1efa27f-cd88-44f1-ac6c-7012e5ea1fe1,ee91ff30-d579-4e74-94a3-c7f4fd3cef73,webinar,content_4,2025-04-10 12:49:25,joined,111,FALSE,592,Decision,Application
+d4642762-b1b0-49f2-bdf9-316454cf23c9,a65920b5-af80-47ac-a937-fa52a16ece51,event invite,content_14,2025-03-17 19:54:34,replied,29,FALSE,501,Consideration,Decision
+486fcd8d-a373-4b7c-8ddb-2df79c5b7dcb,75a744a9-5c76-4531-8ad7-f6d877d0e60e,webinar,content_14,2025-02-05 11:12:15,replied,43,FALSE,280,Interest,Application
+f62b31b3-a8b7-48c6-a915-a00591f24237,76bf8028-ef15-4a8d-bd72-b819535ec437,phone call,content_12,2025-05-15 05:31:42,clicked,290,FALSE,186,Interest,Application
+44a0641c-e181-4f13-8c49-62377df72951,8036eb8d-755b-4c31-a37c-4c209e4f38bd,event invite,content_7,2025-01-10 20:07:41,unsubscribed,153,FALSE,152,Awareness,Consideration
+43b2f02c-f98e-4b74-bae4-b61aa4ae1dd1,9be95454-9230-48ec-8f9d-c321de993143,email,content_11,2025-05-04 17:03:12,unsubscribed,160,TRUE,183,Application,Enrollment
+ac866d3d-8351-4d83-b0cc-fcf220bd8ce9,893cc165-fd39-4d86-b528-db337725a5ca,virtual info session,content_2,2025-04-02 03:32:19,joined,76,FALSE,418,Interest,Consideration
+93670cd3-917a-43bf-9172-11af741e5616,537446aa-b19e-4d8b-a32e-30eb803d12ba,sms,content_9,2025-04-18 18:32:19,joined,186,FALSE,358,Application,Enrollment
+eb2ceade-3634-4036-b710-9a09b2c0bb04,c98a1d3b-32fc-4037-8420-78f6929d6b0f,email,content_5,2025-04-04 04:39:48,ignored,55,FALSE,207,Application,Enrollment
+f8bfc7cc-0664-4f36-9428-dd33773251bf,8d928626-50d3-4c49-9795-2f6cf5ae9b7b,phone call,content_12,2025-01-09 02:17:00,unsubscribed,170,TRUE,392,Consideration,Decision
+019fb1c9-b48c-4bbd-a9ca-3dc1e120d032,f220e0c9-988f-47f5-aa68-5e5c845f9c72,virtual info session,content_3,2025-05-21 06:10:59,booked,151,FALSE,224,Awareness,Interest
+e158f884-31c5-4718-be19-7210de320f51,f4fce787-af00-4bc1-9868-65d51b86c2c5,1-1 meeting,content_9,2025-02-20 11:40:39,clicked,111,FALSE,562,Interest,Application
+bf1d214c-b5ed-4156-847f-3a4438486e63,49555e84-b68f-43c4-b0f4-b2ee6cc822d0,sms,content_4,2025-03-27 03:49:54,clicked,240,FALSE,308,Application,Enrollment
+ec2c4911-b123-4d3d-abe8-715d8af15bc9,235763c3-1bcb-44ba-90f3-10068fa753c4,email,content_13,2025-01-04 17:46:07,ignored,198,FALSE,348,Awareness,Interest
+102001b9-7858-43c7-a526-1b9de3f471a5,382d60f9-f976-4036-a9b9-a9b600062903,email,content_14,2025-02-10 13:49:00,replied,286,FALSE,391,Awareness,Interest
+4a0eb4d7-c7af-475e-8337-1994586e21b1,5522b06c-9bfc-4df6-8e9e-83d5c8e707df,1-1 meeting,content_18,2025-03-17 17:34:23,booked,142,FALSE,84,Consideration,Decision
+2700bd06-4b64-44b2-85b3-5c54534d387b,119032cd-df67-47a2-bfec-94d72794e891,phone call,content_18,2025-02-23 16:57:44,clicked,123,FALSE,256,Awareness,Interest
+91da0e99-747a-4788-9b75-8f91d8057243,e996775a-430c-4a0c-aa48-d1fd39e0445f,webinar,content_6,2025-06-02 16:31:21,unsubscribed,23,TRUE,147,Awareness,Interest
+1d6f9fbf-5dcc-45b1-aafb-4db6ec6fd312,52590c0b-c304-4c22-9e16-3612a876e9da,email,content_1,2025-05-03 04:38:54,replied,204,FALSE,21,Interest,Consideration
+b2227016-1652-4802-bd30-fb6bb0adf6d4,cc1e9031-083b-4b80-a130-ca3c872f174e,1-1 meeting,content_11,2025-01-28 13:40:30,joined,112,FALSE,400,Decision,Application
+7c17c1be-287a-41f8-a50c-8c55c066b1cf,7476fb57-6be4-42d6-94a4-941bd6f0f047,sms,content_18,2025-03-04 03:51:48,ignored,84,TRUE,358,Interest,Application
+e53f800d-b98d-4c0e-ae83-0fb7557f8cf3,62acc7e5-2b88-4c60-8e52-a6ba604c979c,webinar,content_2,2025-03-16 02:45:22,joined,245,TRUE,107,Interest,Consideration
+ba8b1aab-d731-4bd4-8ea8-5351cb305cb3,d36748f3-1545-409b-bc29-308342c922c1,webinar,content_16,2025-02-05 10:03:51,replied,277,TRUE,224,Decision,Application
+8d0f0dc6-dccb-455f-bae2-757cfb93962c,ae144db1-8ee5-43a4-93e3-716b6d094633,1-1 meeting,content_14,2025-02-20 13:57:53,unsubscribed,105,FALSE,386,Awareness,Interest
+a2bc388d-5981-493a-9797-eb05a20afd80,0e382011-055f-44ce-b03d-ce4776466f6a,webinar,content_11,2025-01-15 09:48:52,replied,282,TRUE,72,Interest,Consideration
+b3f2f20b-3d06-479b-84d6-6f522f3dd08f,bda6c0d7-8c0a-46c6-839d-c38b431f8234,email,content_5,2025-02-08 09:45:38,ignored,44,FALSE,139,Awareness,Interest
+ce52844a-a693-4a86-8a1e-35ee9299107d,6f24ec3a-f354-45fa-bd56-756f84eda751,webinar,content_15,2025-02-23 15:45:45,clicked,179,FALSE,276,Consideration,Decision
+f6bd1e0b-6de1-4bd7-96fc-25c0e71c9a65,e71b9040-b157-4290-9c82-ec1dc70cb83e,virtual info session,content_10,2025-02-15 04:26:21,joined,61,TRUE,511,Interest,Application
+193f461b-b7d7-446b-9486-e7ec4ac6c567,09cbde84-9f5f-48ab-a872-a3bedad0fa7f,sms,content_10,2025-05-07 16:18:09,unsubscribed,255,TRUE,285,Awareness,Interest
+81d92cfe-e4a2-4bbf-9bb9-e746e06eca16,ea2d4dc3-e709-4274-af1e-acfe8d2ff28c,phone call,content_5,2025-04-01 10:51:27,clicked,168,TRUE,325,Interest,Application
+80c4da8f-3003-4936-931d-6d1b4f55fa64,586e38b1-1a01-495d-a80f-b7be21548d87,1-1 meeting,content_9,2025-03-08 16:43:09,booked,79,TRUE,455,Application,Enrollment
+935c9f2b-ea5a-4bb9-a672-84b1c6e2b7ec,d49b58b4-ee08-4709-a299-a2b7469df90d,virtual info session,content_14,2025-03-28 16:25:05,joined,90,TRUE,195,Interest,Application
+11d5b94d-251f-4ec4-9201-991a4abeff80,9aaef442-1679-4e2d-bdf9-d27f5fc32ffd,email,content_8,2025-01-17 07:09:16,booked,213,FALSE,393,Awareness,Consideration
+67ca81ab-e2e8-49e9-af79-506d9f1ce168,7d6be218-c11a-49b2-8d33-beebbdc302bd,webinar,content_13,2025-04-29 09:21:29,clicked,84,FALSE,426,Consideration,Decision
+44ceec93-7d05-4393-9377-cbc5e8b7a58d,a79f5459-75fc-44ec-b53d-439130c59735,sms,content_5,2025-04-27 20:27:14,replied,15,FALSE,216,Consideration,Decision
+a0eeab9e-ecf0-4c04-8440-0790802f74bb,cc1e9031-083b-4b80-a130-ca3c872f174e,1-1 meeting,content_7,2025-04-15 09:10:33,clicked,265,TRUE,177,Application,Enrollment
+767a3f70-8942-46b2-9e8a-1d72dbfe8085,1c7a8454-994d-47f9-bc84-a74627282b3d,phone call,content_6,2025-03-09 07:23:54,booked,153,FALSE,159,Awareness,Consideration
+c7bcac98-1966-441d-840d-118f9f1e59b4,6f5da6de-e152-40d0-955e-45888874f1f7,1-1 meeting,content_14,2025-05-10 00:23:33,joined,253,FALSE,190,Awareness,Consideration
+2fdfe5f2-9ce3-4c58-84dd-51021dc4ac51,aca39d72-6874-48c4-91f8-bda393f4e4b8,virtual info session,content_6,2025-03-16 04:08:00,clicked,66,FALSE,93,Consideration,Decision
+fc86d158-2e38-405f-9db9-cfc1dc68a088,8d928626-50d3-4c49-9795-2f6cf5ae9b7b,phone call,content_17,2025-02-15 10:28:48,joined,278,TRUE,554,Interest,Application
+a697e07d-b520-470c-8a75-eb695ed0e112,e919f87e-5859-40ae-a952-97dcd60637a8,event invite,content_8,2025-05-17 01:47:10,booked,219,TRUE,149,Consideration,Decision
+ee396fd2-d6d6-435e-ae6d-ead7a7d771f7,090fce5e-1de3-433e-b57b-2b04107e8594,event invite,content_3,2025-05-25 23:09:03,replied,58,TRUE,342,Consideration,Decision
+d66d31cc-304f-49db-8b0c-308f3974c9a3,c33bb77c-4fd8-4f17-8e63-687f3820f845,sms,content_7,2025-05-21 00:50:37,booked,193,FALSE,403,Decision,Application
+05a079a1-320e-4f81-9354-000d5fed93e6,73afdc0f-dd43-4dd1-a0de-ca78c306179c,phone call,content_4,2025-01-29 07:30:14,unsubscribed,288,TRUE,544,Awareness,Interest
+dcd5dded-1e81-41d9-b76f-d1f1dfc33d86,e2a7c4b5-682a-4b76-be28-9d2f534ee66e,phone call,content_18,2025-03-17 14:03:47,booked,140,FALSE,119,Awareness,Interest
+ea6f1644-2eec-4fcb-82cf-1fc02ce97e5d,4b5393ee-7a0e-4978-9631-870251b1b79c,sms,content_17,2025-01-27 09:01:02,joined,144,TRUE,217,Awareness,Interest
+deb20a5e-0f0b-4aa0-82e8-e3f64de04ec3,07018d3c-7ed5-414c-b494-9ad21f776cd8,event invite,content_12,2025-04-12 18:57:25,replied,108,FALSE,582,Awareness,Consideration
+0d8c196f-adf4-4cc4-8e8b-4c61ea0376bd,0cf5a2a8-0885-4089-bd74-25c27d9e50fd,webinar,content_17,2025-05-26 23:53:57,unsubscribed,280,FALSE,518,Interest,Application
+3d8a83b5-bf7c-452f-a968-bacaf071ad42,dd246bf1-973c-4532-bef3-690bcda95e12,sms,content_20,2025-04-17 02:29:39,booked,286,TRUE,469,Application,Enrollment
+273f4796-08b7-4379-8593-5fcece9132f8,fe31d53e-7435-4075-80a2-d89e9cb1e255,virtual info session,content_2,2025-03-19 07:36:22,joined,225,FALSE,321,Application,Enrollment
+4c25a657-61b1-4bd8-b191-b6d7cc97af61,35fdc374-63f6-4d05-b81c-d18318f83930,1-1 meeting,content_20,2025-01-13 09:57:36,booked,286,TRUE,75,Decision,Application
+bcb5d74c-253e-4446-b816-135809113ecd,5a5c4e2e-ac9f-489a-be1d-e599e7231565,1-1 meeting,content_7,2025-01-05 09:39:40,replied,136,TRUE,333,Awareness,Interest
+2a06cabd-d454-4bf3-b2ca-eb2ec9988820,b421f077-2500-4000-a9f9-941413625b3b,phone call,content_7,2025-05-13 02:15:09,unsubscribed,222,FALSE,145,Consideration,Decision
+470ba940-7985-4a6c-bcd8-4e59d8c6b0f5,dbf17263-f5e0-4c2b-9395-627de5f5c972,1-1 meeting,content_14,2025-01-21 04:10:47,unsubscribed,222,FALSE,336,Decision,Application
+7c0f8c08-a070-41a3-a175-40eb4bde4b65,4ac7c7c6-6f0f-4ba9-92bd-9bb074650034,webinar,content_10,2025-03-07 05:08:23,clicked,42,FALSE,239,Consideration,Decision
+d425ad66-9101-4846-a877-d8fb0ad378e5,2e23dc52-5d1d-4582-aa56-82719b2467ae,phone call,content_5,2025-03-09 16:10:41,joined,76,TRUE,437,Awareness,Consideration
+440a27de-9e09-4710-8fe9-b35309adfdcd,7a82d3bf-771e-4a00-98f7-e3c94386dc8f,event invite,content_19,2025-01-27 03:25:39,ignored,260,TRUE,66,Awareness,Consideration
+4ccbdf51-9fed-4aa9-a20f-87d0a5e49607,5a5c4e2e-ac9f-489a-be1d-e599e7231565,webinar,content_5,2025-01-02 11:37:37,booked,46,FALSE,121,Interest,Consideration
+ac5938f5-6434-43dd-960f-b8ff06cf5442,6f24ec3a-f354-45fa-bd56-756f84eda751,sms,content_2,2025-01-10 22:28:06,booked,121,TRUE,149,Awareness,Interest
+f2cb9c7e-f272-4847-b002-436f3a2893fa,a317532a-6ab5-432e-91e4-b40ce8056b1d,sms,content_18,2025-01-03 19:27:01,unsubscribed,267,FALSE,357,Decision,Application
+a02a11a9-f19b-45f8-ad40-4a8636e8502a,a0149145-8920-4ecd-b017-2c39301ae0be,1-1 meeting,content_12,2025-03-10 18:25:42,clicked,47,TRUE,444,Awareness,Interest
+b4299d8d-677f-4c75-8826-f61b0fcbf576,b79705ce-1a9d-42ba-9e37-9d786a10ffce,email,content_19,2025-03-12 01:27:24,clicked,258,FALSE,161,Consideration,Decision
+694237e7-dceb-463d-86fc-0ddbe010a3b2,583a8206-bbd2-47dc-b85a-d8188e67d473,event invite,content_17,2025-03-26 12:48:56,clicked,55,FALSE,558,Interest,Application
+b42f9f15-d01e-43e6-bd5e-4fb06fc2fb45,c764be7f-9ce3-4340-91de-b933f60c53c4,sms,content_18,2025-02-27 19:09:23,replied,121,FALSE,507,Interest,Consideration
+c109f52f-5484-4b94-8540-1efea3f627ab,e3e7eae0-80ed-47fc-9039-3b9b45ba8e3e,sms,content_12,2025-03-26 20:25:52,clicked,296,FALSE,264,Interest,Consideration
+ef15517f-0fdc-4759-911e-188917d187f4,7ffa5e2e-0332-44d9-8933-64a1b5997e89,sms,content_9,2025-04-19 19:30:44,clicked,78,FALSE,177,Application,Enrollment
+d82dcf38-6024-4423-930d-86967d0ed120,0df9c701-de30-4271-b099-239b7a4da911,email,content_19,2025-04-26 11:20:59,clicked,251,FALSE,580,Decision,Application
+5e0320a2-6b81-4a22-8cc7-2b4de02e2ec9,537446aa-b19e-4d8b-a32e-30eb803d12ba,1-1 meeting,content_1,2025-05-24 01:06:48,replied,38,TRUE,348,Application,Enrollment
+b021ee7d-2053-44db-944e-73e025259ac0,7923c051-77c3-42d7-bef8-bc5c26cf4c7a,phone call,content_5,2025-05-01 07:52:21,replied,189,FALSE,273,Decision,Application
+256dab5b-f705-4517-932b-98e45cf012f6,f4fce787-af00-4bc1-9868-65d51b86c2c5,virtual info session,content_16,2025-02-17 01:08:17,ignored,233,FALSE,356,Awareness,Consideration
+61f16d75-2749-4c05-be4e-8c3b21058481,1ab752e7-0f8e-4e6a-b2a7-0a75ffb3d609,sms,content_7,2025-04-30 05:55:10,joined,153,FALSE,372,Consideration,Decision
+5d438234-c016-4c17-9fd8-03e00f60de6e,f4d3f759-fc6f-4b2e-a206-a9b07c344a47,event invite,content_19,2025-02-03 09:55:46,unsubscribed,247,TRUE,399,Interest,Application
+ba701cd4-ed33-4f95-84f6-7a22ede602c3,98e0a1d6-821b-4550-bca2-a0807b8b73d1,sms,content_1,2025-05-17 15:38:44,joined,50,FALSE,481,Consideration,Decision
+ad59d76e-631c-45af-88bb-b13eebaa8601,2e0b2090-f3ad-4c8f-a7cf-5b6510610ca4,email,content_9,2025-04-06 23:28:19,ignored,66,FALSE,563,Application,Enrollment
+a6a42efe-fa70-4db1-a1b5-1f5c708c5c2d,17bfac6c-ec8f-42a3-ad5d-1990fed9db7b,1-1 meeting,content_20,2025-05-24 08:38:14,unsubscribed,120,TRUE,314,Consideration,Decision
+abc69078-5b33-4c26-a11f-0b9b2dd63830,84e40bdd-6f4d-4d33-8ee5-469e145bbe89,phone call,content_6,2025-01-11 22:00:04,booked,128,FALSE,335,Application,Enrollment
+a09ea2e1-a70f-4545-8e4a-175f2deb6fd2,3a5cdfa0-a487-45e6-9098-f058aeda8186,sms,content_9,2025-02-18 03:01:19,replied,68,FALSE,216,Awareness,Consideration
+b67ed130-df2a-4d1d-8774-3cbe98df55cd,14676044-902e-4693-8a01-efb111b637c2,virtual info session,content_18,2025-03-01 01:56:49,booked,282,FALSE,56,Decision,Application
+0c3719e5-c8f9-4b5c-ba95-8a34a47a3695,e12910f0-bae2-4e5d-afae-5e0ae3623a55,sms,content_9,2025-01-10 06:16:01,joined,29,FALSE,117,Application,Enrollment
+9d854825-932b-4050-a72f-18ac9d1b2fba,ef75a04e-8689-4d47-8c8d-fa03e3779c81,virtual info session,content_2,2025-04-13 00:36:05,replied,124,FALSE,377,Interest,Consideration
+447d0c40-f4a8-46d3-934e-701c9a3f0d13,c4a573d4-1643-41a5-891c-547da2f4d556,webinar,content_2,2025-04-20 13:55:10,joined,274,FALSE,553,Application,Enrollment
+a404337e-43b2-47b6-b625-9a0d05bd8659,2e0b2090-f3ad-4c8f-a7cf-5b6510610ca4,virtual info session,content_18,2025-04-18 02:29:52,unsubscribed,220,TRUE,44,Awareness,Consideration
+b76a6920-cdec-48f4-a95d-533ece926f6c,3a726f45-11e4-4cc1-bad0-23b3516a0ced,email,content_14,2025-02-22 09:57:43,unsubscribed,203,FALSE,546,Consideration,Decision
+c714d912-a53f-4252-9df5-bcdcd97e0169,2ede9276-535b-4d64-b098-da739c1ebba6,event invite,content_12,2025-03-09 23:26:33,clicked,277,FALSE,464,Awareness,Interest
+68445132-4bf2-4b44-aa98-178fc69818b7,548697f9-c2fd-438e-a899-94a7b7e70605,webinar,content_11,2025-01-11 16:26:26,joined,31,TRUE,215,Application,Enrollment
+83fce70f-230f-4812-8b96-83d3c588fc32,2b3e9ba4-412f-4c3d-b28c-b8afd729cf55,phone call,content_12,2025-05-31 14:00:56,unsubscribed,240,FALSE,69,Interest,Application
+08705ddd-5fa2-42b8-99ab-c9207bb15a1d,5cb3805a-caa7-448e-912b-156568ca5984,sms,content_12,2025-04-08 13:25:44,joined,36,TRUE,440,Application,Enrollment
+522d8190-42a1-47f8-8a11-9db8032095f1,c0d84b81-9d31-4f2e-bfcb-49c6518b6599,event invite,content_1,2025-03-31 12:26:00,joined,238,FALSE,221,Consideration,Decision
+2d4f4e21-8063-4e2e-ba67-7ac576e874da,fe31d53e-7435-4075-80a2-d89e9cb1e255,email,content_19,2025-01-28 00:15:28,unsubscribed,224,TRUE,76,Interest,Consideration
+2d1da8a1-a590-4a09-8bce-6fe7a338acb4,8b51b88f-3303-40a6-9cf6-7bf67081a58a,event invite,content_3,2025-04-15 11:17:24,ignored,218,FALSE,418,Decision,Application
+abe21d1b-a8ec-4a71-9daa-16d15ddc76b5,e139c81f-1282-4b73-aa93-bc59426cd822,event invite,content_19,2025-03-27 00:24:45,replied,41,TRUE,87,Awareness,Consideration
+933465a0-e9fc-4ab1-8bfa-4069b75e252d,548697f9-c2fd-438e-a899-94a7b7e70605,1-1 meeting,content_3,2025-01-10 05:30:35,booked,242,FALSE,412,Decision,Application
+6abfeaad-4228-447b-8cd3-46d25e795f76,17bfac6c-ec8f-42a3-ad5d-1990fed9db7b,1-1 meeting,content_15,2025-05-23 08:17:03,ignored,27,FALSE,238,Interest,Consideration
+cd752eb5-d817-4d7b-b7bf-54c7388140e8,1f787d82-b2e5-4dab-8819-f0481c266765,webinar,content_9,2025-02-28 16:03:55,ignored,5,TRUE,522,Decision,Application
+5a07a039-8860-4707-a8bc-838b3f807ea6,4025e584-90de-4806-8cdf-b61054735e3c,phone call,content_17,2025-04-05 04:02:56,unsubscribed,124,FALSE,389,Awareness,Consideration
+57d2a73b-b4db-4024-aeb2-ba2f00016987,19e043bc-7bec-4670-9b97-7b4c68355913,email,content_18,2025-05-26 15:37:36,unsubscribed,266,FALSE,134,Awareness,Interest
+e0998707-fb38-404a-a721-5aa1c1a9b471,68e0eac9-c8e1-41a0-9d1d-8caa02139ed6,email,content_11,2025-02-13 19:10:18,booked,70,FALSE,539,Decision,Application
+3624fb58-0fd4-449a-b0f5-629507aa2b88,162304ad-4b70-4154-9dac-3aac6f6d2387,phone call,content_10,2025-01-27 22:48:58,clicked,56,TRUE,528,Interest,Application
+c2c7ce56-06c2-42a5-8339-01da024a6913,2ede9276-535b-4d64-b098-da739c1ebba6,webinar,content_10,2025-01-10 14:41:07,booked,60,TRUE,225,Awareness,Consideration
+ddc34448-672f-4b9c-aaf0-c950e3d0f5f6,3fb76ac7-81eb-41e2-bb64-088f3f8db0b8,phone call,content_11,2025-04-16 13:17:36,joined,18,FALSE,464,Application,Enrollment
+d20321ba-c289-4de9-ac4a-3088a5065a2c,f220e0c9-988f-47f5-aa68-5e5c845f9c72,virtual info session,content_5,2025-05-16 01:07:55,clicked,87,TRUE,472,Consideration,Decision
+5d7bfc63-f647-4ef0-b27c-5a6c1361d160,7d6be218-c11a-49b2-8d33-beebbdc302bd,email,content_3,2025-02-18 07:22:48,ignored,54,TRUE,222,Awareness,Consideration
+a6eddaa7-261c-4ce8-9637-359f9d33dee0,556b7a04-fa58-427f-ba15-e901db0a32e7,1-1 meeting,content_12,2025-05-28 12:33:07,booked,10,FALSE,551,Decision,Application
+4bcee188-57e7-49f8-8aef-6cc92522d95b,1c7a8454-994d-47f9-bc84-a74627282b3d,1-1 meeting,content_7,2025-03-21 15:59:36,replied,40,FALSE,211,Awareness,Interest
+42bc0bf8-d5c8-42d6-abf3-1e5e043cfef8,082ac62c-660a-48fa-a099-98bb55ef3d40,event invite,content_11,2025-04-16 21:51:51,replied,134,FALSE,243,Consideration,Decision
+dbac5b15-3484-4f33-8ece-ceac8f0879b2,b9daec1d-cc1b-4f0b-a20e-0e5656643b33,webinar,content_4,2025-05-12 08:29:24,replied,264,TRUE,263,Awareness,Consideration
+476a6d6b-161c-4cf3-8405-9990816c1c08,e1df584e-9557-4c1e-bd22-fbb79fd90ba2,webinar,content_7,2025-04-03 13:36:24,replied,65,FALSE,271,Interest,Consideration
+8c676aad-958f-42ae-8d5d-cc9e6f8bc117,d09a2cf9-5e22-4fca-ba28-8a76e21ea458,email,content_9,2025-02-22 23:29:51,unsubscribed,241,FALSE,585,Awareness,Interest
+6a9e2ed2-3d00-42a7-a9fd-2f1870533d6f,2464d8e8-423c-492d-bd3f-3ecbf8ea0307,sms,content_16,2025-03-19 18:50:47,booked,296,FALSE,28,Awareness,Consideration
+8940ee1a-13e5-4aab-a2de-1149efae88a4,d795fd1e-e643-40e4-97a0-a01b11dcf3a6,email,content_10,2025-05-09 22:11:03,unsubscribed,250,TRUE,47,Consideration,Decision
+d8c2025e-afe4-45e4-98e1-6c8ca3974d8e,cdf49876-0725-4c3d-8861-35e965949e87,event invite,content_17,2025-01-19 00:35:19,booked,133,TRUE,575,Application,Enrollment
+12fc9574-c3a9-4a02-8572-7d8deff75f7c,4f7475c6-b1fc-41e9-be3d-f9b4a7e714b8,event invite,content_13,2025-05-20 15:10:42,booked,130,FALSE,11,Consideration,Decision
+c743f495-fa13-4aea-ac29-e6b0c2c19247,c16611a2-cfc0-4241-b070-3a3458c2bf32,sms,content_1,2025-04-28 05:37:45,joined,162,TRUE,423,Awareness,Interest
+e3b6871b-5195-4d3c-bd39-79b27207abd5,be716256-87a2-4109-85cf-7fc9fbd2d304,event invite,content_2,2025-02-06 12:05:00,booked,82,TRUE,51,Awareness,Interest
+a6cbb1d2-520c-4f4b-a3b6-6d3b45362e0f,2588dcee-ed9e-4027-85d2-c242e3e72449,event invite,content_4,2025-04-23 20:14:13,clicked,39,TRUE,340,Awareness,Consideration
+c80039fe-0aa8-490e-b581-5ada3e840ee6,39a7930f-ea2e-403a-90eb-dfa66c4e397e,email,content_16,2025-04-13 00:26:52,booked,72,FALSE,353,Interest,Application
+4386a3be-2be0-4e9b-b63b-e4a41d55dc99,5cf65119-0496-425e-8bb7-5636af1f320c,email,content_6,2025-03-31 22:48:20,clicked,28,FALSE,511,Interest,Consideration
+b49e88d8-8ca1-4ccb-a526-cb14402a4bea,bf7e5dcd-ff08-44ec-aacf-076df48ebe79,event invite,content_3,2025-01-14 19:53:58,joined,43,TRUE,95,Awareness,Consideration
+8814bbd8-97d9-4ce5-a372-cedfa08fa416,5b233112-2183-4e7f-8f71-0c68ddbb9dce,webinar,content_4,2025-03-08 12:04:34,unsubscribed,150,TRUE,526,Awareness,Consideration
+d6886f32-896c-4023-8ce6-c808177ca8a4,b1f67718-c4ae-411c-9c31-e68ba09cb63e,sms,content_17,2025-05-06 05:41:21,unsubscribed,178,TRUE,506,Application,Enrollment
+658d7180-f3dc-46cb-958b-2eaac673defa,9f51ba3f-0187-48e5-8d41-3c41b3dd1cbd,phone call,content_7,2025-04-20 11:20:52,clicked,231,FALSE,566,Decision,Application
+e0817339-316b-4868-90e5-bf79d8d459c3,84e40bdd-6f4d-4d33-8ee5-469e145bbe89,email,content_4,2025-04-18 06:32:21,replied,84,FALSE,334,Application,Enrollment
+6bb1c7c1-e4a2-4d94-b3a5-32d74bfbeeb3,2a20b5b2-07b4-438c-b0e1-11a120525c93,virtual info session,content_7,2025-02-06 07:50:24,booked,20,FALSE,466,Interest,Consideration
+2966bafb-8357-4cb2-852b-c7c4170686c5,53a95ada-e891-415d-abe9-175785a65bca,phone call,content_4,2025-01-24 19:17:35,replied,33,TRUE,243,Interest,Consideration
+173328c8-402c-4ed0-ab91-41bc7e775809,4f16ff26-e240-4a30-9f25-45e0214bb08d,phone call,content_10,2025-01-22 06:09:17,unsubscribed,45,TRUE,81,Awareness,Consideration
+94ab4364-8ad2-4854-9133-57d2f104068b,dabd399c-1a77-46c8-bc91-c47e201b6649,sms,content_3,2025-01-21 16:36:39,unsubscribed,160,TRUE,536,Awareness,Consideration
+eddfbf3c-e668-417e-a4f1-8d45e7762aac,ab1a6552-556f-4bd5-962e-b9e9a6325e2d,phone call,content_7,2025-02-11 06:48:02,joined,297,TRUE,210,Awareness,Consideration
+2c36b634-6bca-419b-bb01-e93b9404e08b,4025e584-90de-4806-8cdf-b61054735e3c,1-1 meeting,content_7,2025-04-09 18:36:58,ignored,41,FALSE,100,Decision,Application
+470598d8-3b70-46c3-b411-9743774e2507,fd2c866b-1483-4d50-b797-b91a74d580c0,1-1 meeting,content_16,2025-05-07 19:57:51,joined,226,FALSE,156,Interest,Application
+f84a7f78-18f9-40b7-9a56-91350865883d,97f20e30-851d-4951-a4f2-d67b5892c67c,email,content_17,2025-04-29 10:39:13,unsubscribed,47,FALSE,505,Awareness,Consideration
+4e64401c-0312-4e18-b4c2-fc38b5ce1175,d490a884-b3c4-4a09-9756-79fbb4a25352,email,content_3,2025-05-18 17:58:23,joined,180,FALSE,32,Interest,Consideration
+cd8b0cd6-3606-499f-8087-aa9652f508c1,630b00e7-6a67-4e83-8633-5a4df496587e,webinar,content_8,2025-01-21 18:57:32,joined,169,TRUE,292,Interest,Application
+d66eb5e2-5dbf-4cfa-b1d1-dd3267363073,8fe5d687-993c-46d5-bd37-619db1811b2e,phone call,content_10,2025-01-29 19:49:15,ignored,256,TRUE,595,Interest,Consideration
+42f9e3cf-522f-48fa-b52b-0a9f3dad44f2,bd09496e-2b73-4645-9d07-f6ab436274b9,event invite,content_19,2025-01-22 06:23:18,booked,58,FALSE,348,Consideration,Decision
+a54a394a-8163-4a66-be43-5522b3969171,35fdc374-63f6-4d05-b81c-d18318f83930,phone call,content_7,2025-04-12 17:33:09,joined,100,TRUE,140,Consideration,Decision
+7a24c75e-5b5d-4595-b5ad-c9818d57743d,9c68b336-72ed-4bdf-afaf-d97f38ca7407,event invite,content_7,2025-04-21 18:04:14,replied,53,TRUE,275,Decision,Application
+04aeafd6-e8a6-4899-9865-40fb0b73d8b3,2a6cf2fd-07b4-4783-816e-2532955e6b68,1-1 meeting,content_5,2025-01-18 04:12:26,joined,127,TRUE,255,Decision,Application
+49518145-a7f5-410d-a11d-9662c894bdee,94169a2b-b039-4d86-b681-5d77877e934d,sms,content_20,2025-05-08 20:02:05,joined,234,TRUE,338,Interest,Consideration
+ecb5c87c-460b-4d72-82ba-e5e2c7bc8ba7,0b3201fc-a42c-40e7-aa9a-2f0274cd6523,event invite,content_18,2025-01-29 12:29:05,clicked,47,FALSE,421,Decision,Application
+b83ad933-bc67-4505-a317-d39a89367731,f8a067cf-96ca-457f-8a1f-ada01c4392e5,webinar,content_19,2025-05-17 14:11:53,unsubscribed,134,FALSE,361,Interest,Application
+c77269c3-56de-4917-a01b-960a40eb8c81,f0c3c942-5f12-40f8-80e8-3d1bf1752efb,webinar,content_9,2025-04-05 20:38:02,joined,82,FALSE,530,Consideration,Decision
+987cea7a-9ea5-443a-a605-46b608f573b8,5b233112-2183-4e7f-8f71-0c68ddbb9dce,webinar,content_16,2025-01-13 00:58:29,replied,205,TRUE,590,Interest,Application
+616a63ab-e882-456c-bc9b-453b8927c09c,3a31ab32-59b4-4239-b835-ea6b6b906946,phone call,content_12,2025-04-28 22:10:44,joined,119,TRUE,446,Interest,Consideration
+c08a522b-8652-42b6-b4a3-73d694383d11,71282f3f-a35f-4ac7-b592-b2e7ff8d9bc5,phone call,content_16,2025-04-19 03:43:13,unsubscribed,154,FALSE,112,Awareness,Interest
+8b076f84-5b08-4ac6-ab5c-9885654d0ee0,c2c9d38e-bdbf-4e3b-bb6f-6dd06820d2db,email,content_13,2025-02-06 08:08:52,booked,63,TRUE,436,Awareness,Consideration
+f780dce2-c64b-4a89-b655-85608f6ddb2e,22f0ea9a-fe31-4582-8c04-70496a898348,sms,content_10,2025-05-23 01:58:24,joined,104,FALSE,38,Interest,Consideration
+a5072d82-376b-41aa-b50e-d4fce808219e,0e382011-055f-44ce-b03d-ce4776466f6a,sms,content_20,2025-04-20 18:00:35,joined,102,FALSE,147,Decision,Application
+81149784-f500-4ece-95ed-b31c5ba1d05b,a048f448-2ea0-470a-9411-b72c21cddcb3,virtual info session,content_6,2025-03-31 11:54:54,unsubscribed,69,FALSE,211,Interest,Consideration
+7546e56a-b366-4b01-a805-9edec378fe6f,ecefe867-e32d-4182-8310-efce204ca2ad,sms,content_13,2025-01-03 02:51:39,clicked,141,FALSE,343,Interest,Application
+bd594bd8-8ced-4b9a-bcc7-643d908f189d,4737d46f-6839-4f0a-aa16-7d1760876c65,virtual info session,content_5,2025-01-29 04:22:10,clicked,111,TRUE,354,Interest,Consideration
+64713f17-fb02-4733-8b4b-5b912414d2d9,f6ced8c1-b878-4134-a5d6-1c5647829517,virtual info session,content_15,2025-02-22 22:10:44,unsubscribed,129,FALSE,562,Consideration,Decision
+c5dd492d-00c4-4819-aa7b-d74f7c5bdf04,58e86483-8d0d-4c91-a1a9-2a7981726f21,event invite,content_17,2025-03-06 19:58:15,unsubscribed,194,FALSE,276,Interest,Consideration
+6cce4cb6-26c4-4da3-bbc0-bce67bea50a0,6eb5c91c-0150-41ff-9ef2-b6a27cd638e7,phone call,content_3,2025-03-29 18:51:42,clicked,105,TRUE,89,Decision,Application
+e3966954-47eb-4952-90cb-8e745ce7f79a,da9c4321-ec15-47f1-a757-1bdab00eea6b,webinar,content_18,2025-04-30 21:08:28,joined,295,FALSE,47,Interest,Application
+f07eaf3c-3c5b-4be3-971e-0502f47bd846,537446aa-b19e-4d8b-a32e-30eb803d12ba,sms,content_2,2025-03-03 02:31:11,clicked,110,TRUE,434,Interest,Application
+8224b81a-1846-42c3-a81c-b35bc4171562,d0df1e6e-3bb5-4ef6-9b59-b20cddf98c82,event invite,content_15,2025-05-17 17:54:32,ignored,92,FALSE,531,Decision,Application
+539cee52-8352-48e3-8e06-3e9b231233e4,f2b5b9f6-240c-48d7-828a-b8d81ab8717f,virtual info session,content_15,2025-02-01 12:18:21,replied,213,FALSE,418,Awareness,Consideration
+30b97d35-a90d-4219-a319-34c533f960b9,17906173-7ca5-421b-8dc3-d84978c80a19,1-1 meeting,content_1,2025-05-03 19:55:53,booked,251,FALSE,495,Consideration,Decision
+bead8376-7765-4cd0-97fd-fde7a36a1680,7f6f1dfb-1d0b-4b60-ac8d-03a1f0140833,email,content_13,2025-05-09 18:42:38,booked,123,TRUE,534,Interest,Consideration
+2cd3e679-bd09-4556-b207-1d5b0ad91fb4,83e480ff-0c7a-4502-9cea-cd6409281db9,event invite,content_1,2025-05-23 13:39:16,ignored,189,TRUE,570,Interest,Consideration
+f6d0290f-6707-4e83-84a1-ffcb39730706,36913b75-0fe1-4f82-9565-36e6cdedeb98,virtual info session,content_6,2025-04-06 03:09:24,unsubscribed,261,FALSE,223,Application,Enrollment
+1c5201d4-e565-4d81-adab-f4df5f8aa522,8dbe976d-2799-40ad-9a72-bb0fd77bd500,virtual info session,content_6,2025-01-08 11:50:19,clicked,273,TRUE,460,Decision,Application
+97225808-072f-4158-b233-c4261f5e0da2,82e7040b-989e-4d6a-a0a7-12a82db9a6f5,phone call,content_8,2025-04-20 14:12:27,ignored,271,TRUE,255,Consideration,Decision
+88a2e621-14ee-4d7d-9f5d-c49e8ceb17d3,2787b160-f88b-49e1-853f-bc00a79332ef,1-1 meeting,content_20,2025-06-03 09:26:27,ignored,250,TRUE,103,Awareness,Interest
+a8d710a5-6e76-4bb2-a913-abd90910958b,c4a573d4-1643-41a5-891c-547da2f4d556,email,content_6,2025-03-07 14:07:27,ignored,26,TRUE,313,Interest,Application
+fa6c625d-1d8e-4849-9f82-7331ed98c5d7,ed01c031-6a49-473c-8fc6-a4ccc0f62328,webinar,content_6,2025-04-09 06:56:05,replied,286,TRUE,558,Interest,Application
+a6915a89-2c14-407b-bcb3-de82ab59e9f9,8eba3bec-03ea-444d-bc92-9fdf8e36a436,1-1 meeting,content_6,2025-01-06 14:01:29,ignored,181,FALSE,435,Application,Enrollment
+23ccaae7-06d2-4bf7-884c-b5353506e1f3,aca39d72-6874-48c4-91f8-bda393f4e4b8,email,content_16,2025-04-18 20:20:00,ignored,44,FALSE,481,Consideration,Decision
+d9dc7f03-2841-4af4-afe4-4f96d224cae6,f4d3f759-fc6f-4b2e-a206-a9b07c344a47,virtual info session,content_2,2025-03-17 23:27:59,clicked,211,TRUE,205,Awareness,Consideration
+b8bf4682-6385-47c7-bcc7-4a246112e173,93a554ce-0984-4dd2-a0df-0240a9284132,phone call,content_14,2025-03-07 03:10:59,clicked,279,FALSE,284,Awareness,Interest
+e49a153d-98f5-40d5-9b3a-d3a59b47f9f3,a73eee37-1aa4-4be0-af82-45eb17ba3171,sms,content_8,2025-01-09 12:21:24,unsubscribed,32,TRUE,514,Interest,Application
+60ae00b7-33d1-411f-aa3b-2661e3093cda,e55bf3b2-f3fd-42fb-849e-5c0f8d65f50c,event invite,content_16,2025-03-07 16:02:48,replied,178,TRUE,180,Interest,Consideration
+12981d6b-0c50-43bb-871c-7f86c0b23736,5978373b-c385-407c-ab8a-c5e2f7ba1388,sms,content_18,2025-03-15 15:13:53,joined,198,FALSE,25,Awareness,Interest
+f178ad4e-555c-4383-9771-833503827c6b,6221569b-8d80-44a7-9e63-ce9ea1ba338d,event invite,content_18,2025-06-01 21:24:41,joined,94,TRUE,469,Application,Enrollment
+3f18099b-4229-478e-a837-b2dd86aaa262,d8743e96-7ddf-4078-ba81-bb530d0a6fb3,phone call,content_9,2025-01-05 06:13:56,clicked,44,FALSE,375,Consideration,Decision
+d4795948-8ce3-457d-8320-6e4815d6ce91,7bc2eeff-ee36-4be7-8527-a04312d352ed,event invite,content_4,2025-04-28 11:56:43,clicked,205,FALSE,476,Interest,Consideration
+7fc4e0ca-26cc-4cd6-9bf7-cba2ab4151e0,0492c4a0-bb18-4bc3-9a60-eedd88851abd,event invite,content_11,2025-03-22 15:01:34,clicked,52,TRUE,172,Consideration,Decision
+8cbeded6-48e8-4fc3-8811-404f64cdcf57,2863169c-702e-4738-941e-9827bbafcde2,sms,content_12,2025-04-19 00:01:05,unsubscribed,212,TRUE,340,Interest,Consideration
+d0f12983-f143-4e55-b847-0efadd73cf8d,da9c4321-ec15-47f1-a757-1bdab00eea6b,email,content_10,2025-02-18 16:21:24,replied,3,FALSE,98,Interest,Consideration
+f09a3e7e-50af-4a52-8aa0-a8801f197395,9057944f-0ad1-4032-aa35-4323e84a206e,event invite,content_8,2025-03-28 22:36:07,booked,97,TRUE,298,Consideration,Decision
+b1f9c472-3b43-4087-912f-89ef545c57cd,6c115fd7-1b8e-453e-a79f-a6793f6c8cda,1-1 meeting,content_5,2025-03-14 22:09:39,ignored,227,TRUE,378,Application,Enrollment
+5ebe1590-b4ac-4922-bf2d-97864eed0f48,f2b5b9f6-240c-48d7-828a-b8d81ab8717f,webinar,content_17,2025-03-26 20:26:13,unsubscribed,286,FALSE,77,Interest,Application
+394b3b8c-4e22-4e43-973c-c5d1410ec512,2c04981d-3895-42af-987c-801ca905a437,virtual info session,content_18,2025-02-17 03:00:47,unsubscribed,111,FALSE,352,Consideration,Decision
+c97a7a4d-c591-441e-b698-1023ddf34f7b,0024a01e-8496-4a38-add0-631b8e072208,sms,content_10,2025-05-21 09:38:32,ignored,77,FALSE,560,Awareness,Consideration
+c128e3a0-ed5d-4767-ac03-37fbeaa13d4e,c8f8cb7c-3b26-4d96-b759-7738f995b3fa,webinar,content_18,2025-05-26 02:15:57,clicked,55,TRUE,393,Application,Enrollment
+add28a77-ed72-444b-88f8-ad6b451542f3,0975bb4e-61e8-45c3-9c43-f44c5547df81,virtual info session,content_16,2025-05-23 16:47:34,joined,258,TRUE,184,Awareness,Consideration
+e621829f-180b-469f-aebf-c3d1ca627c2d,65ef3ab4-ac4d-4033-aabd-f972e8f2d9cf,email,content_7,2025-02-20 21:17:12,clicked,51,FALSE,436,Application,Enrollment
+aa2094e4-e16f-4951-92d4-e4122acb3878,e40f2758-1766-412d-8ef2-015caafa16b0,webinar,content_6,2025-05-02 20:56:15,ignored,154,FALSE,265,Consideration,Decision
+22380cac-3a43-4594-9852-d1906a05dfc0,1d9fcb19-2e04-4e5f-9c4f-3a7f3de9654d,phone call,content_2,2025-02-16 07:34:07,joined,52,TRUE,237,Interest,Application
+392921ed-daaf-4015-bea3-2cb74ec85cd6,de3b3cf3-1347-487d-842c-6b847d105982,sms,content_17,2025-03-07 01:48:51,booked,61,FALSE,538,Interest,Application
+2a3c04ee-2682-4458-b4e1-f70f4f2dd975,ed8e3164-bcaf-470a-87b3-a1cea8b392be,virtual info session,content_10,2025-05-29 04:07:10,clicked,232,TRUE,457,Interest,Application
+15cc1e45-75c8-422a-b1d2-51dfa21d2bce,2bd78326-c64e-47d3-9f93-71f0023ca843,phone call,content_14,2025-04-25 15:46:56,booked,55,FALSE,491,Consideration,Decision
+6b3ea695-d7ba-4800-8711-e50193c685cc,ef75a04e-8689-4d47-8c8d-fa03e3779c81,virtual info session,content_20,2025-05-01 05:25:30,unsubscribed,294,FALSE,130,Decision,Application
+9815b58e-3d34-47ab-8b3c-5ed3c35f05a7,382d60f9-f976-4036-a9b9-a9b600062903,email,content_10,2025-04-29 09:02:07,replied,79,TRUE,99,Decision,Application
+bbc64a59-412c-40bc-bd7d-ad4b4ae97945,fd2c866b-1483-4d50-b797-b91a74d580c0,sms,content_14,2025-01-21 12:45:17,joined,9,FALSE,266,Awareness,Consideration
+3fdc5c00-9f54-4a5c-8421-306f22cafe0a,a79f5459-75fc-44ec-b53d-439130c59735,event invite,content_17,2025-02-15 21:34:17,unsubscribed,34,FALSE,567,Decision,Application
+aedeff86-f8ae-4aa1-a56c-2aceb5cc71c2,a65920b5-af80-47ac-a937-fa52a16ece51,virtual info session,content_1,2025-01-20 13:38:27,ignored,103,FALSE,162,Interest,Consideration
+a4834926-10f0-4650-8524-958f2ef67fbc,dabd399c-1a77-46c8-bc91-c47e201b6649,webinar,content_20,2025-06-02 00:31:26,clicked,264,FALSE,203,Decision,Application
+99e7f753-249d-4081-a665-5c1622c45302,74101da6-5c39-4e9d-88c2-ba91f762f3cc,webinar,content_3,2025-01-30 08:46:44,clicked,218,FALSE,308,Awareness,Interest
+16846bc6-baf6-45f7-957a-609d31bce631,9c68b336-72ed-4bdf-afaf-d97f38ca7407,virtual info session,content_3,2025-01-25 18:31:59,clicked,138,TRUE,15,Interest,Consideration
+00050cde-63c4-46cf-84b2-232d8c513d86,08e4ec84-91b5-4836-88ab-e65b45eb8f4f,phone call,content_6,2025-05-19 10:26:38,clicked,50,TRUE,367,Application,Enrollment
+9374e306-3b62-42d0-8b1b-0f784dad992e,63f80a08-68cd-43a7-a48c-eac1e9514cfd,webinar,content_7,2025-01-08 12:58:35,replied,181,FALSE,87,Awareness,Consideration
+90d4e730-3d60-4128-a43b-130a8ddb9c7f,65ef3ab4-ac4d-4033-aabd-f972e8f2d9cf,event invite,content_20,2025-03-06 21:40:16,replied,55,TRUE,180,Awareness,Consideration
+dd800558-d5ab-454d-bbe7-5a410eeb293e,2464d8e8-423c-492d-bd3f-3ecbf8ea0307,email,content_13,2025-04-06 08:58:46,ignored,219,FALSE,171,Application,Enrollment
+4ccae82d-275c-4ca1-a15d-907bb173f6ab,0cb38777-7e45-43e0-b7f9-d0e2ddb338f3,1-1 meeting,content_9,2025-04-07 09:02:05,booked,47,FALSE,247,Application,Enrollment
+647ddfb2-9202-41df-926c-a65768ac12a6,e3e7eae0-80ed-47fc-9039-3b9b45ba8e3e,webinar,content_16,2025-04-20 17:45:13,booked,239,TRUE,85,Awareness,Interest
+a9620251-b86a-4d75-b030-5435fe475001,fec1bfba-f153-4bea-9cdd-70573283e10b,event invite,content_2,2025-02-28 13:57:23,unsubscribed,256,TRUE,283,Interest,Application
+c594cf3c-7aa0-4d11-b79d-89f02e21be92,72482a24-dee0-4f49-a774-d13aee806ae4,webinar,content_2,2025-04-25 20:43:57,ignored,300,FALSE,323,Interest,Application
+e4393152-5d2b-470b-abc9-3bd0fcf80fcb,8eba3bec-03ea-444d-bc92-9fdf8e36a436,email,content_20,2025-05-13 14:40:39,replied,11,FALSE,274,Application,Enrollment
+5a5f8269-641d-4c12-b47c-bf5cfd9ed6a3,96aa9a49-ac94-40d3-a52f-c50e69b45603,1-1 meeting,content_4,2025-03-24 20:07:35,ignored,153,FALSE,219,Decision,Application
+689b2b0b-80e2-4ae6-a7bb-31640e869947,e49c7594-2930-40f7-935a-2c0b878438a1,virtual info session,content_1,2025-01-30 23:59:31,replied,4,FALSE,157,Interest,Consideration
+03834d25-f32c-4c63-b2f0-b0690c2b9727,178c6d7d-3f54-4fb1-a005-c0e7d335518a,sms,content_2,2025-01-07 03:04:13,unsubscribed,157,FALSE,55,Awareness,Consideration
+65069baf-f465-425f-ae2c-9dff6dc663c2,97cd8b8c-023c-4d0c-a0fc-b0246997bae0,sms,content_12,2025-04-02 06:30:08,unsubscribed,148,FALSE,590,Interest,Application
+b08ed863-698f-4ab2-89e3-485cb1921e5b,8b122cef-2614-42ed-a22b-62bdd46ac047,webinar,content_1,2025-05-05 20:12:39,unsubscribed,104,FALSE,166,Decision,Application
+b6106ce1-bf47-4f5c-b08e-aa17a1402f42,8514f001-bd67-4fc3-8afd-2f386c4a1897,virtual info session,content_7,2025-03-02 21:10:54,joined,263,TRUE,472,Consideration,Decision
+04a45532-6d3c-4dcb-832a-84d1e5a56e0d,e475e947-e5c6-4d4e-ae4b-127e73856160,webinar,content_18,2025-04-03 06:01:22,joined,246,FALSE,197,Interest,Application
+72bcbe2a-4bc3-4aaa-9258-0403871fdfb0,5a5c4e2e-ac9f-489a-be1d-e599e7231565,1-1 meeting,content_2,2025-01-13 00:12:38,replied,258,FALSE,291,Awareness,Consideration
+9d409290-276d-4aeb-be5d-05fa0f54d6d3,8ff0b2b4-b2f1-4f33-bee6-5e7ceda51b14,virtual info session,content_14,2025-02-03 05:39:21,unsubscribed,138,TRUE,191,Awareness,Consideration
+db75b406-89d9-49f7-b267-650bb424870b,736ad7dc-c410-4cd9-8225-cebe6da9d411,event invite,content_12,2025-05-05 00:17:49,replied,216,TRUE,481,Decision,Application
+4124ad77-d1d1-4c2a-b12a-48f8fb861777,467812bf-948b-478b-9b1a-08fd53eab559,email,content_20,2025-02-08 07:43:42,unsubscribed,81,TRUE,234,Interest,Application
+c7aaec15-afc9-4b3b-96c2-c71190a4b54d,5949b323-516e-44f3-9691-fbeac063ab41,email,content_7,2025-04-10 04:03:03,clicked,95,FALSE,351,Awareness,Consideration
+db40ff12-cd32-4c31-8f2c-22c203d6fb28,2b3e9ba4-412f-4c3d-b28c-b8afd729cf55,phone call,content_17,2025-01-28 20:30:47,booked,273,TRUE,124,Interest,Application
+6b393181-0a2d-4fd5-b8d3-6cb3094f673b,72addafa-0341-4ee6-a6eb-f608f319421b,event invite,content_16,2025-03-13 05:56:56,ignored,241,TRUE,426,Awareness,Consideration
+5828738d-524e-4eb1-aced-ad6fdfdb1663,70f23459-5c6e-42ad-979a-008afecbaf9c,email,content_8,2025-02-10 15:19:31,booked,100,FALSE,264,Decision,Application
+b5f8f8a3-acbf-4cda-967f-a7c4e7828d6f,7923c051-77c3-42d7-bef8-bc5c26cf4c7a,email,content_13,2025-02-04 14:22:05,replied,69,FALSE,551,Interest,Application
+a4e7a541-8944-4287-b104-d81d4e93c61f,e3c98205-e11c-44c9-bec1-e2f9b391062d,email,content_17,2025-01-26 10:08:26,ignored,160,FALSE,309,Application,Enrollment
+9b5aac96-8726-4600-af57-c6fca69ce923,893cc165-fd39-4d86-b528-db337725a5ca,event invite,content_14,2025-03-12 10:43:28,clicked,142,TRUE,45,Awareness,Interest
+d61f058d-e6dd-4fe1-983c-2dd27ea1468c,c2c9d38e-bdbf-4e3b-bb6f-6dd06820d2db,event invite,content_6,2025-04-16 12:29:46,replied,201,FALSE,94,Application,Enrollment
+f92416f0-c502-4266-b597-03f97da4be39,49973f88-ae95-4685-82f9-604a1c72b05d,sms,content_13,2025-05-14 03:48:06,unsubscribed,211,FALSE,444,Decision,Application
+5f4d77c8-095c-4517-b21e-35e1d4cff8a1,2a7e95fc-9cf2-48dd-b2f0-83ba069b4fcb,virtual info session,content_3,2025-04-18 22:15:07,unsubscribed,122,FALSE,261,Interest,Application
+f1bc6e2c-b1ea-4486-97c9-850820c85d7e,812dd96b-9baa-411f-9388-48594e2270eb,email,content_6,2025-01-25 22:04:02,replied,85,TRUE,109,Decision,Application
+2e56e036-8177-442b-8470-a71c51d83411,5a5c4e2e-ac9f-489a-be1d-e599e7231565,event invite,content_7,2025-04-08 20:18:16,unsubscribed,111,TRUE,38,Interest,Application
+12c24225-1209-47a7-a2e2-7bd14dd145d2,0bd989e3-8eae-4e26-9101-7ae404048835,webinar,content_12,2025-01-13 17:04:04,unsubscribed,300,TRUE,223,Interest,Application
+ab044adf-ac69-4f75-a456-7d1cf98c378d,bc9e02cb-618c-4ed2-9b4f-53d3d0dc7616,webinar,content_3,2025-04-11 19:10:46,clicked,30,TRUE,185,Awareness,Interest
+e5d16e9b-98be-4cfc-91e5-51eef3241de4,82d6b618-ffc4-4f4f-a800-943cda53ed9d,phone call,content_19,2025-05-13 01:06:57,booked,144,TRUE,104,Interest,Consideration
+26565d44-d8d0-49a6-a91d-19f985c5314f,af5825eb-51d6-4749-bfb6-79d0c4fcba48,phone call,content_16,2025-01-13 02:00:48,replied,148,FALSE,599,Consideration,Decision
+51bb6a92-ca2b-4fc3-8a49-e1a92ccbd510,2a4c3a4f-ff8b-4a1b-9f59-6fe4fbdd9a74,sms,content_20,2025-05-23 00:55:01,joined,288,FALSE,17,Awareness,Consideration
+9efd5ea0-a028-4c03-958c-9f49dc5dc80d,14113b48-23fc-4558-8c96-18f55e562d5a,virtual info session,content_3,2025-04-20 01:38:24,joined,268,TRUE,274,Awareness,Consideration
+da0f485c-40b4-44e6-a06e-c83f6ae23526,c9e43dc5-9ed7-40bd-b2bf-a6916c81195b,1-1 meeting,content_18,2025-06-01 09:45:37,ignored,149,FALSE,336,Awareness,Consideration
+985160ec-06c7-4286-9797-67b999ca54dc,b79705ce-1a9d-42ba-9e37-9d786a10ffce,webinar,content_12,2025-05-09 05:28:01,unsubscribed,82,FALSE,350,Consideration,Decision
+222c5c03-8475-469f-9794-433f5e671596,25af74a2-1abf-4447-8cab-73b125b1030f,webinar,content_1,2025-04-28 20:52:31,unsubscribed,247,FALSE,288,Consideration,Decision
+093ed894-eed1-4a25-a3da-6ec08e37b179,f2b5b9f6-240c-48d7-828a-b8d81ab8717f,sms,content_8,2025-03-28 00:35:03,booked,47,TRUE,203,Awareness,Consideration
+ebe5abc3-6276-4a8f-811e-8bb5bd60b33d,bb1942c3-38bf-474e-b519-a6c8abbbd289,event invite,content_18,2025-02-11 15:03:22,clicked,259,TRUE,51,Application,Enrollment
+4ede5447-c734-42cc-808c-311eb1aa65b7,ac0e2bad-8842-4b12-a9d5-cb54e71f0c75,event invite,content_13,2025-01-27 00:31:16,booked,288,FALSE,53,Awareness,Interest
+37ce195e-8cb6-4bc9-9504-377c0761c55e,14d4ba1f-47b0-42ff-9948-40697c898522,sms,content_8,2025-04-23 21:58:04,joined,16,TRUE,172,Awareness,Interest
+2603ff21-af05-4d5c-900a-469e5f4e09df,f1e3a147-6549-4826-9dc5-b58189da24fb,sms,content_11,2025-02-05 05:00:07,joined,277,FALSE,77,Awareness,Consideration
+fe9c0a6f-3adf-4913-bb6a-2f63405430cc,1095aabb-d9a9-4883-b1ef-4a2e5662b1e8,phone call,content_2,2025-03-03 15:22:18,clicked,195,FALSE,57,Decision,Application
+29c4a1a6-1b86-422a-98d1-15ba76c5e1e7,423beb36-1117-4aa7-a377-7f10db82edef,email,content_13,2025-01-02 08:39:32,ignored,211,TRUE,292,Consideration,Decision
+e5698c9d-a80a-4213-9472-c4f683c11ba0,9b16c7be-6a59-4151-a370-63b2b086a008,event invite,content_16,2025-05-26 20:27:18,unsubscribed,280,FALSE,520,Application,Enrollment
+d5724a42-40e3-4274-9a09-f8cb22390c5f,3fb76ac7-81eb-41e2-bb64-088f3f8db0b8,sms,content_17,2025-03-03 02:34:37,replied,102,TRUE,446,Application,Enrollment
+9f7389dd-2d93-4ffc-8657-c54b9eff26c2,5cb3805a-caa7-448e-912b-156568ca5984,1-1 meeting,content_20,2025-05-10 10:59:50,ignored,126,FALSE,263,Interest,Application
+ca3d6706-5eb4-4924-97ea-6078c67925c8,0492c4a0-bb18-4bc3-9a60-eedd88851abd,1-1 meeting,content_2,2025-03-27 23:24:43,replied,157,TRUE,354,Application,Enrollment
+3940bf95-c1c7-4c3b-9c76-58cba2a66efc,0e88ec6b-9c23-4a5a-bf31-644bfa4bbfc6,webinar,content_6,2025-01-10 20:33:37,unsubscribed,56,TRUE,465,Interest,Consideration
+53c1dfe9-46f6-44ae-bebf-5fbce91a0858,7435c7c3-1c7b-4f18-8cff-99853e91523c,phone call,content_5,2025-03-27 10:49:52,clicked,47,TRUE,87,Decision,Application
+b7986dbe-c84a-4cfe-952c-7023a79c7bdf,7947252d-c6d0-4599-ba0d-e8ec40cf58e0,webinar,content_12,2025-03-20 06:14:40,ignored,178,TRUE,465,Awareness,Interest
+779c83e2-6abd-468c-b66e-2c32530d3d44,21a43e3e-70aa-497d-9264-fbf18dc028e2,webinar,content_4,2025-01-07 12:43:15,unsubscribed,201,TRUE,347,Awareness,Consideration
+eecd85c8-afcb-4fb9-bfb9-72b0ac0ca367,47d2d03d-5680-40bb-91b4-85c7d0752e21,sms,content_8,2025-03-24 18:31:58,booked,36,TRUE,43,Awareness,Interest
+8c0b9be4-7a14-4bbc-85a9-97c0208c2b03,713df7cd-62de-4923-95f5-0e45f17c8d44,event invite,content_8,2025-04-07 20:28:04,booked,89,TRUE,544,Decision,Application
+9e05dea0-0fde-45a2-83b1-3b8237d65fd1,ed8e3164-bcaf-470a-87b3-a1cea8b392be,1-1 meeting,content_18,2025-02-17 15:59:10,joined,101,TRUE,114,Consideration,Decision
+ceca1e39-606c-4460-aa83-28c18a3d5199,00d08137-00ff-45fa-bb3f-1860e3798de3,email,content_20,2025-05-31 06:11:51,booked,127,FALSE,212,Consideration,Decision
+13770f0d-7828-4b90-92bc-40543ad29bab,d0443347-ed0c-4148-91e1-f8d32579c056,phone call,content_18,2025-01-29 18:20:33,ignored,206,TRUE,317,Application,Enrollment
+6753dbc3-fd81-4d3e-8a54-f3e6fffa0bdc,1bdb3a98-cd32-4d08-8a78-fcca1bad426d,1-1 meeting,content_5,2025-03-22 12:50:52,booked,257,FALSE,521,Decision,Application
+0b106c6e-d64a-4c4e-a7cc-ee1bc3fd86c4,ef23ccab-954f-48ed-b477-db0437290373,virtual info session,content_3,2025-01-22 13:20:59,replied,230,TRUE,578,Consideration,Decision
+7cdb1f1b-c396-4651-a9a2-ae7440efec92,51980776-2b54-44da-9de1-b1a760eca591,1-1 meeting,content_17,2025-03-18 14:10:33,ignored,192,TRUE,429,Awareness,Consideration
+dd20c2f9-473c-49aa-881a-463fd98e2545,58e86483-8d0d-4c91-a1a9-2a7981726f21,event invite,content_14,2025-04-09 12:35:45,clicked,127,TRUE,504,Interest,Application
+e885cdc8-6ff9-45d6-9e1c-f3253a3ba47f,47401187-aba8-4690-adf5-8cf97d0eb81c,virtual info session,content_1,2025-01-24 14:47:27,joined,17,TRUE,292,Awareness,Consideration
+2a7fdac5-a21b-49ca-900f-b4b548fb4572,38e0b776-0d51-4726-8899-95d8f437997e,webinar,content_1,2025-04-23 06:21:12,unsubscribed,219,FALSE,443,Consideration,Decision
+5186e559-b865-45bc-beae-b2ffd39fdaa9,56389bfb-b9fc-4f59-a823-9f6d2fed749b,event invite,content_15,2025-02-14 06:29:28,ignored,65,TRUE,94,Interest,Application
+1708d8a2-1a0f-418f-896e-4cd8f1d1cf1b,c16611a2-cfc0-4241-b070-3a3458c2bf32,event invite,content_4,2025-03-28 09:06:50,replied,216,TRUE,543,Interest,Consideration
+39c0421e-bb56-46a4-a82e-93c7c1b62d05,d10f557c-5e12-4f8f-8d6b-97439debf855,1-1 meeting,content_12,2025-02-18 22:27:29,unsubscribed,284,TRUE,435,Interest,Application
+f598fddc-895b-4300-be9d-5f8b3da78e3a,dc0623c7-97b8-4d1d-ad30-a7055bcbeffa,virtual info session,content_13,2025-02-12 21:54:33,clicked,8,TRUE,447,Awareness,Interest
+a97c091e-2402-46dd-b536-c46862347ebf,3bff6e7b-b0dc-4b9a-bf44-9ab2c1c71b44,event invite,content_14,2025-01-04 09:28:21,joined,212,FALSE,493,Consideration,Decision
+85b49cee-708a-4c02-aaf5-b70dea5e7bd0,c2c27778-09c7-4f51-a982-4654137a6c27,virtual info session,content_16,2025-04-13 14:45:22,joined,219,TRUE,45,Awareness,Consideration
+64741b6b-715b-4c00-98d4-30c70d3c8ec7,ea51aad2-0fb6-4559-a1cd-898a182b5502,sms,content_5,2025-06-03 09:25:22,booked,19,FALSE,397,Awareness,Interest
+0ef772ef-da9e-4e00-b2fd-7dbd597a5123,dbd0af83-6899-4d59-aa60-7fac8bcada92,sms,content_20,2025-01-27 06:44:23,replied,213,TRUE,536,Interest,Consideration
+cf796aa3-11ee-450b-b542-1f02a602f254,ab19afb1-0921-496f-bb12-02cf55361f80,event invite,content_3,2025-03-18 18:07:53,joined,156,TRUE,366,Awareness,Consideration
+f3ff9e5d-494b-41be-b1c8-b5b48b396054,ea121d79-f53f-44c6-8230-9c024ccb22d1,webinar,content_3,2025-05-28 12:59:40,clicked,219,TRUE,246,Awareness,Consideration
+11eb3fb7-5cd6-483f-8fcc-e8ba2c4b2c71,68e0eac9-c8e1-41a0-9d1d-8caa02139ed6,1-1 meeting,content_18,2025-03-24 03:04:26,joined,120,TRUE,263,Consideration,Decision
+44c18311-5041-42ba-bd30-cc50b1bf6446,078ec2df-9d16-4ba5-ab66-59afcd38fad7,webinar,content_6,2025-01-07 21:57:15,unsubscribed,275,FALSE,262,Application,Enrollment
+1404c426-5c76-41d8-8214-f0bf06ec1fab,c4a573d4-1643-41a5-891c-547da2f4d556,sms,content_20,2025-05-04 11:30:34,booked,39,TRUE,350,Interest,Application
+e90e5680-0ab9-4f68-aa4e-af22906d6f29,70f23459-5c6e-42ad-979a-008afecbaf9c,event invite,content_15,2025-01-17 19:15:31,replied,78,TRUE,473,Interest,Consideration
+d25321b6-069e-460e-aa4e-66ff8928482f,703cd1aa-bfcf-4ca1-b343-abf32a5c7fa7,1-1 meeting,content_15,2025-02-24 06:56:50,ignored,23,FALSE,116,Awareness,Interest
+c1832257-87b5-45c1-96a9-c9a5af188ce3,4737d46f-6839-4f0a-aa16-7d1760876c65,virtual info session,content_8,2025-03-24 22:19:41,joined,148,FALSE,502,Application,Enrollment
+e4f22386-9c43-4d4a-93bf-20cd7cba06eb,1ab752e7-0f8e-4e6a-b2a7-0a75ffb3d609,virtual info session,content_5,2025-04-01 20:33:45,clicked,168,FALSE,589,Interest,Consideration
+6cfa815a-1b8b-4d87-91bc-b6311c52e636,fa453d6e-8386-4cd9-87de-42217451a4dd,event invite,content_17,2025-04-21 08:13:52,unsubscribed,150,TRUE,306,Decision,Application
+50cd8f90-bba1-49e5-8b60-7013fc571ccf,79b56764-d0d4-4ac0-9ca5-80c1e924c2fe,webinar,content_5,2025-04-10 17:09:23,unsubscribed,149,TRUE,452,Awareness,Interest
+b086497f-e5c3-4ebf-ad01-5221abf872a2,56413076-a5a9-469c-a24f-384def04a4ce,sms,content_20,2025-01-17 21:49:00,unsubscribed,13,TRUE,140,Application,Enrollment
+5b47cf1a-2ed1-4886-acd0-45462dff2fa2,f1e4f92f-7788-48bb-b315-6edf188f9591,webinar,content_7,2025-03-20 09:50:28,clicked,71,FALSE,149,Interest,Consideration
+9c719bb7-9d1c-4d2c-8fc1-e96980c966ec,93a554ce-0984-4dd2-a0df-0240a9284132,1-1 meeting,content_1,2025-04-21 12:43:30,ignored,36,TRUE,13,Interest,Application
+2477b05c-8405-4ad7-8d39-720185cb18b5,14676044-902e-4693-8a01-efb111b637c2,phone call,content_14,2025-01-26 09:04:54,ignored,270,FALSE,228,Interest,Consideration
+1a3ef0b9-7130-4be6-a250-2d4eb92d97b7,382d60f9-f976-4036-a9b9-a9b600062903,phone call,content_12,2025-02-10 20:37:49,ignored,36,TRUE,83,Application,Enrollment
+002a3b02-7dbf-466d-97b5-f087f84ea214,7c4c8a24-6e6a-40c9-928c-75c56d9abd93,virtual info session,content_4,2025-05-05 00:30:09,replied,23,FALSE,368,Awareness,Consideration
+e7fea92d-4b33-4358-8f94-945ad54cf49e,65ef3ab4-ac4d-4033-aabd-f972e8f2d9cf,email,content_15,2025-01-14 21:21:10,booked,252,FALSE,182,Awareness,Interest
+107a3d36-a912-4eb9-b194-2b4f3a41131e,583a8206-bbd2-47dc-b85a-d8188e67d473,1-1 meeting,content_2,2025-01-28 16:40:29,booked,7,FALSE,384,Interest,Application
+3324a2ab-dc7a-4572-b3b9-f44a11a55ac7,082ac62c-660a-48fa-a099-98bb55ef3d40,virtual info session,content_7,2025-05-02 17:15:57,ignored,120,TRUE,424,Decision,Application
+6bd02831-8af5-417b-9d15-5b69f9d198ba,ebc0eed6-5767-429c-951e-8375c5da221e,event invite,content_7,2025-04-26 03:58:30,booked,119,FALSE,379,Consideration,Decision
+de65c8f4-9039-4668-ae3f-9744b679c4e8,ea2d4dc3-e709-4274-af1e-acfe8d2ff28c,phone call,content_12,2025-01-21 10:04:59,joined,13,FALSE,393,Decision,Application
+719b2a5e-1b04-4e9c-8629-3b882772bc80,c4b03d39-9eeb-4a3a-a0c5-05301ec2410c,email,content_10,2025-04-20 19:33:22,unsubscribed,239,TRUE,343,Awareness,Interest
+1ffc6b4b-094f-4877-bc1c-32577030e5e7,a79f5459-75fc-44ec-b53d-439130c59735,event invite,content_19,2025-04-10 16:40:56,unsubscribed,24,TRUE,460,Interest,Application
+54680eec-275a-4654-9bf3-3e82f123aa83,2bd78326-c64e-47d3-9f93-71f0023ca843,virtual info session,content_2,2025-03-17 04:10:11,unsubscribed,261,FALSE,492,Application,Enrollment
+030e3eca-e970-4989-bb7c-0550293d65ed,ca4c6c2a-20fd-4caf-9298-7fab9300d1b0,phone call,content_17,2025-02-17 15:31:05,unsubscribed,114,TRUE,477,Awareness,Consideration
+e4834068-8404-4a33-a75e-c472760800f9,dabd399c-1a77-46c8-bc91-c47e201b6649,email,content_15,2025-03-26 16:04:20,ignored,7,FALSE,236,Application,Enrollment
+4c17b7c1-6364-47dd-9594-1cb1f5ec612e,22d27bed-c808-411d-9e7f-9211571502af,1-1 meeting,content_11,2025-03-14 05:33:45,joined,135,FALSE,25,Application,Enrollment
+4a0fed87-b833-481b-a4e0-25675fab5b2b,c2ebb262-383f-407d-a15c-c9b6a5d48341,phone call,content_14,2025-02-16 19:52:29,ignored,189,TRUE,149,Decision,Application
+cc12fc1a-99ce-4fdf-93e4-5e106e14e77f,a0e8c4e9-d439-41b2-ac0f-40bf57ad1bff,email,content_9,2025-03-21 14:12:53,joined,292,FALSE,269,Interest,Consideration
+78af037b-eecb-4c38-b03f-bccb90b4c870,4f16ff26-e240-4a30-9f25-45e0214bb08d,virtual info session,content_11,2025-03-23 05:03:58,booked,83,TRUE,396,Awareness,Consideration
+d609d02d-35fb-478f-8d20-cd00d4c823da,178c6d7d-3f54-4fb1-a005-c0e7d335518a,webinar,content_3,2025-02-25 09:02:29,joined,224,TRUE,207,Awareness,Consideration
+ebf73e4e-69e7-4dc5-8a53-0dc068736681,588bf3c9-f0ba-45ee-a3af-0500b39e54e0,1-1 meeting,content_5,2025-04-14 02:50:57,replied,223,FALSE,112,Awareness,Interest
+052d6c37-1ddb-4550-b5af-88c9ad39b874,2ede9276-535b-4d64-b098-da739c1ebba6,phone call,content_1,2025-04-11 19:36:26,clicked,282,FALSE,470,Consideration,Decision
+891a56ea-5fcf-47fa-8ded-fdb7073592c5,861a18f7-b014-4577-8ecc-d4d461ea14da,sms,content_11,2025-03-09 05:02:53,booked,159,TRUE,255,Awareness,Interest
+8bb4b7fa-6930-4e02-b158-69505dd3c997,76bf8028-ef15-4a8d-bd72-b819535ec437,email,content_12,2025-02-21 08:59:39,clicked,262,TRUE,472,Interest,Application
+8ed9e853-abbf-4795-89cd-83ce47143841,2606aefc-3771-4c33-b893-1751ba98f7aa,webinar,content_4,2025-05-27 20:09:06,ignored,80,TRUE,80,Awareness,Consideration
+4dc5f5ad-e611-4a3a-8637-c10bef55bfd4,73357cf9-99fe-42ab-b480-55cd616df691,event invite,content_9,2025-03-28 16:16:08,unsubscribed,44,TRUE,210,Awareness,Consideration
+3f8d4e2e-aae4-4b46-b8e4-cfffcd5993bd,4b5393ee-7a0e-4978-9631-870251b1b79c,1-1 meeting,content_6,2025-05-19 14:13:34,joined,85,TRUE,268,Application,Enrollment
+aa7a0740-307f-4894-9cd0-4cb1d9f0038f,16fe768e-e674-4b55-94b9-5e067c30e972,email,content_17,2025-01-27 12:44:57,clicked,236,FALSE,45,Awareness,Consideration
+25cd557b-4ba7-487e-81e5-26f2ae13efc5,a2ce72a8-2451-429e-aa34-25baf1be5fdf,phone call,content_10,2025-03-01 19:20:40,ignored,212,FALSE,213,Consideration,Decision
+85ec41f8-7ddc-45cb-acc1-916e657b4da2,ed8e3164-bcaf-470a-87b3-a1cea8b392be,event invite,content_6,2025-02-13 16:14:21,joined,148,TRUE,324,Interest,Consideration
+d042911c-47d6-4135-82f1-06c0c1082a65,f1e4f92f-7788-48bb-b315-6edf188f9591,phone call,content_4,2025-03-23 08:57:50,ignored,201,FALSE,511,Consideration,Decision
+f271833b-1577-41a5-a33e-77e4903f8f59,6dfc3769-5da0-4fcc-a79e-fbe01355de7c,webinar,content_11,2025-04-22 22:11:41,replied,258,FALSE,32,Decision,Application
+e01d37ab-65a3-48c8-b9b7-22cc27e9e5fa,c4b03d39-9eeb-4a3a-a0c5-05301ec2410c,email,content_10,2025-01-12 13:25:47,clicked,270,FALSE,397,Interest,Consideration
+4d32fa57-bbc0-4944-8f49-c353574249b4,5971e38e-6386-4786-8b42-e2db5e2c112a,phone call,content_13,2025-04-28 16:07:35,booked,116,FALSE,168,Decision,Application
+b5d5cebd-aa52-4ddb-b026-b272b760104f,8da4aff9-b887-41fa-afd5-aaf18749544b,sms,content_20,2025-01-28 15:50:12,booked,3,TRUE,221,Application,Enrollment
+7ade1f72-489a-41cd-87a0-9320f8e77930,588bf3c9-f0ba-45ee-a3af-0500b39e54e0,virtual info session,content_6,2025-01-04 09:02:51,unsubscribed,88,FALSE,268,Interest,Consideration
+8d652b45-3f1a-4afb-99fe-0a88063746c4,b9daec1d-cc1b-4f0b-a20e-0e5656643b33,webinar,content_10,2025-03-03 08:56:32,unsubscribed,29,FALSE,292,Interest,Consideration
+26bcc1ac-9dc2-4870-b669-2cbd262f33b9,1f787d82-b2e5-4dab-8819-f0481c266765,sms,content_20,2025-05-04 14:33:32,replied,55,TRUE,435,Awareness,Interest
+dd99d5fd-eec7-4e4d-ace5-e22f81f6fea7,bf5cdd74-33d8-49e3-baa7-da73b9f64d45,1-1 meeting,content_11,2025-03-27 00:03:07,clicked,183,TRUE,530,Application,Enrollment
+640277b9-4f36-41ea-889e-8b0859a24b50,556b7a04-fa58-427f-ba15-e901db0a32e7,sms,content_13,2025-04-15 23:16:00,replied,143,TRUE,259,Interest,Consideration
+f3e9c1b3-6d60-4a77-82fb-b0cd86ea87ea,b362bde1-1201-4ef7-8b92-bd1d29ce7776,virtual info session,content_20,2025-05-17 18:32:20,replied,188,FALSE,455,Decision,Application
+50047837-4b20-4c76-ab84-b0eba8ad8030,c16cb35a-cd7a-45f3-8754-96be1a210815,1-1 meeting,content_12,2025-04-30 04:08:57,unsubscribed,147,TRUE,489,Consideration,Decision
+a6ad9151-1d7c-4a92-943f-522b663152e0,84af8fd1-5aec-46d7-8b32-a1a5bb4ef45c,email,content_15,2025-03-06 15:32:27,unsubscribed,41,TRUE,177,Awareness,Interest
+cbf4a753-b5c6-4387-bd01-4dcc2bdd4dda,2d866095-31ad-4d2e-ac01-98b449986d49,webinar,content_8,2025-05-11 07:57:56,unsubscribed,157,TRUE,248,Interest,Application
+ab66df9c-a048-4126-8975-b83d3e2cc42c,679a8258-fd44-4835-b0e4-59cf01952823,event invite,content_7,2025-04-10 06:22:52,booked,79,TRUE,420,Decision,Application
+280d1dfb-2f92-457a-aeb3-a98b84803b4a,e4ed4730-a941-4200-8435-2c7f94a2a4d3,email,content_11,2025-03-23 12:11:20,booked,112,FALSE,321,Application,Enrollment
+9caaaa8c-dc25-4657-8d29-3cb804f37550,6f5da6de-e152-40d0-955e-45888874f1f7,event invite,content_11,2025-03-20 10:04:42,replied,107,FALSE,57,Interest,Application
+ee082d1c-6b2b-4a6f-aa4a-bfe5b184bf1c,697b34b5-0c3f-4619-af98-4492e375224f,sms,content_2,2025-04-05 14:19:57,joined,162,FALSE,142,Application,Enrollment
+75319904-23ee-4f3d-b067-506908aeb614,2a7e95fc-9cf2-48dd-b2f0-83ba069b4fcb,email,content_15,2025-05-22 19:48:39,clicked,93,TRUE,472,Decision,Application
+37be1806-d95c-4a51-8a97-e3aea2456f2a,3954817a-b94b-4124-8324-b065e435a5d0,webinar,content_8,2025-03-07 08:03:04,joined,155,FALSE,188,Application,Enrollment
+985fa2b0-5ee6-4e2c-9ca1-9c32e74bf746,38e0b776-0d51-4726-8899-95d8f437997e,sms,content_12,2025-01-02 13:30:33,joined,189,FALSE,382,Consideration,Decision
+e0c3c653-40a5-43bf-9df7-7359c52b8f32,ed01c031-6a49-473c-8fc6-a4ccc0f62328,sms,content_14,2025-03-16 11:44:21,joined,115,TRUE,373,Interest,Application
+f406ffd6-a5a9-4076-b911-ad5a5061245b,9aaef442-1679-4e2d-bdf9-d27f5fc32ffd,1-1 meeting,content_16,2025-05-14 10:08:19,replied,127,TRUE,447,Interest,Consideration
+7b4a8d92-1803-417d-95c7-7b5eb5429715,1bdb3a98-cd32-4d08-8a78-fcca1bad426d,event invite,content_20,2025-01-06 02:35:05,booked,17,TRUE,269,Interest,Application
+fc5dfe7e-7d8b-46b2-8532-197344dd8feb,a0e8c4e9-d439-41b2-ac0f-40bf57ad1bff,sms,content_10,2025-05-12 19:55:59,replied,105,FALSE,53,Interest,Consideration
+0ec8dbf7-a29c-48e4-98fd-f4ec086ca78f,08e4ec84-91b5-4836-88ab-e65b45eb8f4f,webinar,content_3,2025-05-12 05:46:20,unsubscribed,204,FALSE,276,Awareness,Consideration
+36e9def5-785c-46d7-9edd-07e450ea51f5,5f8ab84d-d7a6-46df-aae5-371bfe1b8719,webinar,content_11,2025-02-24 04:05:26,replied,241,TRUE,401,Awareness,Consideration
+cc06bffe-456d-4f17-af60-f5339c6221bf,2bd78326-c64e-47d3-9f93-71f0023ca843,phone call,content_2,2025-03-14 02:51:25,booked,45,TRUE,96,Consideration,Decision
+adac1aae-c07a-4ca6-9595-9635eda501d9,ab19afb1-0921-496f-bb12-02cf55361f80,event invite,content_6,2025-03-26 14:06:33,ignored,165,TRUE,355,Decision,Application
+11c3cd10-5cc7-47f5-8df6-a1459970bf10,7b6fb6bc-37b3-41b6-a21f-640dcee62ac6,phone call,content_1,2025-03-12 13:40:36,joined,254,TRUE,204,Awareness,Consideration
+1c1790d7-2b56-4531-9421-61e00715129f,698ba9ac-220d-4054-a834-5df65b66aa40,phone call,content_1,2025-01-08 23:23:39,replied,2,FALSE,410,Application,Enrollment
+913060df-8254-49ef-8fa9-b8d3668d6c51,583a8206-bbd2-47dc-b85a-d8188e67d473,event invite,content_2,2025-05-31 03:19:48,booked,3,TRUE,593,Awareness,Consideration
+74e20107-e17a-4266-865a-412b33f60495,853f5f63-7f91-49e5-aed3-410bc2134e13,email,content_2,2025-02-16 06:05:15,clicked,256,TRUE,44,Interest,Consideration
+3f20466b-94af-4985-9668-908a824f6e0e,d8743e96-7ddf-4078-ba81-bb530d0a6fb3,sms,content_9,2025-01-16 12:04:06,ignored,270,TRUE,45,Interest,Consideration
+d9912e5c-3c1f-4da8-a671-994775a6ee38,aca39d72-6874-48c4-91f8-bda393f4e4b8,1-1 meeting,content_4,2025-05-18 15:32:15,joined,11,TRUE,440,Interest,Consideration
+978692b8-9eb1-4779-93ba-d6e73ff54f2f,d0df1e6e-3bb5-4ef6-9b59-b20cddf98c82,email,content_12,2025-01-31 09:43:46,replied,100,FALSE,353,Application,Enrollment
+ddf0f76d-af3a-4e26-bd4a-481e1b1439f4,89ac29ac-fe5a-4704-aeb3-8eae8b95d1cb,webinar,content_4,2025-03-05 02:04:10,replied,244,TRUE,69,Consideration,Decision
+85d7b4ba-036e-487d-baa5-6040c1caa983,cd6c9802-c1b6-4c23-a72a-e70cf5814eea,phone call,content_5,2025-01-24 06:02:27,replied,244,FALSE,40,Decision,Application
+8b388bcc-30de-4516-b4af-2743a841f459,47401187-aba8-4690-adf5-8cf97d0eb81c,1-1 meeting,content_5,2025-01-15 21:04:29,booked,274,TRUE,450,Awareness,Interest
+1dd60e47-2b47-4a50-8691-f4fa6c62e0b7,ed8e3164-bcaf-470a-87b3-a1cea8b392be,webinar,content_17,2025-04-03 02:16:36,booked,256,FALSE,243,Interest,Consideration
+11c7f74b-d52b-4273-9b0e-46326b752b81,5a5c4e2e-ac9f-489a-be1d-e599e7231565,phone call,content_3,2025-01-08 06:00:51,joined,236,TRUE,59,Application,Enrollment
+89f0adab-8fb6-4b5b-86b0-3fe1b87b620b,53a95ada-e891-415d-abe9-175785a65bca,virtual info session,content_11,2025-05-19 00:35:09,joined,155,TRUE,236,Awareness,Consideration
+d110d944-9b21-4c27-bee9-7ebe280922e8,4ac7c7c6-6f0f-4ba9-92bd-9bb074650034,webinar,content_1,2025-01-07 13:28:16,joined,5,TRUE,130,Interest,Application
+3eb61dbd-7c4b-4cd5-9026-64da5805f456,a2ce72a8-2451-429e-aa34-25baf1be5fdf,1-1 meeting,content_1,2025-04-30 11:52:20,ignored,141,FALSE,153,Interest,Consideration
+6ce1ec8e-47f6-4820-9678-ce55ffa93d75,dc0623c7-97b8-4d1d-ad30-a7055bcbeffa,email,content_13,2025-02-23 22:24:41,booked,10,TRUE,286,Decision,Application
+52cd80b1-c485-4266-8d4e-31d0433ddf72,0975bb4e-61e8-45c3-9c43-f44c5547df81,sms,content_13,2025-01-02 21:32:28,joined,300,FALSE,489,Awareness,Consideration
+c9a37661-83b0-4ec6-8d92-2c68d2708325,dbf17263-f5e0-4c2b-9395-627de5f5c972,webinar,content_13,2025-03-02 17:43:12,replied,50,TRUE,348,Awareness,Consideration
+75227ecd-dec8-41ea-919e-04fcacd01ba8,1ee43470-ffeb-4b8f-8c65-430598b21f7f,sms,content_6,2025-01-20 01:02:30,unsubscribed,136,TRUE,297,Decision,Application
+a8552616-b9e6-4de6-9ab8-53e25e08f6f0,dbd0af83-6899-4d59-aa60-7fac8bcada92,1-1 meeting,content_12,2025-05-28 01:28:27,unsubscribed,217,TRUE,359,Interest,Application
+433d3bda-47a8-417e-8717-e2857fd6c9d1,c8f8cb7c-3b26-4d96-b759-7738f995b3fa,virtual info session,content_20,2025-02-24 09:50:19,replied,5,FALSE,366,Consideration,Decision
+e1a4fcf8-448e-433e-a11e-c80e085fdc20,4c705b31-92a9-416c-bc2c-3d8a4f437aab,1-1 meeting,content_15,2025-02-16 13:53:09,joined,211,FALSE,134,Decision,Application
+eef68677-9216-4db8-b439-e3ee5f8c4fa4,7af97d01-24f2-4c6f-9b78-53fe225c4d25,phone call,content_7,2025-05-23 07:31:33,clicked,130,TRUE,216,Awareness,Interest
+d3cde249-e939-4b3a-8687-e78857131aff,55a648fd-ac92-404d-848b-8ba688e45663,sms,content_3,2025-04-07 00:38:04,ignored,157,TRUE,189,Interest,Application
+fceffcfb-3dcf-4c95-b312-d439351a507a,9525fa34-a929-4c3e-a304-c40bd18309a7,sms,content_20,2025-05-06 01:47:06,joined,147,FALSE,589,Decision,Application
+ceaf2e9b-0910-4f7f-9a2f-338292cdd8de,893cc165-fd39-4d86-b528-db337725a5ca,virtual info session,content_16,2025-03-20 07:44:29,clicked,267,FALSE,186,Decision,Application
+95957ee8-2a69-47d9-874e-75608d88c339,ae78614d-f59d-4643-86ad-3fd7bfb0481c,webinar,content_12,2025-01-24 07:06:18,booked,41,TRUE,350,Consideration,Decision
+9a0f5806-df7e-4952-a0d4-cce06489f672,d10f557c-5e12-4f8f-8d6b-97439debf855,1-1 meeting,content_4,2025-05-09 14:28:42,joined,182,TRUE,370,Awareness,Consideration
+7bf568b1-11da-4405-a05e-cafebcfa3a82,781758d0-cab3-46f5-955c-dbf222daa81d,1-1 meeting,content_14,2025-05-03 02:02:19,ignored,279,TRUE,239,Application,Enrollment
+db85a274-49ba-490c-a606-7ca9f73eaa3f,fcc29a1e-f561-4a7f-89a5-2e805922f004,1-1 meeting,content_19,2025-05-07 12:18:28,ignored,189,TRUE,162,Application,Enrollment
+6cfd5f3f-0a85-4469-b2d6-e65f257a0699,382d60f9-f976-4036-a9b9-a9b600062903,sms,content_20,2025-03-26 04:45:10,ignored,246,FALSE,352,Application,Enrollment
+4675fc5f-43df-4090-a517-3c44eb0e4e7f,9be95454-9230-48ec-8f9d-c321de993143,1-1 meeting,content_20,2025-02-13 17:17:33,booked,3,TRUE,62,Application,Enrollment
+0e109f9c-58aa-4e3b-8227-20a9d3bf2544,e00973c3-60df-48b0-9e40-64897980d846,email,content_20,2025-05-23 00:15:58,ignored,176,TRUE,410,Interest,Application
+96fbdc1b-4a2d-4612-884d-5e186f6dd59f,56389bfb-b9fc-4f59-a823-9f6d2fed749b,sms,content_7,2025-02-25 08:58:30,booked,45,FALSE,526,Application,Enrollment
+184e3e9a-e1d9-4180-b48a-d3f20109d8f3,c2c9d38e-bdbf-4e3b-bb6f-6dd06820d2db,webinar,content_19,2025-02-05 18:22:11,booked,204,TRUE,220,Application,Enrollment
+bb0e8775-7578-430c-b108-17e16486bb67,178dc526-cff6-44b5-87c0-c9e86edd2580,virtual info session,content_7,2025-05-18 21:36:15,clicked,55,TRUE,65,Consideration,Decision
+2b5799c5-5255-4f05-a448-0e2f848c510c,c4a573d4-1643-41a5-891c-547da2f4d556,virtual info session,content_5,2025-04-21 11:38:27,ignored,29,FALSE,380,Interest,Consideration
+730e9d27-9b29-403b-8732-fb65bafd210d,25416563-05d9-4040-a1cb-b1004f0380ba,webinar,content_3,2025-03-17 05:11:42,joined,23,FALSE,328,Application,Enrollment
+1f2d6bbe-fd25-4575-9e6e-e8779f43297b,fcc29a1e-f561-4a7f-89a5-2e805922f004,email,content_1,2025-03-26 10:55:47,clicked,246,FALSE,549,Application,Enrollment
+7f1f6c57-6928-4c81-b354-75ec029e9113,f1e3a147-6549-4826-9dc5-b58189da24fb,virtual info session,content_18,2025-06-04 01:53:32,joined,185,TRUE,423,Interest,Consideration
+f693ac32-7c9d-4ba2-be91-d52f7b0dd278,ba0d286c-b129-4d2b-bc6a-1c6d66440617,phone call,content_6,2025-01-15 19:45:33,booked,173,TRUE,543,Interest,Consideration
+6f91ac14-dddf-4baa-8335-3d7a7d7f1d9b,71282f3f-a35f-4ac7-b592-b2e7ff8d9bc5,sms,content_7,2025-04-16 19:03:28,replied,14,FALSE,470,Consideration,Decision
+9ac3d489-35ec-450d-bb77-9d9f0117f1f2,6393f6d1-986f-478c-a608-f322fd80f56b,webinar,content_1,2025-01-19 12:55:47,clicked,238,FALSE,21,Application,Enrollment
+c2558e20-0ec3-493a-80db-a5801c19b86b,078ec2df-9d16-4ba5-ab66-59afcd38fad7,event invite,content_16,2025-01-09 06:39:27,booked,121,FALSE,451,Consideration,Decision
+5e77b7e2-7a16-45b2-bb78-7e9761ea63ae,ea51aad2-0fb6-4559-a1cd-898a182b5502,email,content_18,2025-05-10 07:01:57,ignored,139,TRUE,335,Interest,Application
+766823ca-041d-41ba-9df8-52c8bff151b2,09acc58f-e2b3-41b5-a18a-de73d82fa7be,sms,content_10,2025-02-03 12:55:31,booked,233,TRUE,422,Awareness,Consideration
+cc66a4da-1a6b-43e8-873d-8510877a9ddf,6c115fd7-1b8e-453e-a79f-a6793f6c8cda,virtual info session,content_2,2025-05-31 20:20:26,ignored,110,FALSE,420,Interest,Consideration
+0263e934-9a4b-4ced-9b9b-2813fe8a97f7,e1df584e-9557-4c1e-bd22-fbb79fd90ba2,1-1 meeting,content_15,2025-02-26 05:14:12,replied,145,FALSE,291,Application,Enrollment
+3e9265b0-f336-4bff-8714-5ca2a5a1945d,9be95454-9230-48ec-8f9d-c321de993143,1-1 meeting,content_13,2025-01-28 05:09:52,unsubscribed,119,TRUE,330,Consideration,Decision
+b3f070d6-ee89-4f6b-8b1a-a441c3418d72,7f6f1dfb-1d0b-4b60-ac8d-03a1f0140833,sms,content_14,2025-05-12 12:53:31,joined,123,TRUE,331,Decision,Application
+58af0ee1-4f38-463f-bef3-a289d0d260c3,30b3e2db-e8ed-4909-9f71-235ddfa2be68,phone call,content_3,2025-05-09 09:50:25,joined,246,FALSE,587,Awareness,Interest
+59276743-da78-43b7-badc-cef6406bc719,63f80a08-68cd-43a7-a48c-eac1e9514cfd,webinar,content_11,2025-03-24 06:04:02,replied,79,FALSE,15,Consideration,Decision
+1dd55b43-c733-464c-a142-e79714703655,63f80a08-68cd-43a7-a48c-eac1e9514cfd,event invite,content_20,2025-02-04 09:33:05,clicked,185,TRUE,101,Interest,Consideration
+082f3d18-e2c0-4de9-a30b-bfcc271c9e12,2d7c70ef-f3d7-4954-b0de-e5d756e2e66b,webinar,content_2,2025-03-17 01:32:53,replied,55,FALSE,99,Interest,Application
+bebed472-8b31-4722-9466-38e19b29cefd,583a8206-bbd2-47dc-b85a-d8188e67d473,webinar,content_20,2025-05-12 17:27:40,replied,134,FALSE,15,Consideration,Decision
+62c29693-08b3-47b2-b2de-1cb81590cd88,26abb021-2e8c-4527-9e45-1f8964436548,virtual info session,content_14,2025-02-25 01:13:13,unsubscribed,294,FALSE,549,Consideration,Decision
+7f71a6c8-8542-4c1b-abaa-8badec5951de,7c4c8a24-6e6a-40c9-928c-75c56d9abd93,event invite,content_8,2025-05-24 11:22:45,unsubscribed,101,FALSE,228,Application,Enrollment
+2b6585f7-db24-4400-90fb-9a87f1db5cbe,76be87a8-14f1-4567-8aba-8dfd59522c16,event invite,content_11,2025-02-23 02:22:37,joined,248,FALSE,274,Application,Enrollment
+b7330e4d-dd32-452a-a8e7-2419cbb248be,b36510fd-3ab3-4f7f-9edf-f26561d3a10b,1-1 meeting,content_7,2025-05-12 08:58:26,clicked,21,FALSE,379,Consideration,Decision
+fba1147b-8615-4e42-9979-8e1849c78797,ae720ee9-c64e-4cce-a94a-6c47745a2fcd,event invite,content_17,2025-05-09 20:06:54,booked,58,FALSE,432,Application,Enrollment
+38ccf5ed-c7c2-4fc5-901a-05f3e3ab29c6,6221569b-8d80-44a7-9e63-ce9ea1ba338d,email,content_11,2025-04-11 20:03:58,unsubscribed,295,FALSE,293,Interest,Application
+05792253-5a1f-4668-babf-e77a4726e8c0,9b538879-eb1a-4777-9a37-3bf74327091d,email,content_15,2025-02-05 07:43:40,joined,42,TRUE,103,Interest,Application
+6f27f3e0-287c-49c5-b893-91b6755efbec,5971e38e-6386-4786-8b42-e2db5e2c112a,email,content_8,2025-02-12 00:38:02,ignored,73,TRUE,356,Application,Enrollment
+97883acc-2b3f-4e48-a701-572ab5f444e5,21a43e3e-70aa-497d-9264-fbf18dc028e2,virtual info session,content_16,2025-05-27 13:18:35,booked,120,TRUE,43,Interest,Consideration
+8ad33001-569a-4850-a115-33ce007a3457,2d7c70ef-f3d7-4954-b0de-e5d756e2e66b,1-1 meeting,content_6,2025-06-03 02:11:37,booked,98,TRUE,533,Awareness,Interest
+af4df25e-93e3-427d-a089-13acb0fa8340,8d928626-50d3-4c49-9795-2f6cf5ae9b7b,virtual info session,content_5,2025-05-24 01:17:26,booked,179,TRUE,27,Decision,Application
+32c61527-d885-4a1c-a11c-602e28b4327f,21a43e3e-70aa-497d-9264-fbf18dc028e2,virtual info session,content_14,2025-01-07 23:29:03,booked,139,FALSE,447,Decision,Application
+a9082563-f7e8-476f-9990-34f9935a4993,bbf5ba28-524a-4b07-8e14-01d707dd691f,1-1 meeting,content_4,2025-02-28 08:37:39,replied,10,TRUE,488,Interest,Consideration
+e8cd276e-21a5-40a6-9a85-359651c65ae7,ee91ff30-d579-4e74-94a3-c7f4fd3cef73,phone call,content_5,2025-04-25 07:30:25,booked,197,FALSE,334,Consideration,Decision
+f9a1f09b-4ff7-42f2-89d1-e0061559af90,4f16ff26-e240-4a30-9f25-45e0214bb08d,sms,content_15,2025-03-06 18:08:29,unsubscribed,176,TRUE,303,Awareness,Interest
+6bdf1bc6-d9a0-4fc6-8b89-be039ca86af2,736ad7dc-c410-4cd9-8225-cebe6da9d411,email,content_8,2025-04-23 21:10:36,booked,52,TRUE,45,Awareness,Interest
+a2a59145-b738-494b-96ed-d8c4f8db8535,2b3e9ba4-412f-4c3d-b28c-b8afd729cf55,event invite,content_19,2025-02-17 19:36:15,ignored,214,TRUE,370,Interest,Application
+18df9e87-245f-4709-831e-5bd348281bf0,ae78614d-f59d-4643-86ad-3fd7bfb0481c,email,content_15,2025-04-17 06:04:42,clicked,217,TRUE,118,Application,Enrollment
+6b8d7a40-4922-478c-b8ec-4acf361d9234,a5187093-6603-4ab5-9476-08768e507adf,virtual info session,content_7,2025-01-03 18:30:33,clicked,13,FALSE,57,Application,Enrollment
+9facc734-5bc3-426f-8beb-5164451e181a,da9c4321-ec15-47f1-a757-1bdab00eea6b,virtual info session,content_3,2025-03-23 02:19:11,unsubscribed,126,TRUE,370,Consideration,Decision
+a08a844d-05c8-4543-b516-4b0f5269d618,63f80a08-68cd-43a7-a48c-eac1e9514cfd,virtual info session,content_3,2025-05-15 14:49:35,unsubscribed,68,TRUE,77,Interest,Consideration
+c14ecd6b-5fb3-43bd-8682-4b5ac6cd8103,8514f001-bd67-4fc3-8afd-2f386c4a1897,event invite,content_13,2025-01-11 18:11:45,unsubscribed,152,TRUE,550,Consideration,Decision
+a2e30280-7bf1-483e-8b18-f709398f6398,2a6cf2fd-07b4-4783-816e-2532955e6b68,1-1 meeting,content_19,2025-02-23 01:27:44,joined,85,TRUE,512,Consideration,Decision
+5c074186-c78b-4410-b934-402f82f498a0,b5368640-f8ba-41c1-b439-92ae2ed290b9,1-1 meeting,content_13,2025-01-04 17:42:20,joined,72,TRUE,486,Decision,Application
+1a1ba079-cdce-4eef-aa5c-0bca789ae723,dce4f3f6-1e19-4be6-a417-09f78b744740,virtual info session,content_6,2025-03-12 23:52:22,replied,127,FALSE,519,Application,Enrollment
+64361e1e-4de9-4f21-a987-9fc6dd9525c4,9a89c951-86e8-4548-8957-6958497c3cb3,webinar,content_11,2025-03-14 01:03:43,replied,265,FALSE,556,Decision,Application
+b778ae4c-b125-4630-9842-8865ee642c6a,548697f9-c2fd-438e-a899-94a7b7e70605,email,content_16,2025-01-28 01:19:11,ignored,214,FALSE,298,Application,Enrollment
+026245e2-1257-436c-bf01-dc3d0f9c6f81,3a46e382-2dc0-4b39-b14a-846b2d11b66c,sms,content_14,2025-04-19 11:20:48,replied,254,TRUE,550,Consideration,Decision
+cd90d474-7508-4552-b702-13d1f4fc518f,72addafa-0341-4ee6-a6eb-f608f319421b,1-1 meeting,content_6,2025-01-13 08:59:39,replied,28,FALSE,378,Awareness,Interest
+9f837de7-47b9-4e0e-a13f-1031ac794b79,7476fb57-6be4-42d6-94a4-941bd6f0f047,webinar,content_12,2025-04-22 10:57:28,ignored,34,FALSE,329,Consideration,Decision
+60bcf74a-d462-421e-b122-36d8f3cae674,ef75a04e-8689-4d47-8c8d-fa03e3779c81,sms,content_11,2025-06-03 23:41:51,ignored,229,FALSE,209,Awareness,Interest
+02589e51-56f4-4d6f-8f9b-0410ee2692b6,53a95ada-e891-415d-abe9-175785a65bca,webinar,content_5,2025-01-18 12:12:09,replied,185,TRUE,159,Interest,Consideration
+264bb475-a780-4d09-8e0f-1824401d71be,70054048-8817-46f5-a44f-4318a9b7fe8c,email,content_19,2025-01-10 16:54:31,joined,269,TRUE,293,Interest,Application
+baa510a4-e402-4443-8982-02e04c1e5ff0,5301494a-03ef-49c9-be85-1ba553b0ede0,sms,content_20,2025-05-09 14:20:35,booked,241,FALSE,135,Consideration,Decision
+a6e16826-72d9-4d56-af6a-02368af79525,8eba3bec-03ea-444d-bc92-9fdf8e36a436,email,content_14,2025-02-15 07:06:36,joined,145,TRUE,499,Awareness,Interest
+5504a357-ff9c-4449-9e2d-66492265fadb,21a43e3e-70aa-497d-9264-fbf18dc028e2,sms,content_9,2025-01-30 20:51:12,clicked,30,TRUE,187,Awareness,Consideration
+22bbe1cc-6e41-4c7c-8f63-77dffdac7533,bf7e5dcd-ff08-44ec-aacf-076df48ebe79,webinar,content_4,2025-04-20 01:28:47,ignored,269,FALSE,510,Awareness,Consideration
+1c27f8b6-9caa-4b24-9709-464c48ac4ddf,fa453d6e-8386-4cd9-87de-42217451a4dd,1-1 meeting,content_7,2025-02-01 08:02:38,unsubscribed,60,TRUE,489,Consideration,Decision
+10e02738-bf25-4a37-b4ae-407c734dcc88,b9b17d36-f851-4e2b-9bf3-291ee6f16db8,virtual info session,content_12,2025-01-22 22:25:24,clicked,221,TRUE,271,Consideration,Decision
+e0e137df-55e7-4d6d-9335-f07a9daeafd7,77addcbb-cfd8-40fc-8744-2eb2161560a7,virtual info session,content_8,2025-02-08 15:47:18,replied,273,TRUE,599,Application,Enrollment
+5ea2edcf-a5e3-4bc9-9392-8cd122cb9001,79b56764-d0d4-4ac0-9ca5-80c1e924c2fe,event invite,content_19,2025-04-16 22:22:10,replied,137,TRUE,203,Awareness,Consideration
+88bc059b-f973-4ae2-b925-363e135f4007,1643d9fc-5992-4e73-9026-485939443627,event invite,content_3,2025-02-27 13:05:25,clicked,44,TRUE,60,Awareness,Interest
+d223b500-72b4-4811-8df1-8db0f11fad30,63f80a08-68cd-43a7-a48c-eac1e9514cfd,sms,content_10,2025-01-21 04:10:34,booked,62,TRUE,591,Awareness,Interest
+d0910d8c-27db-473c-ad07-0239f0397412,694597df-f7ee-4dca-8a54-b0068f66057e,email,content_8,2025-05-07 11:09:11,clicked,235,TRUE,541,Interest,Consideration
+e98286b9-a6fe-4429-a96d-3fa2a57a1ed9,cc1e9031-083b-4b80-a130-ca3c872f174e,webinar,content_3,2025-03-25 14:59:17,replied,233,TRUE,207,Interest,Consideration
+28c29b59-ffe8-4f8f-8e68-0b119853a3ab,3fb5b48d-87b4-4b73-a651-7c8f3653d099,event invite,content_16,2025-01-02 11:53:14,unsubscribed,74,FALSE,482,Interest,Application
+f00bceee-48b5-4c17-be5a-8f82f1cc9b99,82d6b618-ffc4-4f4f-a800-943cda53ed9d,sms,content_8,2025-03-28 10:30:23,clicked,138,FALSE,310,Interest,Consideration
+6d04641f-a865-412c-96fd-920c77a8cf35,0e0c8c43-edf0-4e54-b088-c1d0e47210fd,1-1 meeting,content_19,2025-05-14 09:41:23,unsubscribed,51,FALSE,138,Awareness,Consideration
+e1a69e9f-47f5-4f2f-ba8f-8287f1293228,6dfc3769-5da0-4fcc-a79e-fbe01355de7c,event invite,content_1,2025-01-18 18:49:29,clicked,141,TRUE,212,Consideration,Decision
+1f39f64b-977b-4946-995b-c3231e1d77d4,c5755ded-114d-4eb8-bf6f-278a4e4a220e,virtual info session,content_10,2025-02-08 00:55:53,ignored,256,TRUE,249,Interest,Application
+14c34ee5-bfb2-4b96-9958-2f68918496d8,57b3a865-6966-4c75-b6aa-289b44d5f594,event invite,content_9,2025-01-11 10:09:33,ignored,54,FALSE,71,Decision,Application
+90b61d49-87b8-4417-9f6c-9ca8e4ae504f,8ff0b2b4-b2f1-4f33-bee6-5e7ceda51b14,event invite,content_19,2025-02-13 14:28:07,joined,260,FALSE,538,Awareness,Consideration
+b3fc55c3-4d7f-425b-8913-8e69ac210c0f,893cc165-fd39-4d86-b528-db337725a5ca,email,content_14,2025-03-09 04:26:17,ignored,181,TRUE,117,Interest,Consideration
+071024b5-ea06-4360-afed-fc2d785c16a2,4ca35070-4bcd-4de1-b939-5210532a3866,virtual info session,content_2,2025-01-24 10:21:57,unsubscribed,221,TRUE,44,Application,Enrollment
+f02ec20a-074a-4813-a9b9-c4ad8da49402,da9c4321-ec15-47f1-a757-1bdab00eea6b,sms,content_14,2025-02-18 04:29:44,booked,148,TRUE,519,Interest,Application
+caf9f264-e121-4022-9b28-ca5403131819,1cc9b034-be63-411e-aa8b-c25010301979,webinar,content_14,2025-03-05 08:57:38,joined,99,TRUE,412,Decision,Application
+9f81c0a4-504f-476f-b829-3bc8d3ca2348,eebb1a24-bc82-4347-b1bf-f20a4c08cb40,email,content_17,2025-01-12 14:12:35,unsubscribed,48,TRUE,468,Decision,Application
+994c9138-80bc-481b-9fd1-11e944547c65,c5e8532b-0b6d-4d9c-bead-759e4545d0c4,virtual info session,content_18,2025-03-18 22:52:48,clicked,111,FALSE,269,Decision,Application
+aee99727-f8d6-40e9-bc3c-50107704bde2,ecefe867-e32d-4182-8310-efce204ca2ad,sms,content_10,2025-02-20 20:36:24,joined,298,TRUE,311,Consideration,Decision
+77ff341c-6d78-4ef6-8e7e-0f4d0272a7ce,0e0c8c43-edf0-4e54-b088-c1d0e47210fd,email,content_13,2025-02-04 17:56:36,booked,121,TRUE,144,Consideration,Decision
+b1a0d92d-00eb-4997-9303-f2b263ba7686,cbb3bc0a-d818-4d26-8656-7aee637c43ac,email,content_17,2025-03-01 04:58:28,joined,292,FALSE,477,Decision,Application
+4d4a54ad-cc47-4de9-8738-0b5f0f7dc513,7367f04a-9425-4812-b996-f6ec162540ca,email,content_16,2025-02-02 16:43:31,booked,147,TRUE,464,Application,Enrollment
+be47f62f-c12c-4749-a74e-03f8455d48f8,583a8206-bbd2-47dc-b85a-d8188e67d473,event invite,content_4,2025-03-12 01:34:53,joined,191,TRUE,27,Consideration,Decision
+5501c3c9-3ed8-4b09-8718-233d80cc26d7,f092112b-129b-459b-aeba-a3d65420e7e1,1-1 meeting,content_12,2025-04-24 04:49:34,replied,249,TRUE,139,Consideration,Decision
+22a3fbe7-c037-42af-803b-07f9c96e32ab,dabd399c-1a77-46c8-bc91-c47e201b6649,sms,content_4,2025-05-31 10:54:10,ignored,138,TRUE,38,Decision,Application
+a597837e-2a99-415b-84d2-7a2d86516fc5,a0e8c4e9-d439-41b2-ac0f-40bf57ad1bff,virtual info session,content_20,2025-01-19 13:28:26,joined,13,TRUE,385,Interest,Application
+2acd3d45-5021-4cac-be6f-6245dd8cb5db,6b646408-6bee-4e8e-b1e8-5564c343ed5f,virtual info session,content_16,2025-04-17 19:40:29,unsubscribed,65,FALSE,205,Consideration,Decision
+62f5f860-2aca-4bf0-81da-a435dad72b17,630b00e7-6a67-4e83-8633-5a4df496587e,webinar,content_8,2025-02-25 00:45:25,unsubscribed,34,TRUE,302,Decision,Application
+d861c394-551b-4e16-95cc-4036ceaf70da,2863169c-702e-4738-941e-9827bbafcde2,1-1 meeting,content_9,2025-02-12 13:11:08,joined,44,FALSE,445,Decision,Application
+6a7605c4-c3c6-4d21-a7f8-96ac82bb5a80,a379b07c-68b8-4a03-bd6b-dbb986d9bec8,phone call,content_4,2025-05-28 21:40:36,unsubscribed,243,FALSE,529,Application,Enrollment
+bd81fb53-52b2-48e0-9930-0bc2a70935e6,423beb36-1117-4aa7-a377-7f10db82edef,email,content_9,2025-04-04 21:41:00,ignored,195,TRUE,229,Decision,Application
+5301f1a4-63fc-4eb3-9bad-27be8558f88e,30b3e2db-e8ed-4909-9f71-235ddfa2be68,1-1 meeting,content_2,2025-05-18 05:17:30,joined,264,FALSE,180,Awareness,Interest
+b2cf5de0-bc70-49f3-8f8a-e75699abc34a,47401187-aba8-4690-adf5-8cf97d0eb81c,webinar,content_20,2025-02-17 05:37:23,unsubscribed,274,FALSE,591,Consideration,Decision
+08de8a3c-3521-40cd-b445-c0eae33cf950,781758d0-cab3-46f5-955c-dbf222daa81d,virtual info session,content_11,2025-02-02 02:41:53,replied,122,TRUE,531,Consideration,Decision
+67b3bf95-6eb1-4f54-bf78-3e934bf636f3,6c115fd7-1b8e-453e-a79f-a6793f6c8cda,event invite,content_4,2025-04-24 15:10:01,booked,199,FALSE,262,Interest,Consideration
+fff3bf3f-9cc1-4dd2-8900-c9964ddcc904,1d348510-947a-43bf-af07-de9010cc372c,event invite,content_13,2025-02-07 15:37:38,joined,31,TRUE,439,Interest,Consideration
+7ef667e6-62b9-403b-9c62-45ef2e226b8a,c33bb77c-4fd8-4f17-8e63-687f3820f845,event invite,content_4,2025-01-02 05:44:02,clicked,217,TRUE,515,Consideration,Decision
+9cbe98fc-ebb9-422f-8194-4bf48e2605c2,82e7040b-989e-4d6a-a0a7-12a82db9a6f5,email,content_13,2025-01-04 03:42:03,unsubscribed,120,FALSE,491,Interest,Consideration
+260901e9-b155-4f38-809f-b000db34bce5,cc1e9031-083b-4b80-a130-ca3c872f174e,event invite,content_7,2025-03-07 15:26:17,clicked,292,TRUE,121,Awareness,Consideration
+fb773198-5aa0-4aa1-ab57-79f99fa77e7c,2d866095-31ad-4d2e-ac01-98b449986d49,webinar,content_15,2025-02-22 13:59:01,ignored,246,FALSE,467,Awareness,Consideration
+08f390cd-7f65-4015-bde4-9674d5b0d318,7c4c8a24-6e6a-40c9-928c-75c56d9abd93,event invite,content_18,2025-01-30 19:06:01,ignored,211,FALSE,279,Awareness,Interest
+a5c6079b-b889-46a1-a117-7083ca20e60e,5493bd5f-2d44-40d2-8a0a-e6683ea67545,virtual info session,content_6,2025-05-01 17:44:58,replied,239,TRUE,324,Interest,Application
+b87865a2-526e-49a6-b3cf-428ad13b5452,467812bf-948b-478b-9b1a-08fd53eab559,virtual info session,content_5,2025-03-22 11:07:40,replied,59,FALSE,515,Application,Enrollment
+d4f52337-96e2-4a57-a7a2-3edff10cbd28,698ba9ac-220d-4054-a834-5df65b66aa40,1-1 meeting,content_9,2025-02-09 21:47:10,clicked,55,FALSE,284,Interest,Consideration
+d288e3f5-09ae-4f66-9387-8c96dbfa5ac7,893cc165-fd39-4d86-b528-db337725a5ca,event invite,content_7,2025-02-03 13:31:04,booked,116,TRUE,373,Consideration,Decision
+f546aad4-edc9-4ec7-99f7-11c9dbabbc40,be5182f3-5b8c-4bb1-a92d-dd9f027110e6,1-1 meeting,content_20,2025-03-31 03:40:53,unsubscribed,6,FALSE,51,Awareness,Interest
+f6193ccd-434f-4ea9-8cd6-338069af1883,e00973c3-60df-48b0-9e40-64897980d846,virtual info session,content_20,2025-01-05 05:29:43,unsubscribed,83,TRUE,24,Interest,Consideration
+e4ce33fd-6aff-431e-95f9-122bc0ea6e3c,ab1a6552-556f-4bd5-962e-b9e9a6325e2d,virtual info session,content_2,2025-01-09 14:03:50,booked,124,FALSE,139,Interest,Application
+61f4dc5f-09a7-4b38-9eda-f7d1bcc55367,96aa9a49-ac94-40d3-a52f-c50e69b45603,1-1 meeting,content_16,2025-04-03 04:02:27,unsubscribed,45,FALSE,392,Consideration,Decision
+27087222-7200-4d11-a9e6-c310074a400b,0492c4a0-bb18-4bc3-9a60-eedd88851abd,virtual info session,content_4,2025-04-02 06:10:33,booked,4,TRUE,158,Awareness,Interest
+8d3488b5-603e-4e82-9300-b329b0655c73,a0e8c4e9-d439-41b2-ac0f-40bf57ad1bff,event invite,content_18,2025-05-08 14:32:18,clicked,85,FALSE,119,Decision,Application
+83a709ce-d605-447b-b740-d9fe1a85280c,346ad9a7-f637-48ed-b84d-962a43d3ceb9,virtual info session,content_8,2025-01-09 22:50:55,joined,73,TRUE,286,Interest,Consideration
+d19c382a-ebe6-4ecd-8ca3-8644ca903f2d,12a07ea4-298c-4f06-82f6-25c6d65f1092,email,content_10,2025-02-01 03:13:56,ignored,197,FALSE,491,Awareness,Interest
+cd26566b-bed0-4d59-9192-b019507b9b53,e12910f0-bae2-4e5d-afae-5e0ae3623a55,phone call,content_9,2025-01-14 13:28:49,ignored,184,FALSE,474,Application,Enrollment
+6370358a-9b77-4e4b-a4bf-02f8515c368e,812dd96b-9baa-411f-9388-48594e2270eb,phone call,content_17,2025-05-08 16:37:49,ignored,130,FALSE,415,Interest,Consideration
+0c84d200-bebe-4456-acb2-3ef442a539c6,75a744a9-5c76-4531-8ad7-f6d877d0e60e,event invite,content_3,2025-03-01 04:32:45,ignored,181,FALSE,205,Application,Enrollment
+17ca7059-eb52-4b95-b80a-04612d043f41,1095aabb-d9a9-4883-b1ef-4a2e5662b1e8,webinar,content_16,2025-02-17 02:48:40,ignored,226,TRUE,48,Consideration,Decision
+232ce10b-4e2a-43b6-93cb-03652504c6b5,75a744a9-5c76-4531-8ad7-f6d877d0e60e,event invite,content_3,2025-04-20 01:28:32,booked,76,FALSE,241,Application,Enrollment
+6363ba7a-a000-4f54-b53e-6cab2b82d666,7923c051-77c3-42d7-bef8-bc5c26cf4c7a,webinar,content_12,2025-04-28 03:25:15,booked,141,FALSE,75,Interest,Consideration
+9a4efaf9-2259-4fdb-b5b3-c330475ae66a,2ede9276-535b-4d64-b098-da739c1ebba6,phone call,content_7,2025-05-05 11:27:28,ignored,233,FALSE,463,Decision,Application
+0d90ec00-b7e3-4748-bce8-08ad70900a9d,703cd1aa-bfcf-4ca1-b343-abf32a5c7fa7,sms,content_20,2025-05-29 16:11:18,ignored,62,FALSE,126,Awareness,Consideration
+18eccf97-a4c5-4623-a63b-b247dd7f516c,9c6fa19c-b737-426e-b73e-8b8fdb809187,email,content_10,2025-06-03 07:28:06,unsubscribed,105,TRUE,209,Awareness,Interest
+a10e17a5-e7e4-4aa0-93e8-9918e211ee41,92598e19-bcfc-4152-9ae6-32a42f9186cf,email,content_12,2025-01-27 23:56:44,clicked,108,TRUE,453,Interest,Consideration
+7109e30f-e730-40dc-a942-9390b929ca58,b48401e4-bc00-4772-afd3-cfcc8e54250d,phone call,content_3,2025-03-20 22:45:12,replied,84,FALSE,15,Awareness,Consideration
+813c0c23-e733-4258-bddd-547f6d80265a,56413076-a5a9-469c-a24f-384def04a4ce,event invite,content_12,2025-01-06 16:22:11,replied,84,FALSE,10,Awareness,Consideration
+0ef79382-7583-4b83-916d-900e46cd3b3b,5a5c4e2e-ac9f-489a-be1d-e599e7231565,email,content_11,2025-01-27 20:30:07,unsubscribed,280,FALSE,90,Application,Enrollment
+f029f244-2b42-45e3-b7e9-5cbc567a596f,caa8237f-b62f-46c9-8c69-5ddc9e44c153,phone call,content_17,2025-02-22 01:05:23,unsubscribed,175,FALSE,519,Decision,Application
+b0aaa4b4-c023-4aea-b778-6dd68b9bfb2a,d09a2cf9-5e22-4fca-ba28-8a76e21ea458,phone call,content_19,2025-03-31 19:46:22,joined,198,FALSE,150,Interest,Consideration
+34137c9f-70fb-4403-bef6-718369d200d4,82e7040b-989e-4d6a-a0a7-12a82db9a6f5,email,content_8,2025-03-07 23:44:10,clicked,282,FALSE,58,Interest,Application
+860d8d1b-d9fe-4e40-a022-971daa6ac6ab,77addcbb-cfd8-40fc-8744-2eb2161560a7,sms,content_15,2025-05-02 06:13:22,replied,89,TRUE,12,Application,Enrollment
+ee788928-3529-4e65-ab80-3899d53c4245,07018d3c-7ed5-414c-b494-9ad21f776cd8,webinar,content_20,2025-02-11 21:37:03,unsubscribed,215,TRUE,508,Interest,Application
+de161e02-3af1-4d29-aaa9-a5bb82c75bc0,7dc8c320-22fe-439e-b08e-50374b2580e2,sms,content_8,2025-05-24 11:20:58,replied,242,TRUE,452,Application,Enrollment
+7cd6a177-98b5-4411-b49e-70b9c8f378c8,423beb36-1117-4aa7-a377-7f10db82edef,phone call,content_7,2025-02-21 10:54:32,ignored,246,FALSE,96,Consideration,Decision
+afc1308b-f3e8-4a1d-8afc-c552500245e3,4b5393ee-7a0e-4978-9631-870251b1b79c,1-1 meeting,content_14,2025-02-13 17:24:38,unsubscribed,126,FALSE,89,Awareness,Interest
+8751979a-6c01-44e0-936f-dbda3ed7021b,5a5c4e2e-ac9f-489a-be1d-e599e7231565,virtual info session,content_16,2025-02-18 23:05:28,booked,5,TRUE,209,Interest,Application
+9fdcf537-b817-464b-95a9-0d1b1c43c9f2,b9daec1d-cc1b-4f0b-a20e-0e5656643b33,virtual info session,content_1,2025-01-15 16:47:11,unsubscribed,259,TRUE,456,Interest,Application
+3394b410-9a81-489d-a123-e5b7eac29a10,7d77e589-9fff-48c6-a61a-d38849d7e6b5,email,content_10,2025-05-21 04:30:49,ignored,213,TRUE,45,Interest,Consideration
+e48191d4-ee81-4b7c-961e-5a28c8806255,7476fb57-6be4-42d6-94a4-941bd6f0f047,email,content_14,2025-02-09 13:03:07,unsubscribed,251,FALSE,373,Decision,Application
+dc32c91d-9349-43c7-96fb-0fd9fcde8b90,74101da6-5c39-4e9d-88c2-ba91f762f3cc,virtual info session,content_9,2025-02-18 02:21:07,joined,274,TRUE,496,Interest,Application
+d3df067f-9935-4f2b-b490-8c507b5ff8bf,70054048-8817-46f5-a44f-4318a9b7fe8c,webinar,content_14,2025-04-17 19:50:02,replied,195,FALSE,62,Interest,Consideration
+cdb6aefd-cbc9-4e6e-bb51-246fe2fdc4be,5949b323-516e-44f3-9691-fbeac063ab41,sms,content_15,2025-03-12 08:53:54,ignored,79,TRUE,461,Interest,Application
+f2d967e9-d1f3-420f-9148-8e2aada32bdd,c2c27778-09c7-4f51-a982-4654137a6c27,sms,content_8,2025-05-10 09:15:35,clicked,149,FALSE,312,Decision,Application
+03d95e2b-cd30-4782-b17a-95af52d78ad7,6f5da6de-e152-40d0-955e-45888874f1f7,1-1 meeting,content_18,2025-01-30 20:30:38,replied,144,FALSE,575,Awareness,Interest
+c8361c2a-a88f-43ef-84a0-dc6137bae23f,2a20b5b2-07b4-438c-b0e1-11a120525c93,1-1 meeting,content_4,2025-02-01 12:40:30,replied,7,TRUE,257,Consideration,Decision
+5de7b6bd-afe0-425a-afb7-7049d7b9036d,4737d46f-6839-4f0a-aa16-7d1760876c65,sms,content_2,2025-01-25 03:54:05,clicked,212,TRUE,471,Interest,Application
+d3fb6d2d-d57d-41c0-9665-3137278c79d0,5f8ab84d-d7a6-46df-aae5-371bfe1b8719,sms,content_8,2025-04-12 23:47:18,unsubscribed,105,FALSE,50,Interest,Consideration
+0b9d6fbd-25df-4186-9d77-1614c04d5eb0,9525fa34-a929-4c3e-a304-c40bd18309a7,webinar,content_3,2025-04-05 03:31:00,booked,24,TRUE,599,Awareness,Consideration
+55b3a12a-9906-4caf-ab50-17db2bd768cc,b79705ce-1a9d-42ba-9e37-9d786a10ffce,sms,content_8,2025-02-02 02:04:27,replied,140,TRUE,457,Awareness,Interest
+d518ed34-61be-4fdf-ac1a-3ff65e132421,3a5cdfa0-a487-45e6-9098-f058aeda8186,sms,content_5,2025-03-10 08:21:57,replied,222,FALSE,594,Awareness,Interest
+d13204f4-22a8-4c02-a7cf-48d457f640c2,d490a884-b3c4-4a09-9756-79fbb4a25352,email,content_13,2025-03-29 08:59:23,clicked,259,FALSE,294,Awareness,Consideration
+007af24d-9d45-4759-989f-55d5a3d4af7c,a0e8c4e9-d439-41b2-ac0f-40bf57ad1bff,sms,content_10,2025-03-25 00:10:01,ignored,243,TRUE,565,Awareness,Interest
+69cd9055-b6ef-4a22-bb5e-86ab6de77e08,6c115fd7-1b8e-453e-a79f-a6793f6c8cda,event invite,content_6,2025-04-07 22:34:26,ignored,251,FALSE,240,Awareness,Interest
+878ab546-f605-4b07-833c-0852ed5edfce,84e40bdd-6f4d-4d33-8ee5-469e145bbe89,event invite,content_4,2025-04-05 22:03:14,unsubscribed,52,TRUE,263,Interest,Application
+fd576b8a-8924-4c56-8c78-94967bf0f9a6,5e2a7df4-d83c-4d57-94a9-50cd63a09408,virtual info session,content_16,2025-04-07 18:39:59,booked,31,FALSE,497,Awareness,Consideration
+ba8065b3-2dd0-4922-baf3-b74780350478,2606aefc-3771-4c33-b893-1751ba98f7aa,sms,content_2,2025-05-30 01:50:35,joined,279,TRUE,405,Interest,Consideration
+f49e702a-ad87-407f-9376-fa3864333571,25af74a2-1abf-4447-8cab-73b125b1030f,phone call,content_10,2025-03-12 17:13:22,clicked,276,FALSE,295,Decision,Application
+e1b75679-83c7-4d02-b2b5-6715dbeb2227,5ec5467c-e59f-49a5-ae58-9285f911b58f,virtual info session,content_2,2025-04-05 11:47:41,ignored,214,TRUE,168,Interest,Consideration
+13d2e0ba-d8b5-4a0e-9905-dff92988ce50,a79f5459-75fc-44ec-b53d-439130c59735,webinar,content_15,2025-03-18 20:51:38,joined,199,FALSE,375,Awareness,Consideration
+74e219cf-69ad-40f7-8073-05cda5bbc0b2,f092112b-129b-459b-aeba-a3d65420e7e1,event invite,content_6,2025-01-04 17:09:23,clicked,4,TRUE,47,Decision,Application
+81854238-6106-4124-a88b-10d79bb49553,21a43e3e-70aa-497d-9264-fbf18dc028e2,sms,content_2,2025-02-20 18:20:18,clicked,292,TRUE,173,Interest,Consideration
+29356774-5ba4-409f-b79e-4e550f8e1373,68194363-11e9-4ac8-be45-1ce928a51c2a,1-1 meeting,content_10,2025-04-17 09:57:04,replied,32,FALSE,55,Decision,Application
+65e1399a-d727-43e9-89a2-8b7a5a031cd5,5971e38e-6386-4786-8b42-e2db5e2c112a,1-1 meeting,content_20,2025-05-18 17:49:11,unsubscribed,224,FALSE,126,Application,Enrollment
+2b70e393-3b87-4c8f-b32d-407da90dd869,d09a2cf9-5e22-4fca-ba28-8a76e21ea458,1-1 meeting,content_13,2025-02-06 20:10:38,replied,276,TRUE,442,Awareness,Consideration
+e3780b8d-a3c1-49db-ae09-d42f14f14307,789dfc9d-78ea-41b7-a0ca-6e2de2f517d6,webinar,content_19,2025-01-08 08:21:04,unsubscribed,178,TRUE,132,Awareness,Consideration
+2825b652-118b-48c9-8196-66dab1323ecb,0492c4a0-bb18-4bc3-9a60-eedd88851abd,1-1 meeting,content_13,2025-04-14 06:08:28,booked,170,FALSE,172,Decision,Application
+aa889834-878e-4c39-99e1-3e5e98c82791,0e0c8c43-edf0-4e54-b088-c1d0e47210fd,webinar,content_8,2025-05-08 13:08:02,booked,76,FALSE,311,Decision,Application
+1fcf4bf5-9928-4acb-a350-caa537cca561,ba0d286c-b129-4d2b-bc6a-1c6d66440617,webinar,content_1,2025-04-25 15:52:25,ignored,274,TRUE,430,Decision,Application
+cc20a4c5-23f9-4622-b26a-83c23d044e73,4a2bd9fd-8be8-4445-a122-c0251b3a0cad,1-1 meeting,content_12,2025-02-12 15:24:39,ignored,87,TRUE,130,Application,Enrollment
+2ad003ef-2786-40e3-be85-6eb5332798b5,279fa767-a13b-45b7-bdde-19fd0191cf3e,webinar,content_6,2025-01-18 21:37:22,booked,22,FALSE,209,Consideration,Decision
+2c01a7ad-2480-4fc7-948d-74c4a05f1a4a,2a6cf2fd-07b4-4783-816e-2532955e6b68,phone call,content_18,2025-04-28 19:57:37,replied,158,TRUE,564,Interest,Application
+25760835-824b-422f-885b-5efd520d6fd3,caa8237f-b62f-46c9-8c69-5ddc9e44c153,event invite,content_13,2025-05-21 23:33:35,booked,1,TRUE,112,Interest,Application
+a1930807-e333-49cf-866d-dc179a5d671e,3954817a-b94b-4124-8324-b065e435a5d0,1-1 meeting,content_4,2025-04-08 07:50:28,ignored,219,FALSE,56,Application,Enrollment
+66fb8b88-777a-46d3-b931-c266316cd2e4,694597df-f7ee-4dca-8a54-b0068f66057e,webinar,content_17,2025-05-23 04:45:36,clicked,32,TRUE,154,Interest,Application
+0d9bfe61-349b-44d0-b889-b0dd47f58831,77addcbb-cfd8-40fc-8744-2eb2161560a7,sms,content_1,2025-01-04 15:52:52,clicked,283,TRUE,311,Interest,Application
+93d9c0dd-569d-47f6-b13b-02870c5cce0a,53a95ada-e891-415d-abe9-175785a65bca,event invite,content_20,2025-03-09 09:17:14,ignored,243,FALSE,337,Awareness,Consideration
+21fdb1d0-c083-4a9d-86e9-07c973dad82c,63f80a08-68cd-43a7-a48c-eac1e9514cfd,phone call,content_6,2025-02-12 07:11:29,replied,269,FALSE,211,Interest,Consideration
+59bcbc67-73d7-4fa8-abe2-0d446f5ddca9,1d348510-947a-43bf-af07-de9010cc372c,phone call,content_5,2025-01-09 04:22:40,ignored,20,TRUE,27,Awareness,Interest
+17895466-1062-4b09-8d91-00c2d570550b,ca4c6c2a-20fd-4caf-9298-7fab9300d1b0,phone call,content_12,2025-01-07 21:38:33,replied,14,FALSE,117,Interest,Consideration
+d818a2e9-7444-4d0e-a9cb-69b9d3770672,a640e22c-915d-4a1f-8705-d8d0314b270a,virtual info session,content_8,2025-03-16 11:35:08,booked,258,FALSE,528,Interest,Consideration
+ae710cc4-9c52-47b1-86fa-707c4e9fbf95,57eb8efe-d217-4975-adbc-153f43c30423,event invite,content_2,2025-01-19 18:46:16,joined,112,TRUE,280,Decision,Application
+ca021a72-df6f-462a-bee1-12cfc8d1c9ab,0cd80297-21f6-4adb-a4f5-12607b63a493,sms,content_14,2025-02-10 00:07:35,booked,220,FALSE,276,Awareness,Consideration
+1641002d-5deb-4c06-83b9-b36cb190432c,c2ebb262-383f-407d-a15c-c9b6a5d48341,1-1 meeting,content_2,2025-05-08 12:59:20,replied,133,TRUE,67,Application,Enrollment
+76f4fb31-d3c4-4a4d-a511-34f14bb4c8d4,9c6fa19c-b737-426e-b73e-8b8fdb809187,email,content_1,2025-03-15 08:36:54,joined,27,TRUE,425,Application,Enrollment
+3b451da2-80dd-42c8-90ae-21f204dad51e,f7669cd0-8d16-4b9c-86fb-b8a4cbf94efb,event invite,content_17,2025-04-09 19:16:10,clicked,155,FALSE,526,Interest,Application
+7fe26312-6983-4c75-955d-f64d7137ce33,5971e38e-6386-4786-8b42-e2db5e2c112a,webinar,content_19,2025-03-08 03:44:15,joined,254,FALSE,165,Interest,Consideration
+f9330c5d-87a1-4861-ac6e-e96ab52c6774,8984659d-6c53-4974-a513-fbbe76ea8125,1-1 meeting,content_9,2025-03-31 03:57:11,ignored,183,FALSE,527,Interest,Application

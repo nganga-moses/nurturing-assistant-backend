@@ -1,0 +1,47 @@
+{
+  "model_info": {
+    "model_name": "hybrid_recommender_v1",
+    "model_version": "1.0.0",
+    "training_date": "2025-06-08T12:17:25.638352",
+    "architecture": "multi_head_hybrid",
+    "embedding_dimension": 128,
+    "total_parameters": "~150,000",
+    "framework": "tensorflow_keras"
+  },
+  "performance_metrics": {
+    "primary_metrics": [
+      "likelihood_score_accuracy",
+      "likelihood_score_loss",
+      "overall_loss"
+    ],
+    "secondary_metrics": [
+      "ranking_score_accuracy",
+      "risk_score_accuracy",
+      "validation_loss"
+    ],
+    "evaluation_metrics": [
+      "precision@k",
+      "recall@k",
+      "ndcg@k",
+      "mean_reciprocal_rank",
+      "coverage",
+      "diversity"
+    ]
+  },
+  "monitoring_thresholds": {
+    "loss_degradation_threshold": 0.1,
+    "accuracy_drop_threshold": 0.05,
+    "inference_latency_threshold": 100,
+    "memory_usage_threshold": 512,
+    "prediction_confidence_threshold": 0.5
+  },
+  "data_quality_checks": {
+    "feature_drift_threshold": 0.15,
+    "data_completeness_threshold": 0.95,
+    "prediction_distribution_drift": 0.1,
+    "student_engagement_ratio_bounds": [
+      0.1,
+      10.0
+    ]
+  }
+}

@@ -1,5 +1,6 @@
 from database.base import Base
-from sqlalchemy import Column, String, Float, Integer, DateTime, ForeignKey, JSON
+from sqlalchemy import Column, String, Float, Integer, DateTime, ForeignKey, Boolean
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
 from datetime import datetime
 
@@ -11,9 +12,10 @@ class StudentProfile(Base):
     last_name = Column(String, nullable=True)
     birthdate = Column(DateTime, nullable=True)
     recruiter_id = Column(String, nullable=True)
-    demographic_features = Column(JSON)
+    demographic_features = Column(JSONB)
     application_status = Column(String)
     funnel_stage = Column(String)
+    current_stage_id = Column(String(36), ForeignKey("funnel_stages.id"), nullable=True)
     first_interaction_date = Column(DateTime)
     last_interaction_date = Column(DateTime)
     interaction_count = Column(Integer)
@@ -28,6 +30,7 @@ class StudentProfile(Base):
     gpa = Column(Float)
     sat_score = Column(Float)
     act_score = Column(Float)
+    is_successful = Column(Boolean, default=False)
 
     # Relationships
     stored_recommendations = relationship("StoredRecommendation", back_populates="student")
@@ -35,6 +38,7 @@ class StudentProfile(Base):
     status_changes = relationship("StatusChange", back_populates="student")
     engagements = relationship("EngagementHistory", back_populates="student")
     recommendations = relationship("Recommendation", back_populates="student", lazy="dynamic")
+    current_stage = relationship("FunnelStage")
 
     def to_dict(self):
         return {
@@ -46,6 +50,7 @@ class StudentProfile(Base):
             "demographic_features": self.demographic_features,
             "application_status": self.application_status,
             "funnel_stage": self.funnel_stage,
+            "current_stage_id": self.current_stage_id,
             "first_interaction_date": self.first_interaction_date.isoformat() if self.first_interaction_date else None,
             "last_interaction_date": self.last_interaction_date.isoformat() if self.last_interaction_date else None,
             "interaction_count": self.interaction_count,

@@ -3,6 +3,8 @@ import numpy as np
 import tensorflow as tf
 from typing import Dict, List, Tuple, Optional, Any
 from data.processing.feature_engineering import AdvancedFeatureEngineering
+from utils.application_likelihood import calculate_application_likelihood
+from datetime import datetime
 
 class DataPreprocessor:
     """Consolidated data preprocessing for all recommendation models."""
@@ -13,7 +15,8 @@ class DataPreprocessor:
         engagement_data: pd.DataFrame,
         content_data: pd.DataFrame,
         test_size: float = 0.2,
-        random_state: int = 42
+        random_state: int = 42,
+        db=None
     ):
         """
         Initialize the data preprocessor.
@@ -24,12 +27,14 @@ class DataPreprocessor:
             content_data: DataFrame with content information
             test_size: Proportion of data to use for testing
             random_state: Random seed for reproducibility
+            db: Database session
         """
         self.student_data = student_data
         self.engagement_data = engagement_data
         self.content_data = content_data
         self.test_size = test_size
         self.random_state = random_state
+        self.db = db
         
         # Initialize feature engineering
         self.feature_engineering = AdvancedFeatureEngineering(
@@ -146,27 +151,25 @@ class DataPreprocessor:
         self.outlier_counts = {}
     
     def prepare_data(self) -> Dict:
-        """
-        Prepare data for training.
-        
-        Returns:
-            Dictionary containing prepared data
-        """
+        """Prepare data for training."""
         print("Preparing data for training...")
         
         # Check if we have enough data
-        if len(self.student_data) == 0 or len(self.engagement_data) == 0 or len(self.content_data) == 0:
+        if len(self.student_data) == 0 or len(self.engagement_data) == 0:
             print("Not enough data for training. Generating synthetic data...")
-            return self._generate_synthetic_data()
+            interactions = self._generate_synthetic_data()
+        else:
+            # Create vocabularies
+            vocabularies = self._create_vocabularies()
+            
+            # Create interaction data
+            interactions = self._create_interactions()
+            
+        # Process timestamps to ensure proper datetime objects
+        self._process_timestamps()
         
-        # Create vocabularies
-        vocabularies = self._create_vocabularies()
-        
-        # Create interaction data
-        interactions = self._create_interactions()
-        
-        # Prepare engagement and content features
-        engagement_content_features = self._prepare_engagement_content_features()
+        # Prepare engagement features
+        engagement_features = self._prepare_engagement_features()
         
         # Split data
         train_interactions, test_interactions = self._split_data(interactions)
@@ -175,24 +178,27 @@ class DataPreprocessor:
         train_dataset = self._create_tf_dataset(train_interactions)
         test_dataset = self._create_tf_dataset(test_interactions)
         
+        # Create vocabularies from the data
+        vocabularies = self._create_vocabularies()
+        
         return {
             'train_dataset': train_dataset,
             'test_dataset': test_dataset,
             'vocabularies': vocabularies,
             'dataframes': {
                 'students': self.student_data,
-                'engagements': self.engagement_data,
-                'content': self.content_data
+                'engagements': self.engagement_data
             },
-            'engagement_content_features': engagement_content_features
+            'engagement_features': engagement_features
         }
     
     def _create_vocabularies(self) -> Dict[str, List]:
-        """Create vocabularies for student IDs, engagement IDs, and content IDs."""
+        """Create vocabularies for student IDs and engagement IDs."""
         return {
+            'student_vocab': self.student_data['student_id'].unique().tolist(),
+            'engagement_vocab': self.engagement_data['engagement_id'].unique().tolist(),
             'student_ids': self.student_data['student_id'].unique().tolist(),
-            'engagement_ids': self.engagement_data['engagement_id'].unique().tolist(),
-            'content_ids': self.content_data['content_id'].unique().tolist()
+            'engagement_ids': self.engagement_data['engagement_id'].unique().tolist()
         }
     
     def _create_interactions(self) -> pd.DataFrame:
@@ -202,7 +208,7 @@ class DataPreprocessor:
             print("Engagements DataFrame student_id values:", self.engagement_data['student_id'].unique())
             
             interactions = self.engagement_data.merge(
-                self.student_data[['student_id', 'funnel_stage', 'dropout_risk_score', 'application_likelihood_score']],
+                self.student_data[['student_id', 'funnel_stage']],
                 on='student_id'
             )
             print("Interactions DataFrame shape:", interactions.shape)
@@ -215,6 +221,16 @@ class DataPreprocessor:
                 lambda row: self._calculate_effectiveness(row, funnel_stages),
                 axis=1
             )
+            
+            # Compute application_likelihood_score for each student
+            for student_id in interactions['student_id'].unique():
+                student = self.student_data[self.student_data['student_id'] == student_id].iloc[0]
+                student_engagements = self.engagement_data[self.engagement_data['student_id'] == student_id].to_dict('records')
+                interactions.loc[interactions['student_id'] == student_id, 'application_likelihood_score'] = calculate_application_likelihood(
+                    student=student.to_dict(),
+                    engagements=student_engagements,
+                    db=self.db
+                )
             
             return interactions
             
@@ -247,66 +263,91 @@ class DataPreprocessor:
     
     def _create_tf_dataset(self, interactions: pd.DataFrame) -> tf.data.Dataset:
         """Create TensorFlow dataset from interactions."""
-        return tf.data.Dataset.from_tensor_slices({
+        # Set default dropout risk score if not present
+        if 'dropout_risk_score' not in interactions.columns:
+            interactions['dropout_risk_score'] = 0.5
+            
+        # Create features dictionary
+        features = {
             "student_id": interactions['student_id'].values,
             "engagement_id": interactions['engagement_id'].values,
-            "content_id": interactions['engagement_content_id'].values,
-            "effectiveness_score": interactions['effectiveness_score'].values,
-            "application_likelihood": interactions['application_likelihood_score'].values,
-            "dropout_risk": interactions['dropout_risk_score'].values
-        }).shuffle(10000).batch(128)
+            "student_features": np.zeros((len(interactions), 10), dtype=np.float32),  # Placeholder for student features
+            "engagement_features": np.zeros((len(interactions), 10), dtype=np.float32)  # Placeholder for engagement features
+        }
+        
+        # Create labels dictionary with matching keys to model output - ensure float32 types
+        labels = {
+            "ranking_score": interactions['effectiveness_score'].astype(np.float32).values,
+            "likelihood_score": interactions['application_likelihood_score'].astype(np.float32).values,
+            "risk_score": interactions['dropout_risk_score'].astype(np.float32).values
+        }
+        
+        # Create dataset with features and labels
+        dataset = tf.data.Dataset.from_tensor_slices((features, labels))
+        return dataset.shuffle(10000).batch(128)
     
-    def _generate_synthetic_data(self) -> Dict:
-        """Generate synthetic data for testing."""
-        # This is a placeholder - implement synthetic data generation
-        # based on your specific requirements
-        raise NotImplementedError("Synthetic data generation not implemented")
+    def _generate_synthetic_data(self) -> pd.DataFrame:
+        """Generate synthetic interaction data for training when real data is not available."""
+        # Create empty DataFrame with required columns
+        interactions = pd.DataFrame(columns=[
+            'student_id', 'engagement_id', 'interaction_type', 'timestamp',
+            'duration', 'completion_rate', 'engagement_score',
+            'application_likelihood_score', 'risk_score', 'effectiveness_score',
+            'student_features', 'engagement_features', 'label', 'weight'
+        ])
+        
+        # Get unique student and engagement IDs
+        student_ids = self.student_data['student_id'].unique()
+        engagement_ids = self.engagement_data['engagement_id'].unique()
+        
+        # Generate synthetic interactions
+        num_interactions = min(1000, len(student_ids) * len(engagement_ids))
+        interactions['student_id'] = np.random.choice(student_ids, num_interactions)
+        interactions['engagement_id'] = np.random.choice(engagement_ids, num_interactions)
+        
+        # Generate random features
+        interactions['interaction_type'] = np.random.choice(['view', 'click', 'complete'], num_interactions)
+        interactions['timestamp'] = pd.date_range(start='2024-01-01', periods=num_interactions, freq='h')
+        interactions['duration'] = np.random.uniform(0, 3600, num_interactions).astype(np.float32)  # 0 to 1 hour in seconds
+        interactions['completion_rate'] = np.random.uniform(0, 1, num_interactions).astype(np.float32)
+        
+        # Generate scores - ensure they are float32
+        interactions['engagement_score'] = np.random.uniform(0, 1, num_interactions).astype(np.float32)
+        interactions['application_likelihood_score'] = np.random.uniform(0, 1, num_interactions).astype(np.float32)
+        interactions['risk_score'] = np.random.uniform(0, 1, num_interactions).astype(np.float32)
+        interactions['effectiveness_score'] = np.random.uniform(0, 1, num_interactions).astype(np.float32)
+        interactions['dropout_risk_score'] = np.random.uniform(0, 1, num_interactions).astype(np.float32)
+        
+        # Generate features
+        interactions['student_features'] = [np.random.rand(10).astype(np.float32) for _ in range(num_interactions)]
+        interactions['engagement_features'] = [np.random.rand(10).astype(np.float32) for _ in range(num_interactions)]
+        
+        # Generate labels and weights
+        interactions['label'] = (interactions['completion_rate'] > 0.5).astype(int)
+        interactions['weight'] = (interactions['completion_rate'] * (1 + interactions['engagement_score'])).astype(np.float32)
+        
+        return interactions
     
-    def _prepare_engagement_content_features(self) -> Dict[str, Any]:
+    def _prepare_engagement_features(self) -> Dict[str, Any]:
         """
-        Prepare engagement and content features.
+        Prepare engagement features.
         
         Returns:
             Dictionary containing processed features
         """
-        # Join engagement and content data (left join, so missing content is allowed)
-        merged = self.engagement_data.merge(
-            self.content_data,
-            how='left',
-            left_on='engagement_content_id',
-            right_on='content_id',
-            suffixes=('', '_content')
-        )
-
-        # Fill missing content fields with defaults
-        merged['content_id'] = merged['content_id'].fillna('NO_CONTENT')
-        merged['content_type'] = merged.get('content_type', pd.Series(['none']*len(merged)))
-        merged['content_body'] = merged.get('content_body', pd.Series(['']*len(merged)))
-        merged['content_meta'] = merged.get('content_meta', pd.Series([{}]*len(merged)))
-
         # Prepare student features
         student_features = self.student_data.set_index('student_id').to_dict(orient='index')
 
         # Prepare engagement type features (categorical)
-        engagement_types = merged['engagement_type'].unique().tolist()
+        engagement_types = self.engagement_data['engagement_type'].unique().tolist()
         engagement_type_to_idx = {et: i for i, et in enumerate(engagement_types)}
-        merged['engagement_type_idx'] = merged['engagement_type'].map(engagement_type_to_idx)
-
-        # Prepare content features (text/meta, handle missing)
-        content_ids = merged['content_id'].unique().tolist()
-        content_id_to_idx = {cid: i for i, cid in enumerate(content_ids)}
-        merged['content_id_idx'] = merged['content_id'].map(content_id_to_idx)
-
-        # Mask for missing content
-        merged['has_content'] = merged['content_id'] != 'NO_CONTENT'
+        self.engagement_data['engagement_type_idx'] = self.engagement_data['engagement_type'].map(engagement_type_to_idx)
 
         return {
-            'merged_df': merged,
+            'merged_df': self.engagement_data,
             'student_features': student_features,
             'engagement_types': engagement_types,
-            'engagement_type_to_idx': engagement_type_to_idx,
-            'content_ids': content_ids,
-            'content_id_to_idx': content_id_to_idx
+            'engagement_type_to_idx': engagement_type_to_idx
         }
     
     def prepare_cross_validation_data(self, n_splits: int = 5) -> List[Dict]:
@@ -363,4 +404,18 @@ class DataPreprocessor:
                 'val_labels': val_data['applied']
             })
         
-        return cv_data 
+        return cv_data
+
+    def _process_timestamps(self):
+        """Process timestamp fields in the data."""
+        if self.engagement_data is not None and 'timestamp' in self.engagement_data.columns:
+            # Convert timestamp to datetime, handling potential format issues
+            self.engagement_data['timestamp'] = pd.to_datetime(
+                self.engagement_data['timestamp'],
+                format='mixed',  # Allow mixed formats
+                errors='coerce'  # Convert invalid dates to NaT
+            )
+            # Drop rows with invalid timestamps
+            self.engagement_data = self.engagement_data.dropna(subset=['timestamp'])
+            # Ensure timezone-naive datetime objects
+            self.engagement_data['timestamp'] = self.engagement_data['timestamp'].dt.tz_localize(None) 

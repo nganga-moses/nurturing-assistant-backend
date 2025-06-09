@@ -1,0 +1,46 @@
+{
+  "name": "student_engagement_benchmark_v1",
+  "description": "Standardized evaluation dataset for student engagement models",
+  "test_scenarios": {
+    "new_student_cold_start": {
+      "description": "Recommendations for students with no interaction history",
+      "student_count": 50,
+      "expected_metrics": {
+        "coverage": ">0.8",
+        "diversity": ">0.6"
+      }
+    },
+    "new_content_cold_start": {
+      "description": "Handling new educational content",
+      "engagement_count": 100,
+      "expected_metrics": {
+        "ranking_accuracy": ">0.1",
+        "likelihood_accuracy": ">0.05"
+      }
+    },
+    "active_student_recommendations": {
+      "description": "Recommendations for students with interaction history",
+      "student_count": 200,
+      "interactions_per_student": "5-20",
+      "expected_metrics": {
+        "precision@5": ">0.15",
+        "recall@10": ">0.25"
+      }
+    },
+    "at_risk_student_identification": {
+      "description": "Identifying students at risk of disengagement",
+      "student_count": 75,
+      "risk_threshold": 0.7,
+      "expected_metrics": {
+        "risk_precision": ">0.2",
+        "risk_recall": ">0.3"
+      }
+    }
+  },
+  "evaluation_protocol": {
+    "train_test_split": "temporal_split_80_20",
+    "validation_strategy": "time_series_cross_validation",
+    "metrics_calculation": "average_over_5_folds",
+    "significance_testing": "paired_t_test_p_0.05"
+  }
+}

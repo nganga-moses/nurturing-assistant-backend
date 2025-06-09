@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from database.session import get_db
-from ..auth.supabase import supabase
+from ..auth.supabase import get_supabase_client
 from data.models.user import User
 
 router = APIRouter(prefix="/auth", tags=["authentication"])
@@ -12,6 +12,9 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
     """Login with Supabase."""
     try:
         # Authenticate with Supabase
+        supabase = get_supabase_client()
+        if not supabase:
+            raise HTTPException(status_code=500, detail="Authentication service unavailable")
         auth_response = supabase.auth.sign_in_with_password({
             "email": form_data.username,
             "password": form_data.password
@@ -20,8 +23,8 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
         if not auth_response.user:
             raise HTTPException(status_code=401, detail="Invalid credentials")
             
-        # Get the user from our database
-        user = db.query(User).filter(User.id == auth_response.user.id).first()
+        # Get the user from our database using supabase_id
+        user = db.query(User).filter(User.supabase_id == auth_response.user.id).first()
         if not user:
             raise HTTPException(status_code=401, detail="User not found")
         if not user.is_active:
@@ -41,6 +44,9 @@ async def refresh_token(refresh_token: str, db: Session = Depends(get_db)):
     """Refresh access token using Supabase."""
     try:
         # Refresh the session with Supabase
+        supabase = get_supabase_client()
+        if not supabase:
+            raise HTTPException(status_code=500, detail="Authentication service unavailable")
         auth_response = supabase.auth.refresh_session(refresh_token)
         
         if not auth_response.user:
@@ -58,7 +64,9 @@ async def refresh_token(refresh_token: str, db: Session = Depends(get_db)):
 async def logout():
     """Logout from Supabase."""
     try:
-        supabase.auth.sign_out()
+        supabase = get_supabase_client()
+        if supabase:
+            supabase.auth.sign_out()
         return {"message": "Successfully logged out"}
     except Exception as e:
         raise HTTPException(status_code=500, detail="Error during logout")
@@ -68,6 +76,9 @@ async def signup(email: str, password: str, db: Session = Depends(get_db)):
     """Sign up a new user with Supabase."""
     try:
         # Create user in Supabase
+        supabase = get_supabase_client()
+        if not supabase:
+            raise HTTPException(status_code=500, detail="Authentication service unavailable")
         auth_response = supabase.auth.sign_up({
             "email": email,
             "password": password
@@ -97,6 +108,9 @@ async def signup(email: str, password: str, db: Session = Depends(get_db)):
 async def password_reset_request(email: str):
     """Request a password reset email via Supabase."""
     try:
+        supabase = get_supabase_client()
+        if not supabase:
+            raise HTTPException(status_code=500, detail="Authentication service unavailable")
         supabase.auth.reset_password_email(email)
         return {"message": "Password reset email sent"}
     except Exception as e:
@@ -106,6 +120,9 @@ async def password_reset_request(email: str):
 async def password_reset_confirm(access_token: str, new_password: str):
     """Confirm password reset with token and new password via Supabase."""
     try:
+        supabase = get_supabase_client()
+        if not supabase:
+            raise HTTPException(status_code=500, detail="Authentication service unavailable")
         supabase.auth.update_user(access_token, {"password": new_password})
         return {"message": "Password has been reset successfully"}
     except Exception as e:
@@ -116,6 +133,9 @@ async def verify_email_request(email: str):
     """Trigger email verification via Supabase."""
     try:
         # Supabase automatically sends verification on signup, but you can resend
+        supabase = get_supabase_client()
+        if not supabase:
+            raise HTTPException(status_code=500, detail="Authentication service unavailable")
         supabase.auth.resend(email)
         return {"message": "Verification email sent"}
     except Exception as e:
@@ -126,6 +146,9 @@ async def verify_email_confirm(access_token: str):
     """Confirm email verification via Supabase."""
     try:
         # Supabase verifies email via magic link, but you can check status
+        supabase = get_supabase_client()
+        if not supabase:
+            raise HTTPException(status_code=500, detail="Authentication service unavailable")
         user = supabase.auth.get_user(access_token)
         if user and user.email_confirmed_at:
             return {"message": "Email verified successfully"}

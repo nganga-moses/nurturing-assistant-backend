@@ -7,6 +7,7 @@ import sys
 # Add the parent directory to the Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from api.routes import api_router
+from api.services.model_manager import ModelManager
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -34,11 +35,20 @@ app.add_middleware(
 # Include routes
 app.include_router(api_router)
 
-# Initialize database on startup
+# Initialize database and model on startup
 @app.on_event("startup")
 async def startup_event():
     """Initialize database and services on startup."""
     try:
+        # Initialize model manager
+        logger.info("Initializing model manager...")
+        model_manager = ModelManager()
+        app.state.model_manager = model_manager
+        
+        # Log model status
+        health = model_manager.health_check()
+        logger.info(f"Model manager initialized - Status: {health['status']}")
+        
         logger.info("Database initialized successfully")
     except Exception as e:
         logger.error(f"Error during startup: {str(e)}")
@@ -46,6 +56,5 @@ async def startup_event():
 
 
 if __name__ == "__main__":
-
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

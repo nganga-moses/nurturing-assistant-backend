@@ -1,6 +1,5 @@
 from database.base import Base
 from sqlalchemy import Column, String, Float, JSON
-from sqlalchemy.orm import relationship
 
 class EngagementContent(Base):
     __tablename__ = "engagement_content"
@@ -13,9 +12,6 @@ class EngagementContent(Base):
     success_rate = Column(Float)
     target_funnel_stage = Column(String)
     appropriate_for_risk_level = Column(String)
-
-    # Relationships
-    engagements = relationship("EngagementHistory", back_populates="content")
 
     def to_dict(self):
         return {

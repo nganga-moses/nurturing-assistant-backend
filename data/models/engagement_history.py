@@ -1,5 +1,6 @@
 from database.base import Base
-from sqlalchemy import Column, String, DateTime, ForeignKey, JSON
+from sqlalchemy import Column, String, DateTime, ForeignKey
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
 
 class EngagementHistory(Base):
@@ -8,16 +9,15 @@ class EngagementHistory(Base):
     engagement_id = Column(String, primary_key=True)
     student_id = Column(String, ForeignKey("student_profiles.student_id"))
     engagement_type = Column(String)
-    engagement_content_id = Column(String, ForeignKey("engagement_content.content_id"))
+    engagement_content_id = Column(String)
     timestamp = Column(DateTime)
     engagement_response = Column(String)
-    engagement_metrics = Column(JSON)
+    engagement_metrics = Column(JSONB)
     funnel_stage_before = Column(String)
     funnel_stage_after = Column(String)
 
     # Relationships
     student = relationship("StudentProfile", back_populates="engagements")
-    content = relationship("EngagementContent", back_populates="engagements")
 
     def to_dict(self):
         return {

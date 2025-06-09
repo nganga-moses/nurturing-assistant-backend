@@ -15,6 +15,7 @@ from .integration_config import IntegrationConfig
 from .settings import Settings
 from .user import User, Role
 from .recommendation import Recommendation
+from .funnel_stage import FunnelStage
 from database.base import Base
 
 __all__ = [
@@ -33,5 +34,6 @@ __all__ = [
     'Settings',
     'User',
     'Role',
-    'Recommendation'
+    'Recommendation',
+    'FunnelStage'
 ]

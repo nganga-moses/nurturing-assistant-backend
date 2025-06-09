@@ -49,13 +49,13 @@ from data.models.engagement_history import EngagementHistory
 from data.models.stored_recommendation import StoredRecommendation
 from data.models.engagement_content import EngagementContent
 from data.models.get_session import get_session
-from data.models.init_db import init_db
 from models.recommendation_service import RecommendationService
 from models.simple_recommender import SimpleRecommender
 from utils.status_tracker import StatusTracker
 from batch_processing.status_tracker import BatchStatusTracker
 from api.services.matching_service import MatchingService
 from database.session import get_db
+from data.models.funnel_stage import FunnelStage
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -181,6 +181,10 @@ def update_student_states(session: Session, engagements_df: pd.DataFrame) -> Non
             # Update funnel stage if changed
             if engagement['funnel_stage_after'] != engagement['funnel_stage_before']:
                 student.funnel_stage = engagement['funnel_stage_after']
+                # Get the corresponding FunnelStage record
+                stage = session.query(FunnelStage).filter_by(stage_name=engagement['funnel_stage_after']).first()
+                if stage:
+                    student.current_stage_id = stage.id
                 
             # Track status changes
             status_tracker.track_student_status(student)
@@ -232,7 +236,7 @@ def main():
     print("=" * 80)
     try:
         # Initialize database
-        init_db()
+        # This step is handled by Alembic migrations, so no explicit init_db() call is needed here.
         # Get database session
         session = get_db()
         try:

@@ -4,7 +4,7 @@ from typing import List
 from database.session import get_db
 from data.models.user import User
 from data.models.student_profile import StudentProfile
-from api.auth.supabase import check_admin, get_current_user, supabase, get_supabase_user, check_admin_or_vp, check_recruiter_or_admin
+from api.auth.supabase import check_admin, get_current_user, get_supabase_client, get_supabase_user, check_admin_or_vp, check_recruiter_or_admin
 import csv
 from io import StringIO
 from pydantic import BaseModel
@@ -55,6 +55,9 @@ def create_user(
     current_user=Depends(check_admin)
 ):
     # Create user in Supabase
+    supabase = get_supabase_client()
+    if not supabase:
+        raise HTTPException(status_code=500, detail="Authentication service unavailable")
     resp = supabase.auth.admin.create_user({"email": email, "password": "TempPass123!", "email_confirm": False})
     if not resp.user:
         raise HTTPException(status_code=400, detail="Failed to create user in Supabase")
@@ -72,7 +75,8 @@ def create_user(
     db.refresh(new_user)
     # Optionally: trigger password reset email
     try:
-        supabase.auth.admin.invite_user_by_email(email)
+        if supabase:
+            supabase.auth.admin.invite_user_by_email(email)
     except Exception:
         pass
     return new_user.to_dict()
@@ -149,6 +153,10 @@ def import_users(
             username = row.get("username") or email.split("@")[0]
             role = row.get("role", "recruiter")
             # Create in Supabase
+            supabase = get_supabase_client()
+            if not supabase:
+                errors.append(f"Authentication service unavailable for {email}")
+                continue
             resp = supabase.auth.admin.create_user({"email": email, "password": "TempPass123!", "email_confirm": False})
             if not resp.user:
                 errors.append(f"Supabase error for {email}")
@@ -167,7 +175,8 @@ def import_users(
             db.refresh(new_user)
             # Trigger password reset email
             try:
-                supabase.auth.admin.invite_user_by_email(email)
+                if supabase:
+                    supabase.auth.admin.invite_user_by_email(email)
             except Exception:
                 pass
             created += 1
@@ -220,6 +229,9 @@ async def signup(
     last_name = data.last_name
     try:
         # Create user in Supabase
+        supabase = get_supabase_client()
+        if not supabase:
+            raise HTTPException(status_code=500, detail="Authentication service unavailable")
         auth_response = supabase.auth.sign_up({
             "email": email,
             "password": password,

@@ -1,7 +1,7 @@
 import tensorflow as tf
 import tensorflow_recommenders as tfrs
 import numpy as np
-from typing import Dict, List, Optional, Text, Tuple, Any
+from typing import Dict, List, Optional, Text, Tuple, Any, Union
 import os
 import json
 import joblib
@@ -11,283 +11,266 @@ from data.processing.engagement_handler import DynamicEngagementHandler
 from data.processing.quality_monitor import DataQualityMonitor
 
 
+@tf.keras.utils.register_keras_serializable()
 class StudentTower(tf.keras.Model):
     """Tower for processing student features."""
     
-    def __init__(self, student_ids: List[str], embedding_dimension: int):
+    def __init__(self, embedding_dimension: int, student_vocab: Dict[str, tf.keras.layers.StringLookup]):
         super().__init__()
         self.embedding_dimension = embedding_dimension
-        self.student_embedding = tf.keras.layers.Embedding(
-            len(student_ids) + 1,  # +1 for unknown
-            embedding_dimension,
-            name="student_embedding"
-        )
-        self.student_hashing = tf.keras.layers.Hashing(
-            num_bins=len(student_ids) + 1,
-            name="student_hashing"
-        )
-        self.feature_processing = tf.keras.Sequential([
+        self.student_vocab = student_vocab
+        self.vector_store = VectorStore(embedding_dimension)
+        self.student_embeddings = {}
+        self.embedding_updates = {}
+        
+        # Student feature processing
+        self.student_feature_processing = tf.keras.Sequential([
             tf.keras.layers.Dense(64, activation='relu'),
+            tf.keras.layers.Dropout(0.2),
             tf.keras.layers.Dense(32, activation='relu'),
-            tf.keras.layers.Dense(embedding_dimension, activation='relu')
+            tf.keras.layers.Dropout(0.1)
         ])
-    
-    def build(self, input_shape):
-        """Build the model."""
-        self.feature_processing.build((None, 10))  # 10 student features
-        super().build(input_shape)
-    
-    def call(self, inputs: Dict[str, Any], training: bool = False) -> tf.Tensor:
-        """Process inputs and return student embedding."""
-        # Extract inputs
-        student_id = inputs["student_id"]
-        student_features = inputs.get("student_features", tf.zeros([tf.shape(student_id)[0], 10]))
         
-        # Convert string ID to integer index using hashing
-        student_index = self.student_hashing(student_id)
+        # Student embedding layer
+        self.student_embedding = tf.keras.layers.Dense(
+            embedding_dimension,
+            activation=None,
+            name='student_embedding'
+        )
         
-        # Get base student embedding
-        base_embedding = self.student_embedding(student_index)
-        
+    def call(self, inputs, training=False):
+        if isinstance(inputs, dict):
+            student_id = inputs['student_id']
+            student_features = inputs['student_features']
+        else:
+            student_features = inputs
+            
         # Process student features
-        feature_embedding = self.feature_processing(student_features)
+        processed_features = self.student_feature_processing(student_features)
         
-        # Combine embeddings
-        combined_embedding = base_embedding + feature_embedding
+        # Generate student embedding
+        student_embedding = self.student_embedding(processed_features)
         
-        # Normalize
-        return tf.nn.l2_normalize(combined_embedding, axis=-1)
+        return student_embedding
     
-    def get_student_embedding(self, student_id: str) -> tf.Tensor:
-        """Get the current embedding for a student."""
-        if student_id in self.student_embeddings:
-            return self.student_embeddings[student_id]
-        return None
-    
-    def get_embedding_updates(self, student_id: str) -> int:
-        """Get the number of times a student's embedding has been updated."""
-        return self.embedding_updates.get(student_id, 0)
+    def update_embeddings(self, student_ids, student_features):
+        """Update embeddings for a batch of students"""
+        for ids_batch, features_batch in zip(student_ids, student_features):
+            embeddings = self(features_batch, training=False)
+            for i, student_id in enumerate(ids_batch.numpy()):
+                student_id = student_id.decode('utf-8') if isinstance(student_id, bytes) else student_id
+                if student_id not in self.vector_store:
+                    # Initialize with a zero vector if not present
+                    self.vector_store.store_vector(student_id, np.zeros(self.embedding_dimension))
+                self.vector_store.update_vector(student_id, embeddings[i].numpy())
     
     def save_vector_store(self, path: str):
-        """Save vector store to disk."""
-        tf.saved_model.save(self.vector_store, path)
+        """Save the vector store to disk"""
+        self.vector_store.save(path)
     
     def load_vector_store(self, path: str):
-        """Load vector store from disk."""
-        self.vector_store = tf.saved_model.load(path)
-
-    def update_student_embeddings(self, student_ids: List[str], embeddings: List[tf.Tensor]) -> None:
-        """Update student embeddings for a batch of student IDs."""
-        for student_id, embedding in zip(student_ids, embeddings):
-            if student_id not in self.student_embeddings:
-                self.student_embeddings[student_id] = embedding
-                self.embedding_updates[student_id] = 1
-            else:
-                # Update with moving average
-                alpha = 0.1  # Learning rate for updates
-                self.student_embeddings[student_id] = (
-                    (1 - alpha) * self.student_embeddings[student_id] + 
-                    alpha * embedding
-                )
-                self.embedding_updates[student_id] += 1
+        """Load the vector store from disk"""
+        self.vector_store.load(path)
 
 
+@tf.keras.utils.register_keras_serializable()
 class EngagementTower(tf.keras.Model):
     """Tower for processing engagement features."""
     
-    def __init__(self, engagement_ids: List[str], embedding_dimension: int):
+    def __init__(self, embedding_dimension: int, engagement_vocab: Dict[str, tf.keras.layers.StringLookup]):
         super().__init__()
         self.embedding_dimension = embedding_dimension
-        self.engagement_embedding = tf.keras.layers.Embedding(
-            len(engagement_ids) + 1,  # +1 for unknown
-            embedding_dimension,
-            name="engagement_embedding"
-        )
-        self.engagement_hashing = tf.keras.layers.Hashing(
-            num_bins=len(engagement_ids) + 1,
-            name="engagement_hashing"
-        )
-        self.feature_processing = tf.keras.Sequential([
-            tf.keras.layers.Dense(64, activation='relu'),
+        self.engagement_vocab = engagement_vocab
+        self.vector_store = VectorStore(embedding_dimension)
+        self.engagement_embeddings = {}
+        self.embedding_updates = {}
+        
+        # Engagement feature processing
+        self.engagement_feature_processing = tf.keras.Sequential([
             tf.keras.layers.Dense(32, activation='relu'),
-            tf.keras.layers.Dense(embedding_dimension, activation='relu')
+            tf.keras.layers.Dropout(0.2),
+            tf.keras.layers.Dense(16, activation='relu'),
+            tf.keras.layers.Dropout(0.1)
         ])
-    
-    def build(self, input_shape):
-        """Build the model."""
-        self.feature_processing.build((None, 10))  # 10 engagement features
-        super().build(input_shape)
-    
-    def call(self, inputs: Dict[str, Any], training: bool = False) -> tf.Tensor:
-        """Process inputs and return engagement embedding."""
-        # Extract inputs
-        engagement_id = inputs["engagement_id"]
-        engagement_features = inputs.get("engagement_features", tf.zeros([tf.shape(engagement_id)[0], 10]))
         
-        # If features are a dictionary, convert to tensor
-        if isinstance(engagement_features, dict):
-            feature_names = ["type", "duration", "difficulty", "prerequisites", "popularity", "success_rate",
-                            "engagement_level", "feedback_score", "completion_rate", "interaction_frequency"]
-            engagement_features = tf.stack([engagement_features.get(k, tf.zeros([tf.shape(engagement_id)[0]])) 
-                                          for k in feature_names], axis=1)
+        # Engagement embedding layer
+        self.engagement_embedding = tf.keras.layers.Dense(
+            embedding_dimension,
+            activation=None,
+            name='engagement_embedding'
+        )
         
-        # Convert string ID to integer index using hashing
-        engagement_index = self.engagement_hashing(engagement_id)
-        
-        # Get base engagement embedding
-        base_embedding = self.engagement_embedding(engagement_index)
-        
+    def call(self, inputs, training=False):
+        if isinstance(inputs, dict):
+            engagement_id = inputs['engagement_id']
+            engagement_features = inputs['engagement_features']
+        else:
+            engagement_features = inputs
+            
         # Process engagement features
-        feature_embedding = self.feature_processing(engagement_features)
+        processed_features = self.engagement_feature_processing(engagement_features)
         
-        # Combine embeddings
-        combined_embedding = base_embedding + feature_embedding
+        # Generate engagement embedding
+        engagement_embedding = self.engagement_embedding(processed_features)
         
-        # Normalize
-        return tf.nn.l2_normalize(combined_embedding, axis=-1)
+        return engagement_embedding
     
-    def get_engagement_embedding(self, engagement_id: str) -> tf.Tensor:
-        """Get the current embedding for an engagement."""
-        if engagement_id in self.engagement_embeddings:
-            return self.engagement_embeddings[engagement_id]
-        return None
-    
-    def get_embedding_updates(self, engagement_id: str) -> int:
-        """Get the number of times an engagement's embedding has been updated."""
-        return self.embedding_updates.get(engagement_id, 0)
+    def update_embeddings(self, engagement_ids, engagement_features):
+        """Update embeddings for a batch of engagements"""
+        for ids_batch, features_batch in zip(engagement_ids, engagement_features):
+            embeddings = self(features_batch, training=False)
+            for i, engagement_id in enumerate(ids_batch.numpy()):
+                engagement_id = engagement_id.decode('utf-8') if isinstance(engagement_id, bytes) else engagement_id
+                if engagement_id not in self.vector_store:
+                    # Initialize with a zero vector if not present
+                    self.vector_store.store_vector(engagement_id, np.zeros(self.embedding_dimension))
+                self.vector_store.update_vector(engagement_id, embeddings[i].numpy())
     
     def save_vector_store(self, path: str):
-        """Save vector store to disk."""
-        tf.saved_model.save(self.vector_store, path)
+        """Save the vector store to disk"""
+        self.vector_store.save(path)
     
     def load_vector_store(self, path: str):
-        """Load vector store from disk."""
-        self.vector_store = tf.saved_model.load(path)
-
-    def update_engagement_embeddings(self, engagement_ids: List[str], embeddings: List[tf.Tensor]) -> None:
-        """Update engagement embeddings for a batch of engagement IDs."""
-        for engagement_id, embedding in zip(engagement_ids, embeddings):
-            if engagement_id not in self.engagement_embeddings:
-                self.engagement_embeddings[engagement_id] = embedding
-                self.embedding_updates[engagement_id] = 1
-            else:
-                # Update with moving average
-                alpha = 0.1  # Learning rate for updates
-                self.engagement_embeddings[engagement_id] = (
-                    (1 - alpha) * self.engagement_embeddings[engagement_id] + 
-                    alpha * embedding
-                )
-                self.embedding_updates[engagement_id] += 1
+        """Load the vector store from disk"""
+        self.vector_store.load(path)
 
 
+@tf.keras.utils.register_keras_serializable()
 class RecommenderModel(tf.keras.Model):
-    """Model for recommending engagements to students."""
+    """Hybrid recommender model combining collaborative and content-based approaches."""
     
-    def __init__(self, student_ids: List[str], engagement_ids: List[str], embedding_dimension: int = 64):
+    def __init__(
+        self,
+        student_tower: StudentTower,
+        engagement_tower: EngagementTower,
+        embedding_dimension: int = 128,  # Increased from 64
+        dropout_rate: float = 0.2,  # Added dropout
+        l2_reg: float = 0.01  # Added L2 regularization
+    ):
         super().__init__()
+        self.student_tower = student_tower
+        self.engagement_tower = engagement_tower
         self.embedding_dimension = embedding_dimension
-        self.student_tower = StudentTower(student_ids, embedding_dimension)
-        self.engagement_tower = EngagementTower(engagement_ids, embedding_dimension)
-        self.ranking_head = tf.keras.layers.Dense(1, activation='sigmoid', name="ranking_head")
-        self.likelihood_head = tf.keras.layers.Dense(1, activation='sigmoid', name="likelihood_head")
-        self.risk_head = tf.keras.layers.Dense(1, activation='sigmoid', name="risk_head")
-    
-    def build(self, input_shape):
-        """Build the model."""
-        # Build student tower
-        self.student_tower.build(input_shape)
         
-        # Build engagement tower
-        self.engagement_tower.build(input_shape)
+        # Add more layers for better feature extraction
+        self.student_dense1 = tf.keras.layers.Dense(
+            256, 
+            activation='relu',
+            kernel_regularizer=tf.keras.regularizers.l2(l2_reg)
+        )
+        self.student_dense2 = tf.keras.layers.Dense(
+            128,
+            activation='relu',
+            kernel_regularizer=tf.keras.regularizers.l2(l2_reg)
+        )
+        self.student_dropout = tf.keras.layers.Dropout(dropout_rate)
         
-        # Build prediction heads
-        self.ranking_head.build((None, self.embedding_dimension))
-        self.likelihood_head.build((None, self.embedding_dimension))
-        self.risk_head.build((None, self.embedding_dimension))
+        self.engagement_dense1 = tf.keras.layers.Dense(
+            256,
+            activation='relu',
+            kernel_regularizer=tf.keras.regularizers.l2(l2_reg)
+        )
+        self.engagement_dense2 = tf.keras.layers.Dense(
+            128,
+            activation='relu',
+            kernel_regularizer=tf.keras.regularizers.l2(l2_reg)
+        )
+        self.engagement_dropout = tf.keras.layers.Dropout(dropout_rate)
         
-        super().build(input_shape)
-    
-    def call(self, inputs: Dict[str, Any], training: bool = False) -> Dict[str, tf.Tensor]:
-        """Process inputs and return predictions."""
-        # Get embeddings
-        student_embedding = self.student_tower(inputs)
-        engagement_embedding = self.engagement_tower(inputs)
+        # Output heads with regularization
+        self.ranking_head = tf.keras.layers.Dense(
+            1,
+            activation='sigmoid',
+            kernel_regularizer=tf.keras.regularizers.l2(l2_reg)
+        )
+        self.likelihood_head = tf.keras.layers.Dense(
+            1,
+            activation='sigmoid',
+            kernel_regularizer=tf.keras.regularizers.l2(l2_reg)
+        )
+        self.risk_head = tf.keras.layers.Dense(
+            1,
+            activation='sigmoid',
+            kernel_regularizer=tf.keras.regularizers.l2(l2_reg)
+        )
         
-        # Combine embeddings
-        combined_embedding = student_embedding * engagement_embedding
+        # Initialize vector stores
+        self.student_vector_store = VectorStore(embedding_dimension)
+        self.engagement_vector_store = VectorStore(embedding_dimension)
         
-        # Generate predictions
-        ranking_score = self.ranking_head(combined_embedding)
-        likelihood_score = self.likelihood_head(combined_embedding)
-        risk_score = self.risk_head(combined_embedding)
+        # Initialize nearest neighbors models
+        self.student_nn = NearestNeighbors(n_neighbors=10, metric='cosine')
+        self.engagement_nn = NearestNeighbors(n_neighbors=10, metric='cosine')
+        
+        # Track if vector stores are initialized
+        self.student_vectors_initialized = False
+        self.engagement_vectors_initialized = False
+
+    def call(self, inputs, training=False):
+        """Forward pass through the model."""
+        # Get student and engagement features
+        student_features = inputs['student_features']
+        engagement_features = inputs['engagement_features']
+        
+        # Get embeddings from towers
+        student_embeddings = self.student_tower(student_features)
+        engagement_embeddings = self.engagement_tower(engagement_features)
+        
+        # Apply additional layers with dropout during training
+        student_embeddings = self.student_dense1(student_embeddings)
+        student_embeddings = self.student_dropout(student_embeddings, training=training)
+        student_embeddings = self.student_dense2(student_embeddings)
+        
+        engagement_embeddings = self.engagement_dense1(engagement_embeddings)
+        engagement_embeddings = self.engagement_dropout(engagement_embeddings, training=training)
+        engagement_embeddings = self.engagement_dense2(engagement_embeddings)
+        
+        # Compute similarity scores
+        similarity_scores = tf.reduce_sum(
+            student_embeddings * engagement_embeddings,
+            axis=1,
+            keepdims=True
+        )
+        
+        # Generate predictions from each head
+        ranking_score = self.ranking_head(similarity_scores)
+        likelihood_score = self.likelihood_head(similarity_scores)
+        risk_score = self.risk_head(similarity_scores)
         
         return {
-            "ranking_score": ranking_score,
-            "likelihood_score": likelihood_score,
-            "risk_score": risk_score
+            'ranking_score': ranking_score,
+            'likelihood_score': likelihood_score,
+            'risk_score': risk_score
         }
+    
+    def update_vector_stores(self, student_data, engagement_data):
+        """Update vector stores for both towers after training"""
+        self.student_tower.update_embeddings(
+            student_data['student_id'],
+            student_data['student_features']
+        )
+        self.engagement_tower.update_embeddings(
+            engagement_data['engagement_id'],
+            engagement_data['engagement_features']
+        )
     
     def save(self, model_dir: str):
-        """Save model to disk."""
-        # Create model directory
-        os.makedirs(model_dir, exist_ok=True)
+        """Save the model to disk."""
+        # Save the model architecture and weights
+        super().save(os.path.join(model_dir, "recommender_model.keras"))
         
-        # Save student vector store
-        self.student_tower.save_vector_store(os.path.join(model_dir, "student_vector_store"))
-        
-        # Save engagement vector store
-        self.engagement_tower.save_vector_store(os.path.join(model_dir, "engagement_vector_store"))
-        
-        # Save quality metrics
-        metrics = {
-            "ranking_rmse": self.ranking_head.rmse.result().numpy(),
-            "likelihood_auc": self.likelihood_head.auc.result().numpy(),
-            "risk_auc": self.risk_head.auc.result().numpy()
-        }
-        with open(os.path.join(model_dir, "metrics.json"), "w") as f:
-            json.dump(metrics, f)
+        # Save the vector store
+        self.student_tower.vector_store.save(os.path.join(model_dir, "student_vectors"))
+        self.engagement_tower.vector_store.save(os.path.join(model_dir, "engagement_vectors"))
     
     def load(self, model_dir: str):
-        """Load model from disk."""
-        # Load student vector store
-        self.student_tower.load_vector_store(os.path.join(model_dir, "student_vector_store"))
+        """Load the model and vector stores"""
+        # Load the full model
+        super().load(os.path.join(model_dir, "recommender_model"))
         
-        # Load engagement vector store
-        self.engagement_tower.load_vector_store(os.path.join(model_dir, "engagement_vector_store"))
-        
-        # Load quality metrics
-        with open(os.path.join(model_dir, "metrics.json"), "r") as f:
-            metrics = json.load(f)
-            self.ranking_head.rmse.update_state(metrics["ranking_rmse"])
-            self.likelihood_head.auc.update_state(metrics["likelihood_auc"])
-            self.risk_head.auc.update_state(metrics["risk_auc"])
-
-    def update_embeddings(self, student_ids: List[str], engagement_ids: List[str]):
-        """Update student and engagement embeddings for all IDs."""
-        # Update student embeddings
-        student_embeddings = []
-        for student_id in student_ids:
-            emb = self.student_tower({
-                "student_id": tf.convert_to_tensor([student_id]),
-                "student_features": {k: tf.convert_to_tensor([0.0]) for k in [
-                    "age", "gender", "ethnicity", "location", "gpa", "test_scores", "courses", "major",
-                    "attendance", "participation", "feedback", "study_habits", "social_activity", "stress_level"
-                ]}
-            })
-            student_embeddings.append(emb[0])
-        self.student_tower.update_student_embeddings(student_embeddings, student_ids)
-
-        # Update engagement embeddings
-        engagement_embeddings = []
-        for engagement_id in engagement_ids:
-            emb = self.engagement_tower({
-                "engagement_id": tf.convert_to_tensor([engagement_id]),
-                "engagement_features": {k: tf.convert_to_tensor([0.0]) for k in [
-                    "type", "duration", "difficulty", "prerequisites", "popularity", "success_rate"
-                ]}
-            })
-            engagement_embeddings.append(emb[0])
-        self.engagement_tower.update_engagement_embeddings(engagement_embeddings, engagement_ids)
+        # Load vector stores
+        self.student_tower.load_vector_store(os.path.join(model_dir, "student_vectors"))
+        self.engagement_tower.load_vector_store(os.path.join(model_dir, "engagement_vectors"))
 
 
 class ModelTrainer:
@@ -300,29 +283,31 @@ class ModelTrainer:
         self.dataframes = data_dict['dataframes']
         self.embedding_dimension = embedding_dimension
         
-        # Create engagement corpus dataset
-        self.engagement_corpus = tf.data.Dataset.from_tensor_slices({
-            "engagement_id": self.vocabularies['engagement_ids'],
-            "content_id": [self.dataframes['engagements'].loc[
-                self.dataframes['engagements']['engagement_id'] == eid, 'engagement_content_id'
-            ].iloc[0] if eid in self.dataframes['engagements']['engagement_id'].values else "" 
-              for eid in self.vocabularies['engagement_ids']]
-        })
-        
         # Create model
         self.model = RecommenderModel(
-            student_ids=self.vocabularies['student_ids'],
-            engagement_ids=self.vocabularies['engagement_ids'],
-            embedding_dimension=self.embedding_dimension
+            student_tower=StudentTower(embedding_dimension, self.vocabularies['student_vocab']),
+            engagement_tower=EngagementTower(embedding_dimension, self.vocabularies['engagement_vocab'])
         )
         
         # Define optimizer
-        self.optimizer = tf.keras.optimizers.Adagrad(learning_rate=0.1)
+        self.optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
     
     def train(self, epochs=5):
         """Train the model."""
-        # Compile model
-        self.model.compile(optimizer=self.optimizer)
+        # Compile model with loss functions for each head
+        self.model.compile(
+            optimizer=self.optimizer,
+            loss={
+                'ranking_head': tf.keras.losses.BinaryCrossentropy(),
+                'likelihood_head': tf.keras.losses.BinaryCrossentropy(),
+                'risk_head': tf.keras.losses.BinaryCrossentropy()
+            },
+            metrics={
+                'ranking_head': ['accuracy'],
+                'likelihood_head': ['accuracy'],
+                'risk_head': ['accuracy']
+            }
+        )
         
         # Train model
         history = self.model.fit(
@@ -390,7 +375,7 @@ class ModelTrainer:
     def load_model(self, model_dir="models"):
         """Load a trained model."""
         # Load model
-        self.model = tf.saved_model.load(os.path.join(model_dir, "student_engagement_model"))
+        self.model = tf.saved_model.load(os.path.join(model_dir, "recommender_model"))
         
         # Load vocabularies
         with open(os.path.join(model_dir, "vocabularies.json"), "r") as f:

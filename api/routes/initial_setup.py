@@ -2,16 +2,26 @@ from fastapi import APIRouter, HTTPException, Depends, UploadFile, File, Backgro
 from typing import Optional, Dict, Any, List
 import os
 import pandas as pd
-from google.cloud import storage
 from sqlalchemy.orm import Session
+from sqlalchemy import text
 from database.session import get_db
 from api.auth.supabase import check_admin
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 import asyncio
 from pydantic import BaseModel
 import csv
 import io
+import subprocess
+import sys
+
+# Conditional import for Google Cloud Storage (only needed in production mode)
+try:
+    from google.cloud import storage
+    GCS_AVAILABLE = True
+except ImportError:
+    GCS_AVAILABLE = False
+    storage = None
 
 router = APIRouter(prefix="/initial-setup", tags=["initial-setup"])
 
@@ -20,6 +30,23 @@ logger = logging.getLogger(__name__)
 class SetupMode:
     TESTING = "testing"
     PRODUCTION = "production"
+
+class SetupRequest(BaseModel):
+    mode: str
+    epochs: int = 20  # Number of training epochs (default: 20 for good performance)
+    batch_size: int = 32  # Batch size for training (default: 32)
+    embedding_dim: int = 128  # Dimension of embeddings (default: 128)
+
+class RecommendationGenerationRequest(BaseModel):
+    target_stage: str = "application"  # Target funnel stage: "application", "enrollment", "deposit", etc.
+    batch_size: int = 100  # Number of students to process at once
+    min_confidence: float = 0.5  # Minimum confidence threshold for recommendations
+    top_k: int = 5  # Number of recommendations per student
+
+class PeriodicUpdateRequest(BaseModel):
+    update_type: str  # "daily" or "weekly" 
+    days_back: int = 1  # How many days back to look for updates
+    force_retrain: bool = False  # Whether to force model retraining
 
 class SetupStatus(BaseModel):
     status: str
@@ -32,6 +59,15 @@ class SetupStatus(BaseModel):
 # Global variable to store setup status
 setup_status = SetupStatus(
     status="idle",
+    progress=0.0,
+    current_step="",
+    message="",
+    timestamp=datetime.now()
+)
+
+# Global variable to store recommendation generation status
+recommendation_status = SetupStatus(
+    status="idle", 
     progress=0.0,
     current_step="",
     message="",
@@ -62,13 +98,29 @@ def update_setup_status(status: str, progress: float, current_step: str, message
         timestamp=datetime.now()
     )
 
+def update_recommendation_status(status: str, progress: float, current_step: str, message: str, errors: List[str] = None):
+    """Update the global recommendation generation status."""
+    global recommendation_status
+    recommendation_status = SetupStatus(
+        status=status,
+        progress=progress,
+        current_step=current_step,
+        message=message,
+        errors=errors or [],
+        timestamp=datetime.now()
+    )
+
 def download_from_gcs(bucket_name: str, source_blob_name: str, destination_file_name: str) -> None:
     """Download a file from Google Cloud Storage."""
+    if not GCS_AVAILABLE:
+        raise HTTPException(status_code=500, detail="Google Cloud Storage not available. Please install google-cloud-storage package.")
+    
     try:
         storage_client = storage.Client()
         bucket = storage_client.bucket(bucket_name)
         blob = bucket.blob(source_blob_name)
         blob.download_to_filename(destination_file_name)
+        logger.info(f"Successfully downloaded {source_blob_name} to {destination_file_name}")
     except Exception as e:
         logger.error(f"Error downloading from GCS: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to download file from GCS: {str(e)}")
@@ -77,18 +129,18 @@ def purge_database(db: Session) -> None:
     """Purge all data from the database."""
     try:
         # Delete all records from relevant tables
-        db.execute("TRUNCATE TABLE student_profiles CASCADE")
-        db.execute("TRUNCATE TABLE engagement_history CASCADE")
-        db.execute("TRUNCATE TABLE engagement_content CASCADE")
-        db.execute("TRUNCATE TABLE stored_recommendations CASCADE")
-        db.execute("TRUNCATE TABLE recommendation_feedback_metrics CASCADE")
+        db.execute(text("TRUNCATE TABLE student_profiles CASCADE"))
+        db.execute(text("TRUNCATE TABLE engagement_history CASCADE"))
+        db.execute(text("TRUNCATE TABLE engagement_content CASCADE"))
+        db.execute(text("TRUNCATE TABLE stored_recommendations CASCADE"))
+        db.execute(text("TRUNCATE TABLE recommendation_feedback_metrics CASCADE"))
         db.commit()
     except Exception as e:
         db.rollback()
         logger.error(f"Error purging database: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to purge database: {str(e)}")
 
-async def run_setup(mode: str, db: Session):
+async def run_setup(mode: str, epochs: int, batch_size: int, embedding_dim: int, db: Session):
     """Run the setup process asynchronously."""
     try:
         update_setup_status("running", 0.0, "Starting setup", "Initializing...")
@@ -102,57 +154,113 @@ async def run_setup(mode: str, db: Session):
                 # Use local files
                 students_file = "data/initial/students.csv"
                 engagements_file = "data/initial/engagements.csv"
-                content_file = "data/initial/content.csv"
+                
+                # Check if local files exist
+                if not os.path.exists(students_file):
+                    raise HTTPException(status_code=404, detail=f"Students file not found: {students_file}")
+                if not os.path.exists(engagements_file):
+                    raise HTTPException(status_code=404, detail=f"Engagements file not found: {engagements_file}")
+                    
+                logger.info(f"Using local files: {students_file}, {engagements_file}")
             else:
-                # Download files from GCS
+                # Production mode: Download files from GCS
+                if not GCS_AVAILABLE:
+                    raise HTTPException(status_code=500, detail="Production mode requires Google Cloud Storage. Please install google-cloud-storage package.")
+                
                 update_setup_status("running", 0.1, "Downloading files", "Downloading from GCS...")
                 students_file = os.path.join(temp_dir, "students.csv")
                 engagements_file = os.path.join(temp_dir, "engagements.csv")
-                content_file = os.path.join(temp_dir, "content.csv")
                 
                 bucket_name = os.getenv("GCS_BUCKET_NAME")
                 if not bucket_name:
-                    raise HTTPException(status_code=500, detail="GCS_BUCKET_NAME environment variable not set")
+                    raise HTTPException(status_code=500, detail="GCS_BUCKET_NAME environment variable not set for production mode")
                 
+                logger.info(f"Downloading from GCS bucket: {bucket_name}")
                 download_from_gcs(bucket_name, "initial/students.csv", students_file)
                 download_from_gcs(bucket_name, "initial/engagements.csv", engagements_file)
-                download_from_gcs(bucket_name, "initial/content.csv", content_file)
             
             # Validate files
             update_setup_status("running", 0.2, "Validating files", "Checking file formats...")
             errors = []
             
             # Validate students file
-            student_errors = validate_csv_file(students_file, ["student_id", "demographic_features", "application_status"])
+            student_errors = validate_csv_file(students_file, ["student_id", "location", "intended_major", "application_status"])
             errors.extend([f"Students file: {e}" for e in student_errors])
             
             # Validate engagements file
             engagement_errors = validate_csv_file(engagements_file, ["student_id", "engagement_type", "timestamp"])
             errors.extend([f"Engagements file: {e}" for e in engagement_errors])
             
-            # Validate content file
-            content_errors = validate_csv_file(content_file, ["content_id", "content_type", "metadata"])
-            errors.extend([f"Content file: {e}" for e in content_errors])
-            
             if errors:
                 update_setup_status("failed", 0.0, "Validation failed", "File validation failed", errors)
                 return
             
             # Import data and train model
-            update_setup_status("running", 0.3, "Importing data", "Importing data into database...")
-            from scripts.ingest_and_train import main as ingest_and_train
-            ingest_and_train(
-                students_csv=students_file,
-                engagements_csv=engagements_file,
-                content_csv=content_file
-            )
+            update_setup_status("running", 0.3, "Importing data", "Starting data import and model training...")
             
-            update_setup_status("completed", 1.0, "Setup complete", "Initial setup completed successfully")
+            # Call the ingest_and_train script with proper arguments
+            script_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "scripts", "ingest_and_train.py")
+            cmd = [
+                sys.executable, script_path,
+                "--students-csv", students_file,
+                "--engagements-csv", engagements_file,
+                "--epochs", str(epochs),
+                "--batch-size", str(batch_size),
+                "--embedding-dim", str(embedding_dim)
+            ]
+            
+            logger.info(f"Running command: {' '.join(cmd)}")
+            update_setup_status("running", 0.4, "Training model", "Running data import and model training...")
+            
+            # Use thread executor to run subprocess without blocking the event loop
+            import concurrent.futures
+            import asyncio
+            
+            def run_training_sync():
+                """Run training in a separate thread to avoid blocking."""
+                return subprocess.run(
+                    cmd, 
+                    capture_output=True, 
+                    text=True, 
+                    cwd=os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+                )
+            
+            # Run the training subprocess in a thread executor
+            loop = asyncio.get_event_loop()
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                result = await loop.run_in_executor(executor, run_training_sync)
+            
+            if result.returncode != 0:
+                error_msg = f"Training script failed: {result.stderr}"
+                logger.error(error_msg)
+                logger.error(f"stdout: {result.stdout}")
+                raise Exception(error_msg)
+            
+            logger.info("Training script completed successfully")
+            logger.info(f"Training output: {result.stdout}")
+            
+            update_setup_status("running", 0.9, "Finalizing", "Training completed, finalizing setup...")
+            
+            # Restart the model manager to load the new model
+            try:
+                from api.services.model_manager import ModelManager
+                update_setup_status("running", 0.95, "Loading model", "Loading trained model...")
+                
+                # This will be available in the main app context, but for setup validation we can test loading
+                test_manager = ModelManager()
+                health = test_manager.health_check()
+                logger.info(f"Model health check: {health}")
+                
+            except Exception as e:
+                logger.warning(f"Model loading validation failed: {e}")
+                # Don't fail the setup, as the model will be loaded on next app restart
+            
+            update_setup_status("completed", 1.0, "Setup complete", "Initial setup completed successfully! Model training finished and system is ready.")
             
         finally:
             # Clean up temporary files
             if mode == SetupMode.PRODUCTION:
-                for file in [students_file, engagements_file, content_file]:
+                for file in [students_file, engagements_file]:
                     if os.path.exists(file):
                         os.remove(file)
                 os.rmdir(temp_dir)
@@ -160,6 +268,138 @@ async def run_setup(mode: str, db: Session):
     except Exception as e:
         logger.error(f"Error during initial setup: {str(e)}")
         update_setup_status("failed", 0.0, "Setup failed", str(e), [str(e)])
+
+async def run_recommendation_generation(request: RecommendationGenerationRequest, db: Session):
+    """Run bulk recommendation generation asynchronously."""
+    try:
+        update_recommendation_status("running", 0.0, "Starting generation", "Initializing recommendation generation...")
+        
+        # Import model manager and services
+        from api.services.model_manager import ModelManager
+        from api.services.recommendation_service import RecommendationService
+        from data.models.stored_recommendation import StoredRecommendation
+        from data.models.funnel_stage import FunnelStage
+        
+        # Get the target stage
+        target_stage = db.query(FunnelStage).filter_by(stage_name=request.target_stage.title()).first()
+        if not target_stage:
+            raise ValueError(f"Target stage '{request.target_stage}' not found")
+        
+        update_recommendation_status("running", 0.1, "Loading model", "Loading trained model...")
+        
+        # Initialize model manager and recommendation service
+        model_manager = ModelManager()
+        if not model_manager.is_healthy:
+            raise ValueError("Model is not healthy - please train model first")
+        
+        recommendation_service = RecommendationService(model_manager)
+        
+        update_recommendation_status("running", 0.2, "Finding students", "Querying eligible students...")
+        
+        # Get students who haven't reached the target stage yet (eligible for recommendations)
+        all_stages = db.query(FunnelStage).order_by(FunnelStage.stage_order).all()
+        target_stage_order = target_stage.stage_order
+        
+        # Get students in stages before the target stage
+        eligible_stages = [stage for stage in all_stages if stage.stage_order < target_stage_order]
+        eligible_stage_names = [stage.stage_name for stage in eligible_stages]
+        
+        students = db.query(StudentProfile).filter(
+            StudentProfile.funnel_stage.in_(eligible_stage_names)
+        ).all()
+        
+        total_students = len(students)
+        if total_students == 0:
+            update_recommendation_status("completed", 100.0, "No eligible students", 
+                                        f"No students found before target stage '{request.target_stage}'")
+            return
+        
+        logger.info(f"Found {total_students} eligible students for recommendations")
+        update_recommendation_status("running", 0.3, "Generating recommendations", 
+                                    f"Processing {total_students} students...")
+        
+        # Process students in batches
+        recommendations_generated = 0
+        recommendations_stored = 0
+        batch_size = request.batch_size
+        
+        for i in range(0, total_students, batch_size):
+            batch_students = students[i:i + batch_size]
+            batch_progress = 0.3 + (i / total_students) * 0.6  # Progress from 0.3 to 0.9
+            
+            update_recommendation_status(
+                "running", 
+                batch_progress * 100, 
+                "Generating recommendations",
+                f"Processing batch {i//batch_size + 1}/{(total_students + batch_size - 1)//batch_size}..."
+            )
+            
+            # Generate recommendations for this batch
+            for student in batch_students:
+                try:
+                    # Generate recommendations for this student
+                    recommendations = recommendation_service.get_recommendations(
+                        student.student_id, 
+                        top_k=request.top_k,
+                        funnel_stage=student.funnel_stage
+                    )
+                    
+                    # Filter by confidence threshold
+                    high_confidence_recs = [
+                        rec for rec in recommendations 
+                        if rec.get('confidence_score', 0) >= request.min_confidence
+                    ]
+                    
+                    if high_confidence_recs:
+                        # Store recommendations in database
+                        stored_rec = StoredRecommendation(
+                            student_id=student.student_id,
+                            recommendations=high_confidence_recs,
+                            generated_at=datetime.now(),
+                            expires_at=datetime.now() + timedelta(days=30),  # 30-day expiry
+                            target_stage=request.target_stage,
+                            generation_metadata={
+                                "model_version": model_manager.model_metadata.get("version", "unknown"),
+                                "confidence_threshold": request.min_confidence,
+                                "top_k": request.top_k,
+                                "student_stage": student.funnel_stage
+                            }
+                        )
+                        db.add(stored_rec)
+                        recommendations_stored += len(high_confidence_recs)
+                    
+                    recommendations_generated += len(recommendations)
+                    
+                except Exception as e:
+                    logger.error(f"Error generating recommendations for student {student.student_id}: {e}")
+                    continue
+            
+            # Commit batch
+            db.commit()
+        
+        update_recommendation_status("running", 0.9, "Validating results", "Validating generated recommendations...")
+        
+        # Final validation
+        total_stored = db.query(StoredRecommendation).filter(
+            StoredRecommendation.target_stage == request.target_stage,
+            StoredRecommendation.generated_at >= datetime.now() - timedelta(minutes=30)
+        ).count()
+        
+        update_recommendation_status(
+            "completed", 
+            100.0, 
+            "Generation complete", 
+            f"Generated {recommendations_generated} recommendations for {total_students} students. "
+            f"Stored {recommendations_stored} high-confidence recommendations. "
+            f"Total stored: {total_stored}"
+        )
+        
+        logger.info(f"Recommendation generation completed: {recommendations_generated} generated, {recommendations_stored} stored")
+        
+    except Exception as e:
+        error_msg = f"Recommendation generation failed: {str(e)}"
+        logger.error(error_msg)
+        update_recommendation_status("failed", 0.0, "Generation failed", error_msg, [str(e)])
 
 @router.post("/purge")
 async def purge_data(
@@ -177,28 +417,199 @@ async def purge_data(
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/setup")
-async def initial_setup(
-    mode: str,
-    background_tasks: BackgroundTasks,
+async def train_model(
+    request: SetupRequest,
+    db: Session = Depends(get_db),
+    # TODO: Add authentication after initial setup is complete
+    # current_user=Depends(check_admin)
+):
+    """Train the initial model with the provided data and settings."""
+    global setup_status
+    
+    if setup_status.status == "running":
+        raise HTTPException(status_code=400, detail="Training is already in progress")
+    
+    # Validate mode
+    if request.mode not in [SetupMode.TESTING, SetupMode.PRODUCTION]:
+        raise HTTPException(status_code=400, detail="Invalid mode. Must be 'testing' or 'production'")
+    
+    # For production mode, check if Google Cloud Storage is available
+    if request.mode == SetupMode.PRODUCTION and not GCS_AVAILABLE:
+        raise HTTPException(
+            status_code=500, 
+            detail="Production mode requires google-cloud-storage package. Please install it first."
+        )
+    
+    # Run setup in a separate thread to avoid blocking
+    def run_setup_thread():
+        """Run setup in a separate thread to avoid blocking the API."""
+        import asyncio
+        # Create new event loop for this thread
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        try:
+            loop.run_until_complete(run_setup(request.mode, request.epochs, request.batch_size, request.embedding_dim, db))
+        except Exception as e:
+            logger.error(f"Setup failed: {e}")
+            update_setup_status("failed", 0.0, "Setup failed", f"Error: {str(e)}", [str(e)])
+        finally:
+            loop.close()
+    
+    # Start the setup in a background thread
+    import threading
+    setup_thread = threading.Thread(target=run_setup_thread)
+    setup_thread.daemon = True
+    setup_thread.start()
+    
+    return {"message": "Model training started", "status": "started"}
+
+@router.post("/generate-recommendations")
+async def generate_recommendations(
+    request: RecommendationGenerationRequest,
     db: Session = Depends(get_db),
     current_user=Depends(check_admin)
 ):
-    """
-    Perform initial setup of the system.
+    """Generate bulk recommendations for storage."""
+    global recommendation_status
     
-    Args:
-        mode: Either "testing" or "production"
-    """
-    if mode not in [SetupMode.TESTING, SetupMode.PRODUCTION]:
-        raise HTTPException(status_code=400, detail="Invalid mode. Must be 'testing' or 'production'")
+    if recommendation_status.status == "running":
+        raise HTTPException(status_code=400, detail="Recommendation generation is already in progress")
     
-    # Start setup process in background
-    background_tasks.add_task(run_setup, mode, db)
+    # Validate target stage
+    valid_stages = ["awareness", "interest", "consideration", "application", "deposit", "enrollment", "matriculation"]
+    if request.target_stage.lower() not in valid_stages:
+        raise HTTPException(status_code=400, detail=f"Invalid target stage. Must be one of: {valid_stages}")
+    
+    # Run recommendation generation in a separate thread
+    def run_generation_thread():
+        """Run recommendation generation in a separate thread."""
+        import asyncio
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        try:
+            loop.run_until_complete(run_recommendation_generation(request, db))
+        except Exception as e:
+            logger.error(f"Recommendation generation failed: {e}")
+            update_recommendation_status("failed", 0.0, "Generation failed", f"Error: {str(e)}", [str(e)])
+        finally:
+            loop.close()
+    
+    # Start generation in background thread
+    import threading
+    generation_thread = threading.Thread(target=run_generation_thread)
+    generation_thread.daemon = True
+    generation_thread.start()
+    
+    return {"message": "Recommendation generation started", "status": "started"}
+
+@router.get("/recommendation-status")
+async def get_recommendation_status():
+    """Get the current recommendation generation status."""
+    return recommendation_status
+
+@router.post("/periodic-update")
+async def run_periodic_update(
+    request: PeriodicUpdateRequest,
+    current_user=Depends(check_admin)
+):
+    """Run periodic data updates (for use by schedulers)."""
+    try:
+        # Run the appropriate update script
+        script_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "scripts")
+        
+        if request.update_type == "daily":
+            # Run daily update
+            engagement_cmd = [
+                sys.executable, 
+                os.path.join(script_dir, "ingest_engagements.py"),
+                "--days", str(request.days_back)
+            ]
+            
+            student_cmd = [
+                sys.executable,
+                os.path.join(script_dir, "ingest_students.py"), 
+                "--days", str(request.days_back)
+            ]
+            
+        elif request.update_type == "weekly":
+            # Run weekly update with optional retraining
+            engagement_cmd = [
+                sys.executable,
+                os.path.join(script_dir, "ingest_engagements.py"),
+                "--days", str(request.days_back)
+            ]
+            
+            student_cmd = [
+                sys.executable,
+                os.path.join(script_dir, "ingest_students.py"),
+                "--days", str(request.days_back)
+            ]
+            
+            if request.force_retrain:
+                engagement_cmd.append("--force-retrain")
+                student_cmd.append("--force-retrain")
+        else:
+            raise HTTPException(status_code=400, detail="Invalid update_type. Must be 'daily' or 'weekly'")
+        
+        # Run engagement updates
+        logger.info(f"Running engagement update: {' '.join(engagement_cmd)}")
+        engagement_result = subprocess.run(
+            engagement_cmd,
+            cwd=os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+            capture_output=True,
+            text=True
+        )
+        
+        if engagement_result.returncode != 0:
+            raise HTTPException(
+                status_code=500, 
+                detail=f"Engagement update failed: {engagement_result.stderr}"
+            )
+        
+        # Run student updates  
+        logger.info(f"Running student update: {' '.join(student_cmd)}")
+        student_result = subprocess.run(
+            student_cmd,
+            cwd=os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+            capture_output=True,
+            text=True
+        )
+        
+        if student_result.returncode != 0:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Student update failed: {student_result.stderr}"
+            )
+        
+        return {
+            "message": f"{request.update_type.title()} update completed successfully",
+            "engagement_output": engagement_result.stdout,
+            "student_output": student_result.stdout,
+            "retrained": request.force_retrain
+        }
+        
+    except Exception as e:
+        logger.error(f"Periodic update failed: {e}")
+        raise HTTPException(status_code=500, detail=f"Update failed: {str(e)}")
+
+@router.get("/funnel-stages")
+async def get_funnel_stages(db: Session = Depends(get_db)):
+    """Get available funnel stages for goal setting."""
+    from data.models.funnel_stage import FunnelStage
+    
+    stages = db.query(FunnelStage).filter(FunnelStage.is_active == True).order_by(FunnelStage.stage_order).all()
     
     return {
-        "status": "started",
-        "message": "Initial setup process started",
-        "timestamp": datetime.now().isoformat()
+        "stages": [
+            {
+                "id": stage.id,
+                "name": stage.stage_name,
+                "order": stage.stage_order, 
+                "is_tracking_goal": stage.is_tracking_goal,
+                "tracking_goal_type": stage.tracking_goal_type
+            }
+            for stage in stages
+        ]
     }
 
 @router.get("/status")
