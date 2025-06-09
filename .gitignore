@@ -5,3 +5,8 @@ na_frontend
 .cursorignore
 __pycache__/
 configs
+venv/
+data/models/__pycache__/
+data/core/__pycache__/
+migrations/versions/
+.DS_Store
