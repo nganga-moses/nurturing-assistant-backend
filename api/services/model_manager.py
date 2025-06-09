@@ -147,36 +147,37 @@ class ModelManager:
         }
         logger.info("Fallback mode initialized")
     
-    def predict_likelihood(self, student_id: str, engagement_id: str = None) -> float:
+    def predict_likelihood(self, student_id: str, engagement_id: str = None, target_stage: str = None) -> float:
         """
-        Predict application likelihood for a student-engagement pair.
+        Predict likelihood for a student to reach a specific goal stage.
         
         Args:
             student_id: Student identifier
             engagement_id: Engagement identifier (optional)
+            target_stage: Target funnel stage name (e.g., "Application"). If None, defaults to configured goal stage.
             
         Returns:
-            float: Likelihood score between 0 and 1
+            float: Likelihood score between 0 and 1 representing probability of reaching target stage
         """
         try:
             self.prediction_count += 1
             
             if self.model is not None:
-                # Use full model prediction
-                return self._predict_with_full_model(student_id, engagement_id, "likelihood")
+                # Use full model prediction with goal context
+                return self._predict_with_full_model(student_id, engagement_id, "likelihood", target_stage)
             
             elif self.student_vectors is not None and self.engagement_vectors is not None:
-                # Use vector similarity
-                return self._predict_with_vectors(student_id, engagement_id, "likelihood")
+                # Use vector similarity with goal-aware calculation
+                return self._predict_with_vectors(student_id, engagement_id, "likelihood", target_stage)
             
             else:
-                # Fallback prediction
-                return self._fallback_likelihood(student_id, engagement_id)
+                # Fallback prediction with goal context
+                return self._fallback_likelihood(student_id, engagement_id, target_stage)
                 
         except Exception as e:
             self.error_count += 1
             logger.error(f"Likelihood prediction failed: {e}")
-            return self._fallback_likelihood(student_id, engagement_id)
+            return self._fallback_likelihood(student_id, engagement_id, target_stage)
     
     def predict_risk(self, student_id: str, engagement_id: str = None) -> float:
         """
@@ -307,14 +308,14 @@ class ModelManager:
     
     # Private helper methods
     
-    def _predict_with_full_model(self, student_id: str, engagement_id: str, prediction_type: str) -> float:
+    def _predict_with_full_model(self, student_id: str, engagement_id: str, prediction_type: str, target_stage: str = None) -> float:
         """Make prediction using the full loaded model."""
         # This would require proper input preparation for the model
         # For now, return a placeholder since full model loading has issues
-        return self._fallback_likelihood(student_id, engagement_id) if prediction_type == "likelihood" else self._fallback_risk(student_id)
+        return self._fallback_likelihood(student_id, engagement_id, target_stage) if prediction_type == "likelihood" else self._fallback_risk(student_id)
     
-    def _predict_with_vectors(self, student_id: str, engagement_id: str, prediction_type: str) -> float:
-        """Make prediction using vector similarity."""
+    def _predict_with_vectors(self, student_id: str, engagement_id: str, prediction_type: str, target_stage: str = None) -> float:
+        """Make prediction using vector similarity with goal-aware calculation."""
         try:
             student_embedding = self.student_vectors.get_embedding(student_id)
             
@@ -330,12 +331,23 @@ class ModelManager:
                     )
                     # Convert similarity to probability
                     score = (similarity + 1) / 2  # Map from [-1,1] to [0,1]
+                    
+                    # Apply goal-specific adjustment if target stage is provided
+                    if prediction_type == "likelihood" and target_stage:
+                        score = self._apply_goal_context(score, student_id, target_stage)
+                    
                     return float(np.clip(score, 0, 1))
             
             # Use student embedding characteristics for prediction
             if prediction_type == "likelihood":
                 # Higher average embedding values = higher likelihood
-                score = (np.mean(student_embedding) + 1) / 2
+                base_score = (np.mean(student_embedding) + 1) / 2
+                
+                # Apply goal-specific adjustment if target stage is provided
+                if target_stage:
+                    score = self._apply_goal_context(base_score, student_id, target_stage)
+                else:
+                    score = base_score
             else:  # risk
                 # Higher variance in embedding = higher risk
                 score = np.std(student_embedding)
@@ -345,6 +357,12 @@ class ModelManager:
         except Exception as e:
             logger.error(f"Vector prediction failed: {e}")
             return 0.5
+
+    def _apply_goal_context(self, base_score: float, student_id: str, target_stage: str) -> float:
+        """Apply goal-specific context to adjust the base prediction score."""
+        # For now, return base score without adjustment to avoid recursive database calls
+        # The goal context is handled in predict_goal_likelihood method
+        return base_score
     
     def _generate_vector_recommendations(self, student_id: str, top_k: int) -> List[Dict[str, Any]]:
         """Generate recommendations using vector similarity."""
@@ -385,10 +403,10 @@ class ModelManager:
             logger.error(f"Vector recommendation generation failed: {e}")
             return self._fallback_recommendations(student_id, top_k)
     
-    def _fallback_likelihood(self, student_id: str, engagement_id: str = None) -> float:
+    def _fallback_likelihood(self, student_id: str, engagement_id: str = None, target_stage: str = None) -> float:
         """Fallback likelihood prediction using deterministic algorithm."""
         # Create deterministic but realistic-looking score based on IDs
-        hash_input = f"{student_id}_{engagement_id or 'default'}"
+        hash_input = f"{student_id}_{engagement_id or 'default'}_{target_stage or 'default'}"
         hash_value = hash(hash_input) % 1000
         # Map to likelihood range [0.1, 0.9] for realism
         return 0.1 + (hash_value / 1000) * 0.8
@@ -423,4 +441,82 @@ class ModelManager:
         
         # Sort by score descending
         recommendations.sort(key=lambda x: x["score"], reverse=True)
-        return recommendations 
+        return recommendations
+    
+    def predict_goal_likelihood(self, student_id: str, goal_stage_name: str) -> Dict[str, Any]:
+        """
+        Predict likelihood of reaching a specific goal stage with detailed context.
+        
+        Args:
+            student_id: Student identifier
+            goal_stage_name: Name of the goal stage (e.g., "Application")
+            
+        Returns:
+            Dictionary with likelihood score and contextual information
+        """
+        try:
+            # Calculate base likelihood
+            base_likelihood = self.predict_likelihood(student_id)
+            
+            # Try to get detailed context from database
+            try:
+                from database.engine import SessionLocal
+                from data.models.funnel_stage import FunnelStage
+                from data.models.student_profile import StudentProfile
+                
+                with SessionLocal() as db:
+                    # Get student's current stage
+                    student = db.query(StudentProfile).filter(StudentProfile.student_id == student_id).first()
+                    current_stage = student.funnel_stage if student else "Awareness"
+                    
+                    # Get funnel stage information
+                    stages = db.query(FunnelStage).order_by(FunnelStage.stage_order).all()
+                    stage_map = {stage.stage_name: stage.stage_order for stage in stages}
+                    
+                    current_order = stage_map.get(current_stage, 0)
+                    goal_order = stage_map.get(goal_stage_name, len(stage_map))
+                    stage_distance = goal_order - current_order
+                    
+                    # Adjust based on stage distance
+                    if goal_order <= current_order:
+                        # Already at or past goal stage
+                        adjusted_likelihood = 0.95 if goal_order == current_order else 1.0
+                        stage_context = "already_achieved" if goal_order < current_order else "current_stage"
+                    else:
+                        # Calculate distance penalty
+                        distance_penalty = max(0.3, 1.0 - (stage_distance * 0.1))  # Gradual decrease
+                        adjusted_likelihood = base_likelihood * distance_penalty
+                        stage_context = f"stages_ahead_{stage_distance}"
+                        
+            except Exception as db_error:
+                logger.warning(f"Database context retrieval failed: {db_error}")
+                # Fallback values
+                current_stage = "Interest"  # Default assumption
+                adjusted_likelihood = base_likelihood * 0.8  # Apply some discount
+                stage_distance = 1  # Assume 1 stage away
+                stage_context = "fallback_mode"
+            
+            return {
+                "student_id": student_id,
+                "likelihood": float(np.clip(adjusted_likelihood, 0.0, 1.0)),
+                "current_stage": current_stage,
+                "target_stage": goal_stage_name,
+                "stage_distance": stage_distance,
+                "stage_context": stage_context,
+                "base_model_score": float(base_likelihood),
+                "confidence": 0.8 if self.student_vectors is not None else 0.4
+            }
+            
+        except Exception as e:
+            self.error_count += 1
+            logger.error(f"Goal likelihood prediction failed: {e}")
+            return {
+                "student_id": student_id,
+                "likelihood": 0.5,
+                "current_stage": "Unknown",
+                "target_stage": goal_stage_name,
+                "stage_distance": 0,
+                "stage_context": "error",
+                "base_model_score": 0.5,
+                "confidence": 0.2
+            } 

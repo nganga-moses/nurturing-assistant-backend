@@ -47,6 +47,32 @@ class EmbeddingResponse(BaseModel):
     dimension: int
 
 
+class GoalLikelihoodResponse(BaseModel):
+    """Response model for goal-aware likelihood predictions."""
+    student_id: str
+    target_stage: str
+    likelihood: float
+    current_stage: str
+    stage_distance: int
+    stage_context: str
+    base_model_score: float
+    confidence: float
+    
+    class Config:
+        schema_extra = {
+            "example": {
+                "student_id": "STU001",
+                "target_stage": "Application",
+                "likelihood": 0.75,
+                "current_stage": "Consideration",
+                "stage_distance": 1,
+                "stage_context": "stages_ahead_1",
+                "base_model_score": 0.82,
+                "confidence": 0.8
+            }
+        }
+
+
 class LikelihoodTestResponse(BaseModel):
     student_id: str
     engagement_id: Optional[str]
@@ -289,6 +315,7 @@ async def get_model_status():
             ],
             "predictions": [
                 "/api/v1/model/predict/likelihood",
+                "/api/v1/model/predict/goal-likelihood",
                 "/api/v1/model/predict/risk",
                 "/api/v1/model/recommendations/{student_id}"
             ],
@@ -511,6 +538,35 @@ async def predict_likelihood(
         "prediction_method": "vector_similarity" if model_manager.student_vectors else "fallback",
         "timestamp": model_manager.last_health_check
     }
+
+@router.get("/predict/goal-likelihood", response_model=GoalLikelihoodResponse, summary="Goal-Aware Likelihood Prediction")
+async def predict_goal_likelihood(
+    student_id: str,
+    goal_stage: str,
+    model_manager: ModelManager = Depends(get_model_manager)
+):
+    """
+    Predict likelihood of a student reaching a specific funnel stage goal.
+    
+    This endpoint provides goal-aware predictions that consider:
+    - Student's current position in the funnel
+    - Distance to the target stage
+    - Contextual adjustments based on stage progression patterns
+    
+    Args:
+        student_id: The student's unique identifier
+        goal_stage: Name of the target funnel stage (e.g., "Application", "Enrollment")
+        
+    Returns:
+        Comprehensive prediction with likelihood score, current stage context,
+        and detailed information about the prediction methodology.
+        
+    Example:
+        GET /api/v1/model/predict/goal-likelihood?student_id=STU001&goal_stage=Application
+    """
+    result = model_manager.predict_goal_likelihood(student_id, goal_stage)
+    
+    return GoalLikelihoodResponse(**result)
 
 @router.get("/predict/risk", summary="Direct Risk Assessment")
 async def predict_risk(
