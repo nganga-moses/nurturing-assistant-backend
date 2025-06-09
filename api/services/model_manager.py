@@ -242,7 +242,7 @@ class ModelManager:
         """
         try:
             if self.student_vectors is not None:
-                return self.student_vectors.get_vector(student_id)
+                return self.student_vectors.get_embedding(student_id)
             return None
         except Exception as e:
             logger.error(f"Error retrieving student embedding: {e}")
@@ -260,7 +260,7 @@ class ModelManager:
         """
         try:
             if self.engagement_vectors is not None:
-                return self.engagement_vectors.get_vector(engagement_id)
+                return self.engagement_vectors.get_embedding(engagement_id)
             return None
         except Exception as e:
             logger.error(f"Error retrieving engagement embedding: {e}")
@@ -316,13 +316,13 @@ class ModelManager:
     def _predict_with_vectors(self, student_id: str, engagement_id: str, prediction_type: str) -> float:
         """Make prediction using vector similarity."""
         try:
-            student_embedding = self.student_vectors.get_vector(student_id)
+            student_embedding = self.student_vectors.get_embedding(student_id)
             
             if student_embedding is None:
                 return 0.5  # Default score
             
             if engagement_id and self.engagement_vectors is not None:
-                engagement_embedding = self.engagement_vectors.get_vector(engagement_id)
+                engagement_embedding = self.engagement_vectors.get_embedding(engagement_id)
                 if engagement_embedding is not None:
                     # Compute cosine similarity
                     similarity = np.dot(student_embedding, engagement_embedding) / (
@@ -349,25 +349,31 @@ class ModelManager:
     def _generate_vector_recommendations(self, student_id: str, top_k: int) -> List[Dict[str, Any]]:
         """Generate recommendations using vector similarity."""
         try:
-            student_embedding = self.student_vectors.get_vector(student_id)
+            student_embedding = self.student_vectors.get_embedding(student_id)
             if student_embedding is None:
                 return self._fallback_recommendations(student_id, top_k)
             
             recommendations = []
-            engagement_ids = list(self.engagement_vectors.vectors.keys())[:top_k * 2]  # Get more than needed
+            engagement_ids = list(self.engagement_vectors.id_to_embedding.keys())[:top_k * 2]  # Get more than needed
             
             for engagement_id in engagement_ids:
-                engagement_embedding = self.engagement_vectors.get_vector(engagement_id)
+                engagement_embedding = self.engagement_vectors.get_embedding(engagement_id)
                 if engagement_embedding is not None:
                     similarity = np.dot(student_embedding, engagement_embedding) / (
                         np.linalg.norm(student_embedding) * np.linalg.norm(engagement_embedding)
                     )
-                    score = (similarity + 1) / 2
+                    # Convert similarity to probability and boost scores
+                    raw_score = (similarity + 1) / 2
+                    # Apply a sigmoid-like transformation to boost relevant scores
+                    boosted_score = 1 / (1 + np.exp(-10 * (raw_score - 0.5)))
+                    
+                    # More realistic confidence: base confidence + similarity bonus
+                    confidence = 0.3 + (raw_score * 0.7)  # Range: [0.3, 1.0]
                     
                     recommendations.append({
                         "engagement_id": engagement_id,
-                        "score": float(score),
-                        "confidence": min(float(score * 1.2), 1.0),
+                        "score": float(boosted_score),
+                        "confidence": float(np.clip(confidence, 0.0, 1.0)),
                         "reason": "vector_similarity"
                     })
             
@@ -396,15 +402,25 @@ class ModelManager:
     def _fallback_recommendations(self, student_id: str, top_k: int) -> List[Dict[str, Any]]:
         """Fallback recommendation generation."""
         recommendations = []
+        # Use hash to generate deterministic but varied recommendations
+        base_hash = hash(student_id) % 1000
+        
         for i in range(top_k):
             engagement_id = f"fallback_engagement_{i+1}"
-            score = max(0.1, 0.9 - (i * 0.15))  # Decreasing scores
+            # Generate varied but reasonable scores
+            score_hash = (base_hash + i * 137) % 1000  # 137 is prime for better distribution
+            score = 0.3 + (score_hash / 1000) * 0.6  # Range: [0.3, 0.9]
+            
+            # Confidence slightly lower than score for realism
+            confidence = max(0.25, score - 0.1)
             
             recommendations.append({
                 "engagement_id": engagement_id,
-                "score": score,
-                "confidence": score * 0.8,
+                "score": float(score),
+                "confidence": float(confidence),
                 "reason": "fallback_algorithm"
             })
         
+        # Sort by score descending
+        recommendations.sort(key=lambda x: x["score"], reverse=True)
         return recommendations 

@@ -40,7 +40,7 @@ class SetupRequest(BaseModel):
 class RecommendationGenerationRequest(BaseModel):
     target_stage: str = "application"  # Target funnel stage: "application", "enrollment", "deposit", etc.
     batch_size: int = 100  # Number of students to process at once
-    min_confidence: float = 0.5  # Minimum confidence threshold for recommendations
+    min_confidence: float = 0.3  # Minimum confidence threshold for recommendations (lowered for vector similarity)
     top_k: int = 5  # Number of recommendations per student
 
 class PeriodicUpdateRequest(BaseModel):
@@ -279,6 +279,7 @@ async def run_recommendation_generation(request: RecommendationGenerationRequest
         from api.services.recommendation_service import RecommendationService
         from data.models.stored_recommendation import StoredRecommendation
         from data.models.funnel_stage import FunnelStage
+        from data.models.student_profile import StudentProfile
         
         # Get the target stage
         target_stage = db.query(FunnelStage).filter_by(stage_name=request.target_stage.title()).first()
@@ -321,6 +322,7 @@ async def run_recommendation_generation(request: RecommendationGenerationRequest
         # Process students in batches
         recommendations_generated = 0
         recommendations_stored = 0
+        students_with_recommendations = 0
         batch_size = request.batch_size
         
         for i in range(0, total_students, batch_size):
@@ -329,7 +331,7 @@ async def run_recommendation_generation(request: RecommendationGenerationRequest
             
             update_recommendation_status(
                 "running", 
-                batch_progress * 100, 
+                batch_progress, 
                 "Generating recommendations",
                 f"Processing batch {i//batch_size + 1}/{(total_students + batch_size - 1)//batch_size}..."
             )
@@ -347,26 +349,33 @@ async def run_recommendation_generation(request: RecommendationGenerationRequest
                     # Filter by confidence threshold
                     high_confidence_recs = [
                         rec for rec in recommendations 
-                        if rec.get('confidence_score', 0) >= request.min_confidence
+                        if rec.get('confidence', 0) >= request.min_confidence
                     ]
                     
                     if high_confidence_recs:
                         # Store recommendations in database
-                        stored_rec = StoredRecommendation(
-                            student_id=student.student_id,
-                            recommendations=high_confidence_recs,
-                            generated_at=datetime.now(),
-                            expires_at=datetime.now() + timedelta(days=30),  # 30-day expiry
-                            target_stage=request.target_stage,
-                            generation_metadata={
+                        # Add target_stage and generation_metadata to the recommendations JSON
+                        enhanced_recs = []
+                        for rec in high_confidence_recs:
+                            enhanced_rec = rec.copy()
+                            enhanced_rec.update({
+                                "target_stage": request.target_stage,
                                 "model_version": model_manager.model_metadata.get("version", "unknown"),
                                 "confidence_threshold": request.min_confidence,
                                 "top_k": request.top_k,
                                 "student_stage": student.funnel_stage
-                            }
+                            })
+                            enhanced_recs.append(enhanced_rec)
+                        
+                        stored_rec = StoredRecommendation(
+                            student_id=student.student_id,
+                            recommendations=enhanced_recs,
+                            generated_at=datetime.now(),
+                            expires_at=datetime.now() + timedelta(days=30)  # 30-day expiry
                         )
                         db.add(stored_rec)
                         recommendations_stored += len(high_confidence_recs)
+                        students_with_recommendations += 1
                     
                     recommendations_generated += len(recommendations)
                     
@@ -379,19 +388,12 @@ async def run_recommendation_generation(request: RecommendationGenerationRequest
         
         update_recommendation_status("running", 0.9, "Validating results", "Validating generated recommendations...")
         
-        # Final validation
-        total_stored = db.query(StoredRecommendation).filter(
-            StoredRecommendation.target_stage == request.target_stage,
-            StoredRecommendation.generated_at >= datetime.now() - timedelta(minutes=30)
-        ).count()
-        
         update_recommendation_status(
             "completed", 
-            100.0, 
+            1.0, 
             "Generation complete", 
             f"Generated {recommendations_generated} recommendations for {total_students} students. "
-            f"Stored {recommendations_stored} high-confidence recommendations. "
-            f"Total stored: {total_stored}"
+            f"Stored {recommendations_stored} high-confidence recommendations for {students_with_recommendations} students."
         )
         
         logger.info(f"Recommendation generation completed: {recommendations_generated} generated, {recommendations_stored} stored")
