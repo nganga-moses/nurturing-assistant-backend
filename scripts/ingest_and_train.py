@@ -144,6 +144,10 @@ def train_and_save_model(
     logger.info("Starting model training...")
     history = trainer.train(epochs=epochs, batch_size=batch_size)
     
+    # Save the trained model
+    logger.info("Saving trained model...")
+    trainer.save_model(model_dir)
+    
     # Save training history
     history_path = os.path.join(model_dir, 'training_history.json')
     with open(history_path, 'w') as f:

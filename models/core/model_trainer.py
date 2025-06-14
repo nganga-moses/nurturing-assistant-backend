@@ -32,9 +32,9 @@ class ModelTrainer:
         
         # Create model
         self.model = RecommenderModel(
-            student_tower=StudentTower(embedding_dimension, self.vocabularies['student_vocab']),
-            engagement_tower=EngagementTower(embedding_dimension, self.vocabularies['engagement_vocab']),
-            embedding_dimension=embedding_dimension
+            embedding_dimension=embedding_dimension,
+            dropout_rate=0.2,
+            l2_reg=0.01
         )
         
         # Define learning rate schedule
@@ -104,17 +104,8 @@ class ModelTrainer:
             batch_size=batch_size
         )
         
-        # Update vector stores after training
-        self.model.update_vector_stores(
-            student_data={
-                'student_id': self.train_dataset.map(lambda x, y: x['student_id']),
-                'student_features': self.train_dataset.map(lambda x, y: x['student_features'])
-            },
-            engagement_data={
-                'engagement_id': self.train_dataset.map(lambda x, y: x['engagement_id']),
-                'engagement_features': self.train_dataset.map(lambda x, y: x['engagement_features'])
-            }
-        )
+        # Vector stores will be handled by ModelManager after model loading
+        # Simplified approach doesn't require vector store updates during training
         
         return history
     
@@ -127,8 +118,10 @@ class ModelTrainer:
         # Create model directory if it doesn't exist
         os.makedirs(model_dir, exist_ok=True)
         
-        # Save the full model
-        self.model.save(os.path.join(model_dir, "recommender_model"))
+        # Save the full model with .keras extension
+        model_path = os.path.join(model_dir, "recommender_model.keras")
+        self.model.save(model_path)
+        print(f"✅ Model saved to {model_path}")
         
         # Create and save nearest neighbors index for engagements
         engagement = {

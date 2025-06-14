@@ -33,6 +33,7 @@ def seed_roles_and_admin():
         Role(name="admin", description="System administrator with full access"),
         Role(name="admissions assistant", description="Can view and manage student profiles"),
         Role(name="manager", description="Can view analytics and manage recruiters"),
+        Role(name="vp", description="Has Strategic oversight"),
         Role(name="readonly", description="Can only view data, no modifications")
     ]
     

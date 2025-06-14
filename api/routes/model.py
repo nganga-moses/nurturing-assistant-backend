@@ -8,6 +8,7 @@ functionality through the API.
 
 import os
 import sys
+import logging
 from typing import Optional, List, Dict, Any
 from fastapi import APIRouter, HTTPException, Depends, Request
 from pydantic import BaseModel
@@ -20,6 +21,7 @@ sys.path.append(os.path.join(project_root, 'api', 'services'))
 from model_manager import ModelManager
 
 router = APIRouter()
+logger = logging.getLogger(__name__)
 
 # Dependency to get model manager from app state
 def get_model_manager(request: Request) -> ModelManager:
@@ -531,11 +533,18 @@ async def predict_likelihood(
     """
     score = model_manager.predict_likelihood(student_id, engagement_id)
     
+    # Determine the actual prediction method used
+    prediction_method = "fallback"  # Default
+    if model_manager.model is not None:
+        prediction_method = "full_model"
+    elif model_manager.student_vectors is not None:
+        prediction_method = "vector_similarity"
+    
     return {
         "student_id": student_id,
         "engagement_id": engagement_id,
         "likelihood_score": score,
-        "prediction_method": "vector_similarity" if model_manager.student_vectors else "fallback",
+        "prediction_method": prediction_method,
         "timestamp": model_manager.last_health_check
     }
 
@@ -564,9 +573,29 @@ async def predict_goal_likelihood(
     Example:
         GET /api/v1/model/predict/goal-likelihood?student_id=STU001&goal_stage=Application
     """
-    result = model_manager.predict_goal_likelihood(student_id, goal_stage)
-    
-    return GoalLikelihoodResponse(**result)
+    try:
+        result = model_manager.predict_goal_likelihood(student_id, goal_stage)
+        
+        # Ensure all required fields are present for the response model
+        response_data = {
+            "student_id": result.get("student_id", student_id),
+            "target_stage": result.get("target_stage", goal_stage),
+            "likelihood": result.get("likelihood", 0.5),
+            "current_stage": result.get("current_stage", "Unknown"),
+            "stage_distance": result.get("stage_distance", 0),
+            "stage_context": result.get("stage_context", "unknown"),
+            "base_model_score": result.get("base_model_score", 0.5),
+            "confidence": result.get("confidence", 0.5)
+        }
+        
+        return GoalLikelihoodResponse(**response_data)
+        
+    except Exception as e:
+        logger.error(f"Goal likelihood prediction failed: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Goal likelihood prediction failed: {str(e)}"
+        )
 
 @router.get("/predict/risk", summary="Direct Risk Assessment")
 async def predict_risk(
@@ -581,11 +610,18 @@ async def predict_risk(
     """
     risk_score = model_manager.predict_risk(student_id)
     
+    # Determine the actual prediction method used
+    prediction_method = "fallback"  # Default
+    if model_manager.model is not None:
+        prediction_method = "full_model"
+    elif model_manager.student_vectors is not None:
+        prediction_method = "vector_similarity"
+    
     return {
         "student_id": student_id,
         "risk_score": risk_score,
         "risk_level": "high" if risk_score > 0.7 else "medium" if risk_score > 0.4 else "low",
-        "prediction_method": "vector_similarity" if model_manager.student_vectors else "fallback",
+        "prediction_method": prediction_method,
         "timestamp": model_manager.last_health_check
     }
 

@@ -15,6 +15,11 @@ import io
 import subprocess
 import sys
 
+# Import required models at module level
+from data.models.student_profile import StudentProfile
+from data.models.stored_recommendation import StoredRecommendation
+from data.models.funnel_stage import FunnelStage
+
 # Conditional import for Google Cloud Storage (only needed in production mode)
 try:
     from google.cloud import storage
@@ -277,9 +282,6 @@ async def run_recommendation_generation(request: RecommendationGenerationRequest
         # Import model manager and services
         from api.services.model_manager import ModelManager
         from api.services.recommendation_service import RecommendationService
-        from data.models.stored_recommendation import StoredRecommendation
-        from data.models.funnel_stage import FunnelStage
-        from data.models.student_profile import StudentProfile
         
         # Get the target stage
         target_stage = db.query(FunnelStage).filter_by(stage_name=request.target_stage.title()).first()
